@@ -1,2 +1,4 @@
-#include "Planetary_System.h"
-// TODO
+#ifndef PLANETARY_SYSTEM
+#include "Planetary_System.hpp"
+#define PLANETARY_SYSTEM
+#endif
