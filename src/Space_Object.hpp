@@ -1,9 +1,22 @@
-#ifndef PLANETARY_BODY
-#include "Planetary_Body.hpp"
-#define PLANETARY_BODY
+#if defined(__APPLE__)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
 #endif
 
+#ifndef DRAWABLE
+#define DRAWABLE
+#include "Drawable.hpp"
+#endif
+
+#ifndef MATH_HELPER
+#define MATH_HELPER
+#include "Math_helper.hpp"
+#endif
+
+#include <math.h>
 #include <vector>
+#include <list>
 
 #define PLANET 1
 #define COMET 2
@@ -13,7 +26,7 @@
 // ellipse calculation.
 //#define CREATURE 4
 
-class SpaceObject {
+class Space_Object : public Drawable {
   public:
 
     int getObjectType();
@@ -32,39 +45,63 @@ class SpaceObject {
     * on its local coordinates
     *  - Need to get the plane to correspond to orbital plane
     *  - Need to get object to its current orbital position
-    *  - Need to rotate the object about its own axes
     */
-    virtual void drawPrep();
+
+	//virtual void draw_rotate();
+
+    int drawPrep();
+
+	virtual void draw();
 
     /**
     * Adds satellite to orbit around this object
      */
-    void add_Satelite( SpaceObject * satellite);
+    void add_Satelite( Space_Object * satellite);
+	/**
 
+	Sets the space object to orbit. If there is no specified orbit then this object will be at the same position
+	as its parent.
 
-    SpaceObject();
+	 @param a
+	 @param b
+	 @param focus_sel
+	*/
+	void set_orbit(float a, float b, int focus_sel);
 
-    ~SpaceObject();
+    //Space_Object();
+
+    //~Space_Object();
 
   protected:
-    std::vector<SpaceObject *> satellites;
 
-    typedef struct OrbitalPlane {
-      float planeNormal[3];
-      float planePoint;
-    } OrbitalPlane;
+
+    typedef struct Orbital_Plane {
+      GLfloat planeNormal[3];
+      GLfloat planePoint;
+    } Orbital_Plane;
 
     // Defines the orbit of space object, note that this ellipse
     // is in polar coordinates
     typedef struct Orbit {
       // Referring to https://math.stackexchange.com/questions/315386/ellipse-in-polar-coordinates
       // for mathematical ref about polar formula of ellipse.
-      float ellipse_a;
-      float ellipse_b;
-      float orbital_theta;
-      // Focus of the ellipse which the object is orbiting around
-      float orbit_focus;
-      OrbitalPlane plane;
+       GLfloat ellipse_a;
+       GLfloat ellipse_b;
+       GLfloat orbital_theta;
+       // Focus of the ellipse which the object is orbiting around
+	   GLfloat orbit_focus_x;
+	   // selects negative or positive focus
+	   int focus_select;
+	   // Returns the distance from the center of the ellipse of the object
+	   float curr_rad() {
+		  return ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
+	   }
+	   // returns distance from the selected focus
+	   float actual_dist() {
+
+	   }
+
+      Orbital_Plane plane;
     } Orbit;
 
     /**
@@ -74,12 +111,10 @@ class SpaceObject {
     */
     void updateOrbit();
 
-
-    Planetary_Body planet;
-
-  private:
-
-
+	  std::list<Space_Object *> satellites;
+    Space_Object * planet;
+    Orbital_Plane orbit_plane;
+	Orbit object_orbit;
     int current_x;
     int current_y;
     int current_z;

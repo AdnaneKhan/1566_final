@@ -1,6 +1,10 @@
-#include "Drawable.hpp"
+#ifndef SPACE_OBJECT
+#define SPACE_OBJECT
+#include "Space_Object.hpp"
+#endif
 
-class Planetary_Body: public Drawable {
+
+class Planetary_Body: public Space_Object {
   public:
     /**
     * @param x component of vector to rotate about
@@ -8,11 +12,16 @@ class Planetary_Body: public Drawable {
     * @param z component of vector to rotate about
     * @param theta angle to rotate (in degrees)
     */
-      void rotate(float x, float y, float z, float theta_degrees);
-      void rotate(float rotate_vector[3], float theta);
+      void rotate(GLfloat x, GLfloat y, GLfloat z, GLfloat theta_rad);
+      void rotate(GLfloat rotate_vector[3], float theta_rad);
       // TODO find out how textures will play into this.
       Planetary_Body(float rotationRate, int radius);
-      void draw();
+	  Planetary_Body();
+
+	  virtual void draw_rotate();
+	  virtual void fullDraw();
+	  virtual void draw();
+
   private:
     /**
     * Stores a gl matrix that will be used to rotate this object prior to drawinng  it.
@@ -26,6 +35,7 @@ class Planetary_Body: public Drawable {
     *
     * This denotes the rotation ABOUT THE OBJECT'S OWN axis.
     */
-    float rotationRate;
+    float rotation_rate;
+	int planet_radius;
 
 };
