@@ -85,17 +85,31 @@ class Space_Object : public Drawable {
     typedef struct Orbit {
       // Referring to https://math.stackexchange.com/questions/315386/ellipse-in-polar-coordinates
       // for mathematical ref about polar formula of ellipse.
+		// 1 - x major, 2 - y major
+		int major;
        GLfloat ellipse_a;
        GLfloat ellipse_b;
        GLfloat orbital_theta;
       
-	   GLfloat orbit_focus_x;
+	   GLfloat orbit_focus;
+
 	   float rate_mod;
 	   // selects negative or positive focus
 	   int focus_select;
 	   // Returns the distance from the center of the ellipse of the object
 	   float curr_rad() {
 		 return ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
+	   }
+
+	   void focus_translate(GLfloat &x, GLfloat &y) {
+		   if (major == 1) {
+			   x = orbit_focus;
+			   y = 0.0f;
+		   }
+		   else if (major == 2) {
+			   x = 0.0f;
+			   y = orbit_focus;
+		   }
 	   }
 	   // returns distance from the selected focus
 	   float actual_dist() {
@@ -106,7 +120,7 @@ class Space_Object : public Drawable {
     } Orbit;
 
 
-	  std::list<Space_Object *> satellites;
+	std::list<Space_Object *> satellites;
     Space_Object * planet;
     Orbital_Plane orbit_plane;
 	Orbit object_orbit;

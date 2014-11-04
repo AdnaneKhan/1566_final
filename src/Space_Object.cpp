@@ -61,7 +61,9 @@ int Space_Object::drawPrep() {
   glTranslatef(x_movement, y_movement, 0);
 
   // Translate object such that the orbit's focus is on the origin
-  glTranslatef(this->object_orbit.orbit_focus_x, 0, 0);
+  GLfloat translate_vec[2];
+  this->object_orbit.focus_translate(translate_vec[0], translate_vec[1]);
+  glTranslatef(translate_vec[0], translate_vec[1], 0);
 
   glPushMatrix();
   push_c++;
@@ -76,6 +78,13 @@ void Space_Object::set_orbit(float a, float b, int focus_sel) {
 	this->object_orbit.ellipse_a = a;
 	this->object_orbit.ellipse_b = b;
 	// positive x offset of the focus
-	this->object_orbit.orbit_focus_x = sqrt(a*a - b*b) / 2;
 
+	if (a >= b) {
+		this->object_orbit.major = 1;
+		this->object_orbit.orbit_focus = sqrt(a*a - b*b) / 2;
+	}
+	else {
+		this->object_orbit.major = 2;
+		this->object_orbit.orbit_focus = sqrt(b*b - a*a) / 2;
+	}
 }
