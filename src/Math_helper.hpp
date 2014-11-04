@@ -7,6 +7,8 @@
 #else
 #include <GL/glut.h>
 #endif
+
+void random_orbit(float &a, float &b);
 /**
 * Generates a random rotation rate for planet/star
 */

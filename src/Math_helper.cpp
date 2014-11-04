@@ -5,6 +5,14 @@
 #include <math.h>
 
 /**
+Generates random ellipse
+parameters for distance, min 6, max 12
+*/
+void random_orbit(float &a, float &b) {
+	a = (float)((rand() % 6) + 6)*1.0;
+	b = (float)((rand() % 6) + 6)*1.0;
+}
+/**
 * Generates a random rotation rate for planet/star
 */
 float random_rot_rate() {
@@ -13,10 +21,12 @@ float random_rot_rate() {
 	return retV;
 }
 
-/**
+/*
+* Returns a random radius from 1 to 5
+*
 */
 int random_radius() {
-	float retV = 1;
+	int retV = (rand() % 5) + 1;
 
 	return retV;
 }

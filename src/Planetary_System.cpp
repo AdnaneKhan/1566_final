@@ -1,7 +1,4 @@
-
 #include "Planetary_System.hpp"
-
-
 
 Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 	this->star = new Planetary_Body(0, sun_radius);
@@ -9,10 +6,8 @@ Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 	for (int i = 0; i < num_planets; i++) {
 		Space_Object * temp = new Planetary_Body((num_planets+1-(i+1))*.60,1);
 		// Set orbit to be origin of system
-		temp->set_orbit(5+i*2,3+i*2,1);
 		star->add_Satelite(temp);
 	}
-
 }
 
 void Planetary_System::update_system() {

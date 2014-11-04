@@ -35,7 +35,7 @@ void my_display(void);
 void my_reshape(int w, int h);
 void my_keyboard(unsigned char key, int x, int y);
 
-Planetary_System root(1, 4);
+Planetary_System root(random_radius(), 4);
 
 int main(int argc, char **argv) {
 
@@ -84,7 +84,7 @@ void gl_setup(void) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(20, 1.0, 1.0, 200.0);
+	gluPerspective(40, 1.0, 1.0, 200.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -194,7 +194,7 @@ void my_display(void) {
 
 	
 
-	gluLookAt(0.0, 0.0, 150.0,  // x,y,z coord of the camera 
+	gluLookAt(0.0, 0.0, 200.0,  // x,y,z coord of the camera 
 		0, 0.0, 0.0,  // x,y,z coord of what we are looking at
 		0.0, 1.0, 0.0); // the direction of up 
 

@@ -59,14 +59,15 @@ void Planetary_Body::fullDraw() {
 	}
 }
 
-
-
 Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	this->planet_radius = radius;
 	this->rotation_rate = rotationRate;
 	this->object_orbit.rate_mod = rotationRate;
 
-	this->set_orbit(3, 3, 1);
+	float a;
+	float b;
+	random_orbit(a, b);
+	this->set_orbit(a, b, 1);
 
 	GLfloat temp[16] = { 1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
@@ -76,7 +77,6 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	for (int i = 0; i < 16; i++) {
 		rotationMatrix[i] = temp[i];
 	}
-
 }
 
 Planetary_Body::Planetary_Body() {

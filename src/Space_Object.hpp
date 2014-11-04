@@ -45,8 +45,6 @@ class Space_Object : public Drawable {
     *  - Need to get object to its current orbital position
     */
 
-	//virtual void draw_rotate();
-
     int drawPrep();
 
 	virtual void draw(){};
@@ -75,10 +73,6 @@ class Space_Object : public Drawable {
 	*/
 	void set_orbit(float a, float b, int focus_sel);
 
-    //Space_Object();
-
-    //~Space_Object();
-
   protected:
 
     typedef struct Orbital_Plane {
@@ -94,7 +88,7 @@ class Space_Object : public Drawable {
        GLfloat ellipse_a;
        GLfloat ellipse_b;
        GLfloat orbital_theta;
-       // Focus of the ellipse which the object is orbiting around
+      
 	   GLfloat orbit_focus_x;
 	   float rate_mod;
 	   // selects negative or positive focus

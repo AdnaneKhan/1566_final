@@ -76,6 +76,6 @@ void Space_Object::set_orbit(float a, float b, int focus_sel) {
 	this->object_orbit.ellipse_a = a;
 	this->object_orbit.ellipse_b = b;
 	// positive x offset of the focus
-	this->object_orbit.orbit_focus_x = sqrt(a*a - b*b) /2;
+	this->object_orbit.orbit_focus_x = sqrt(a*a - b*b) / 2;
 
 }
