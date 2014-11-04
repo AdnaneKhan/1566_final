@@ -1,25 +1,22 @@
-#ifndef MATH_HELPER
-#define MATH_HELPER
+
 #include "Math_helper.hpp"
-#endif
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <math.h>
-#define M_PI 3.14159265359
 
 /**
 * Generates a random rotation rate for planet/star
 */
 float random_rot_rate() {
-	float retV = 0.0f;
+	float retV = 0.015f;
 
 	return retV;
 }
 
 /**
 */
-float random_radius() {
-	float retV = 0.0f;
+int random_radius() {
+	float retV = 1;
 
 	return retV;
 }
@@ -51,7 +48,6 @@ void normalize_vector(GLfloat vector[3] ) {
 		vector[i] /= mag;
 	}
 }
-
 
 float rad_to_deg(float theta_rad) {
 	return theta_rad *  (180 / M_PI);

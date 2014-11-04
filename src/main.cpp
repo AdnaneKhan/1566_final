@@ -35,11 +35,14 @@ void my_display(void);
 void my_reshape(int w, int h);
 void my_keyboard(unsigned char key, int x, int y);
 
+Planetary_System root(1, 4);
+
 int main(int argc, char **argv) {
 
 	/* General initialization for GLUT and OpenGL
 	Must be called first */
 	glutInit(&argc, argv);
+
 
 	/* we define these setup procedures */
 	glut_setup();
@@ -73,7 +76,7 @@ void glut_setup(void) {
 
 /* This function sets up the initial states of OpenGL related enivornment */
 void gl_setup(void) {
-
+	
 	/* specifies a background color: black in this case */
 	glClearColor(0, 0, 0, 0);
 
@@ -81,7 +84,7 @@ void gl_setup(void) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(20, 1.0, 1.0, 100.0);
+	gluPerspective(20, 1.0, 1.0, 200.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -189,10 +192,14 @@ void my_display(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	gluLookAt(0.0, 0.0, 20.0,  // x,y,z coord of the camera 
+	
+
+	gluLookAt(0.0, 0.0, 150.0,  // x,y,z coord of the camera 
 		0, 0.0, 0.0,  // x,y,z coord of what we are looking at
 		0.0, 1.0, 0.0); // the direction of up 
 
+	root.draw_system();
+	root.update_system();
 
 	// do transformation for light1 -- should have no effect on anything else
 	glPushMatrix();

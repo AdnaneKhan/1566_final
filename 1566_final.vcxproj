@@ -38,7 +38,16 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ExecutablePath>\\vmware-host\Shared Folders\adnankhan On My Mac\Dropbox\Pitt Fall 2014\Graphics\1566_final\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>\\vmware-host\Shared Folders\adnankhan On My Mac\Dropbox\Pitt Fall 2014\Graphics\1566_final\include;$(IncludePath)</IncludePath>
+    <LibraryPath>\\vmware-host\Shared Folders\adnankhan On My Mac\Dropbox\Pitt Fall 2014\Graphics\1566_final\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ExecutablePath>\\vmware-host\Shared Folders\adnankhan On My Mac\Dropbox\Pitt Fall 2014\Graphics\1566_final\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>\\vmware-host\Shared Folders\adnankhan On My Mac\Dropbox\Pitt Fall 2014\Graphics\1566_final\include;$(IncludePath)</IncludePath>
+    <LibraryPath>\\vmware-host\Shared Folders\adnankhan On My Mac\Dropbox\Pitt Fall 2014\Graphics\1566_final\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -64,6 +73,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Drawable.hpp" />
+    <ClInclude Include="src\Math_helper.hpp" />
+    <ClInclude Include="src\Planetary_Body.hpp" />
+    <ClInclude Include="src\Planetary_System.hpp" />
+    <ClInclude Include="src\Space_Object.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Math_helper.cpp" />
+    <ClCompile Include="src\Planetary_Body.cpp" />
+    <ClCompile Include="src\Planetary_System.cpp" />
+    <ClCompile Include="src\Space_Object.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

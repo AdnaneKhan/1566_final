@@ -1,22 +1,20 @@
+
+#ifndef SPACE_OBJECT_H
+#define SPACE_OBJECT_H
+
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
 #endif
 
-#ifndef DRAWABLE
-#define DRAWABLE
 #include "Drawable.hpp"
-#endif
-
-#ifndef MATH_HELPER
-#define MATH_HELPER
 #include "Math_helper.hpp"
-#endif
 
 #include <math.h>
 #include <vector>
 #include <list>
+#include <iostream>
 
 #define PLANET 1
 #define COMET 2
@@ -39,7 +37,7 @@ class Space_Object : public Drawable {
     *
     * Returns to previous frame
     */
-    virtual void fullDraw();
+	virtual void fullDraw(){};
     /**
     * Performs operations necessary so that the object can be drawn
     * on its local coordinates
@@ -51,7 +49,16 @@ class Space_Object : public Drawable {
 
     int drawPrep();
 
-	virtual void draw();
+	virtual void draw(){};
+	int num_satellites();
+
+	/**
+	* Updates the orbital position of the object
+	* Essentially this is updating the theta
+	* while conforming to Kepler's third law of planetary motion
+	*/
+	void updateOrbit();
+
 
     /**
     * Adds satellite to orbit around this object
@@ -74,7 +81,6 @@ class Space_Object : public Drawable {
 
   protected:
 
-
     typedef struct Orbital_Plane {
       GLfloat planeNormal[3];
       GLfloat planePoint;
@@ -90,11 +96,12 @@ class Space_Object : public Drawable {
        GLfloat orbital_theta;
        // Focus of the ellipse which the object is orbiting around
 	   GLfloat orbit_focus_x;
+	   float rate_mod;
 	   // selects negative or positive focus
 	   int focus_select;
 	   // Returns the distance from the center of the ellipse of the object
 	   float curr_rad() {
-		  return ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
+		 return ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
 	   }
 	   // returns distance from the selected focus
 	   float actual_dist() {
@@ -104,12 +111,6 @@ class Space_Object : public Drawable {
       Orbital_Plane plane;
     } Orbit;
 
-    /**
-    * Updates the orbital position of the object
-    * Essentially this is updating the theta
-    * while conforming to Kepler's third law of planetary motion
-    */
-    void updateOrbit();
 
 	  std::list<Space_Object *> satellites;
     Space_Object * planet;
@@ -123,3 +124,5 @@ class Space_Object : public Drawable {
     // Angle in radians of position about its orbit
 
 };
+
+#endif

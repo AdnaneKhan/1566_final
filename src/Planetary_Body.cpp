@@ -1,12 +1,5 @@
-#ifndef PLANETARY_BODY
-#define PLANETARY_BODY
 #include "Planetary_Body.hpp"
-#endif
-
-#ifndef MATH_HELPER
 #include "Math_helper.hpp"
-#define MATH_HELPER
-#endif
 
 
 #if defined(__APPLE__)
@@ -19,7 +12,7 @@
 */
 void Planetary_Body::draw() {
 	glPushMatrix();
-	glutSolidSphere(1, 50, 16);
+	glutSolidSphere(this->planet_radius, 50, 16);
 	glPopMatrix();
 }
 
@@ -50,13 +43,15 @@ void Planetary_Body::fullDraw() {
 	draw();
 	glPopMatrix();
 
+	
 	// Draw satellitess
 	if (this->satellites.size() > 0) {
 		for (std::list<Space_Object *>::const_iterator iterator = satellites.begin(), end = satellites.end(); iterator != end; ++iterator) {
 			(*iterator)->fullDraw();
+
 		}
 	}
-	
+
 	// Pop matrixes we pushed during prep stage
 	while (pop_c > 0) {
 		glPopMatrix();
@@ -69,16 +64,26 @@ void Planetary_Body::fullDraw() {
 Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	this->planet_radius = radius;
 	this->rotation_rate = rotationRate;
+	this->object_orbit.rate_mod = rotationRate;
 
-	// Object is static
-	this->object_orbit.focus_select = 1;
-	this->object_orbit.ellipse_a = 0;
-	this->object_orbit.ellipse_b = 0;
-	this->object_orbit.orbital_theta = 0;
+	this->set_orbit(3, 3, 1);
+
+	GLfloat temp[16] = { 1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f };
+
+	for (int i = 0; i < 16; i++) {
+		rotationMatrix[i] = temp[i];
+	}
+
 }
 
 Planetary_Body::Planetary_Body() {
 	Planetary_Body(random_rot_rate(), random_radius());
+}
+
+Planetary_Body::~Planetary_Body() {
 	// Delete satellites
 	while (this->satellites.size() >= 1) {
 		delete(satellites.front());

@@ -1,9 +1,7 @@
-#ifndef SPACE_OBJECT
-#define SPACE_OBJECT
+#ifndef PLANETARY_BODY_H
+#define PLANETARY_BODY_H
+
 #include "Space_Object.hpp"
-#endif
-
-
 class Planetary_Body: public Space_Object {
   public:
     /**
@@ -17,6 +15,7 @@ class Planetary_Body: public Space_Object {
       // TODO find out how textures will play into this.
       Planetary_Body(float rotationRate, int radius);
 	  Planetary_Body();
+	  ~Planetary_Body();
 
 	  virtual void draw_rotate();
 	  virtual void fullDraw();
@@ -26,8 +25,7 @@ class Planetary_Body: public Space_Object {
     /**
     * Stores a gl matrix that will be used to rotate this object prior to drawinng  it.
     */
-    float rotationMatrix[16];
-
+	  GLfloat rotationMatrix[16];
     /**
     * Multiplier in float relative to the cock speed of the universe
     * value from 0 to 1, 1 means it rotates 360 degrees per tick,
@@ -39,3 +37,5 @@ class Planetary_Body: public Space_Object {
 	int planet_radius;
 
 };
+
+#endif

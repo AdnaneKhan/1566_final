@@ -1,3 +1,7 @@
+#ifndef MATH_HELPER_H
+#define MATH_HELPER_H
+#define M_PI 3.14159265359
+
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
 #else
@@ -10,7 +14,7 @@ float random_rot_rate();
 
 /**
 */
-float random_radius();
+int random_radius();
 
 /**
 * Returns random number of planets from 2-12
@@ -38,3 +42,4 @@ void normalize_vector(GLfloat  vector[3] );
 float rad_to_deg(float theta_rad);
 
 float deg_to_rad(float theta_deg);
+#endif
