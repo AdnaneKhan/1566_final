@@ -16,6 +16,8 @@
 #include <list>
 #include <iostream>
 
+#define GRAV 6.67e-11;
+
 #define PLANET 1
 #define COMET 2
 #define SPACE_SHIP 3
@@ -57,7 +59,6 @@ class Space_Object : public Drawable {
 	*/
 	void updateOrbit();
 
-
     /**
     * Adds satellite to orbit around this object
      */
@@ -83,54 +84,42 @@ class Space_Object : public Drawable {
     // Defines the orbit of space object, note that this ellipse
     // is in polar coordinates
     typedef struct Orbit {
-      // Referring to https://math.stackexchange.com/questions/315386/ellipse-in-polar-coordinates
-      // for mathematical ref about polar formula of ellipse.
-		// 1 - x major, 2 - y major
-		int major;
+
        GLfloat ellipse_a;
        GLfloat ellipse_b;
        GLfloat orbital_theta;
       
 	   GLfloat orbit_focus;
 
+	   float eccentricity;
 	   float rate_mod;
 	   // selects negative or positive focus
 	   int focus_select;
-	   // Returns the distance from the center of the ellipse of the object
+
+		// Returns distance from focus to point on border of sphere given the angle.	  
 	   float curr_rad() {
-		 return ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
-	   }
-
-	   void focus_translate(GLfloat &x, GLfloat &y) {
-		   if (major == 1) {
-			   x = orbit_focus;
-			   y = 0.0f;
+		   if (ellipse_a == 0 || ellipse_a == 0) {
+			   return 0;
 		   }
-		   else if (major == 2) {
-			   x = 0.0f;
-			   y = orbit_focus;
-		   }
-	   }
-	   // returns distance from the selected focus
-	   float actual_dist() {
-
+		   return ellipse_a*(1 - eccentricity*eccentricity) / (1 + cos(orbital_theta));
 	   }
 
       Orbital_Plane plane;
     } Orbit;
 
-
 	std::list<Space_Object *> satellites;
     Space_Object * planet;
     Orbital_Plane orbit_plane;
 	Orbit object_orbit;
-    int current_x;
-    int current_y;
-    int current_z;
+
+
     // Denotes the type of object
     int object_type;
-    // Angle in radians of position about its orbit
-
+   
+	// Mass to be used for kepler's calculations
+	double mass;
+	// to be ignored if object is stationary
+	double parentmass;
 };
 
 #endif

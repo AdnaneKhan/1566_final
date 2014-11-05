@@ -62,6 +62,9 @@ void Planetary_Body::fullDraw() {
 Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	this->planet_radius = radius;
 	this->rotation_rate = rotationRate;
+
+	// Used to stub the update of orbit
+	// before kepler's can be implemented
 	this->object_orbit.rate_mod = rotationRate;
 
 	float a;

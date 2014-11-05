@@ -35,7 +35,9 @@ void my_display(void);
 void my_reshape(int w, int h);
 void my_keyboard(unsigned char key, int x, int y);
 
-Planetary_System root(random_radius(), 4);
+void time_update(int param);
+
+Planetary_System root(random_radius(), 2);
 
 int main(int argc, char **argv) {
 
@@ -90,6 +92,7 @@ void gl_setup(void) {
 
 	/* NEW: lighting stuff */
 	glShadeModel(GL_SMOOTH);
+	glutTimerFunc(100, time_update, 0);
 	return;
 }
 
@@ -199,8 +202,7 @@ void my_display(void) {
 		0.0, 1.0, 0.0); // the direction of up 
 
 	root.draw_system();
-	root.update_system();
-
+	
 	// do transformation for light1 -- should have no effect on anything else
 	glPushMatrix();
 	{
@@ -218,6 +220,11 @@ void my_display(void) {
 
 	/* buffer is ready */
 	glutSwapBuffers();
-
+	glutPostRedisplay();
 	return;
+}
+
+void time_update(int param) {
+	root.update_system();
+	glutTimerFunc(20, time_update, 0);
 }
