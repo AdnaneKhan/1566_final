@@ -70,6 +70,7 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	float a;
 	float b;
 	random_orbit(a, b);
+
 	this->set_orbit(a, b, 1);
 
 	GLfloat temp[16] = { 1.0f, 0.0f, 0.0f, 0.0f,

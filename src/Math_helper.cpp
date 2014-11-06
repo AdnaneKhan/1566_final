@@ -9,8 +9,11 @@ Generates random ellipse
 parameters for distance, min 6, max 12
 */
 void random_orbit(float &a, float &b) {
-	a = (float)((rand() % 6) + 6)*1.0;
-	b = (float)((rand() % 6) + 6)*1.0;
+	float rand_orbit = (float)(rand() % 70);
+
+
+	a = rand_orbit *1.1;
+	b = rand_orbit *0.9;
 }
 /**
 * Generates a random rotation rate for planet/star
@@ -46,7 +49,7 @@ float vector_length(GLfloat vector[3]) {
 }
 
 void vector_cross(GLfloat vec_a[3], GLfloat vec_b[3], GLfloat vec_res[3]) {
-	vec_res[0] = vec_a[1]*vec_b[2] - vec_a[2]*vec_b[0];
+	vec_res[0] = vec_a[1]*vec_b[2] - vec_a[2]*vec_b[1];
 	vec_res[1] = vec_a[2]*vec_b[0] - vec_a[0]*vec_b[2];
 	vec_res[2] = vec_a[0]*vec_b[1] - vec_a[1]*vec_b[0];
 }

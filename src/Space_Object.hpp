@@ -77,8 +77,9 @@ class Space_Object : public Drawable {
   protected:
 
     typedef struct Orbital_Plane {
+		
       GLfloat planeNormal[3];
-      GLfloat planePoint;
+	  GLfloat planePoint[3];
     } Orbital_Plane;
 
     // Defines the orbit of space object, note that this ellipse
@@ -91,19 +92,44 @@ class Space_Object : public Drawable {
       
 	   GLfloat orbit_focus;
 
+	   int major;
 	   float eccentricity;
 	   float rate_mod;
 	   // selects negative or positive focus
 	   int focus_select;
 
-		// Returns distance from focus to point on border of sphere given the angle.	  
-	   float curr_rad() {
-		   if (ellipse_a == 0 || ellipse_a == 0) {
-			   return 0;
+	   void focus_translate(GLfloat &x, GLfloat &y) {
+		   if (major == 1) {
+			   x = orbit_focus;
+			   y = 0.0f;
+
 		   }
-		   return ellipse_a*(1 - eccentricity*eccentricity) / (1 + cos(orbital_theta));
+		   else if (major == 2) {
+			   x = 0.0f;
+			   y = orbit_focus;
+
+		   }
+
 	   }
 
+		// Returns distance from focus to point on border of sphere given the angle.	  
+	   float curr_rad() {
+		   if (ellipse_a == 0 || ellipse_b == 0) {
+			   return 0;
+		   }
+		   return ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
+		  // float radius = ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
+		  // float x_movement;
+		  // float y_movement;
+		  // focus_translate(x_movement, y_movement);
+		  // x_movement += radius * cos(orbital_theta);
+		  // y_movement += radius * sin(orbital_theta);
+
+		  // return sqrt(x_movement*x_movement + y_movement*y_movement);
+		  //// return ellipse_a*(1 - eccentricity*eccentricity) / (1 + cos(orbital_theta));
+	   }
+
+	 
       Orbital_Plane plane;
     } Orbit;
 
@@ -120,6 +146,10 @@ class Space_Object : public Drawable {
 	double mass;
 	// to be ignored if object is stationary
 	double parentmass;
+
+//
+	float radius;
+	float area;
 };
 
 #endif

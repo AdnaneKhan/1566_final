@@ -37,7 +37,7 @@ Calculates cross of vectors
 
 NOTE Cross product is NOT normalized
 */
-void vector_cross(GLfloat vec_a[3], GLfloat vec_b[3], GLfloat  vec_res[3]);
+void vector_cross(GLfloat vec_a[3], GLfloat vec_b[3], GLfloat vec_res[3]);
 
 void normalize_vector(GLfloat  vector[3] );
 
