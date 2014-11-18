@@ -2,6 +2,7 @@
 #define PLANETARY_BODY_H
 
 #include "Space_Object.hpp"
+#include "Texture.hpp"
 
 /**
 * This class will hold state concerning a planetary object
@@ -30,9 +31,11 @@ class Planetary_Body: public Space_Object {
 	  virtual void fullDraw();
 	  virtual void draw();
 
+
+
   private:
 
-	
+	Texture * planet_tex;
 
     /**
     * Stores a gl matrix that will be used to rotate this object prior to drawinng  it.
@@ -47,7 +50,6 @@ class Planetary_Body: public Space_Object {
     */
     float rotation_rate;
 	int planet_radius;
-
 };
 
 #endif

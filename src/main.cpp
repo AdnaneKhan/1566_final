@@ -8,6 +8,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "Spaceship.hpp"		
 
 #define min(a,b) ((a) < (b)? a:b)
 #define FALSE 0 
@@ -16,7 +17,7 @@
 #define COUNTERCLOCKWISE  1
 #define CLOCKWISE -1
 
-#define DELTA_TIME 100
+#define DELTA_TIME 5
 #define DELTA_DEG  5
 
 int   light1_theta = 0;
@@ -37,7 +38,7 @@ void my_keyboard(unsigned char key, int x, int y);
 
 void time_update(int param);
 
-Planetary_System root(random_radius(), 400);
+Planetary_System root(random_radius(), 2);
 
 int main(int argc, char **argv) {
 
@@ -197,11 +198,25 @@ void my_display(void) {
 
 	
 
-	gluLookAt(0.0, 0.0, 500.0,  // x,y,z coord of the camera 
+	gluLookAt(-100.0, -100.0, 300.0,  // x,y,z coord of the camera 
 		0, 0.0, 0.0,  // x,y,z coord of what we are looking at
-		0.0, 1.0, 0.0); // the direction of up 
+		0, 0, 1.0); // the direction of up 
 
+	glColor3f(0, .2, 1);
 	root.draw_system();
+
+	glPushMatrix();
+
+
+
+	glScalef(200,200, 1);
+	glTranslatef(0, 0, -5);
+	glColor3f(.0, .0, .0);
+	glutSolidCube(1);
+
+	glPopMatrix();
+
+
 	
 	// do transformation for light1 -- should have no effect on anything else
 	glPushMatrix();
@@ -226,5 +241,5 @@ void my_display(void) {
 
 void time_update(int param) {
 	root.update_system();
-	glutTimerFunc(20, time_update, 0);
+	glutTimerFunc(DELTA_TIME, time_update, 0);
 }

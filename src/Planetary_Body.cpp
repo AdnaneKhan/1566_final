@@ -12,6 +12,8 @@
 */
 void Planetary_Body::draw() {
 	glPushMatrix();
+
+	glColor3b(0, 0, 1);
 	glutSolidSphere(this->planet_radius, 50, 16);
 	glPopMatrix();
 }
@@ -38,19 +40,23 @@ void Planetary_Body::fullDraw() {
 	
 	glPushMatrix();
 
+
+	
+	// Draw satellitess
+	if (this->satellites.size() > 0) {
+		for (Space_Object * o : this->satellites) {
+			glPushMatrix();
+			o->fullDraw();
+		
+			glPopMatrix();
+		}
+	}
+
 	draw_rotate();
 	// Do the actual draw
 	draw();
 	glPopMatrix();
 
-	
-	// Draw satellitess
-	if (this->satellites.size() > 0) {
-		for (std::list<Space_Object *>::const_iterator iterator = satellites.begin(), end = satellites.end(); iterator != end; ++iterator) {
-			(*iterator)->fullDraw();
-
-		}
-	}
 
 	// Pop matrixes we pushed during prep stage
 	while (pop_c > 0) {

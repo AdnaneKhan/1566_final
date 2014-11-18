@@ -11,15 +11,38 @@ void Space_Object::updateOrbit() {
 
 	this->object_orbit.orbital_theta = fmod(temp+atanf((2 * area) / (radius*radius))*this->object_orbit.rate_mod, (2 * M_PI));
 
-	//printf("new theta %f\n", this->object_orbit.orbital_theta);
-
 	// Draw satellitess
 	if (this->satellites.size() > 0) {
-		for (std::list<Space_Object *>::const_iterator iterator = satellites.begin(), end = satellites.end(); iterator != end; ++iterator) {
-			(*iterator)->updateOrbit();
-
+		for (Space_Object * o : this->satellites) {
+			o->updateOrbit();
 		}
 	}
+}
+
+void Space_Object::draw_orbit() {
+	
+	glPushMatrix();
+
+	float t_x;
+	float t_y;
+
+	this->object_orbit.focus_translate(t_x, t_y);;
+
+	glTranslatef(t_x, t_y, 0);
+	glColor3f(0, 1, 0);
+	glBegin(GL_LINE_LOOP);
+
+	int i;
+	for (i = 0; i<360; i++)
+	{
+		float rad = deg_to_rad(i);
+		glVertex2f(cos(rad)*this->object_orbit.ellipse_a,
+		sin(rad)*this->object_orbit.ellipse_b);
+	}
+
+	glEnd();
+
+	glPopMatrix();
 }
 
  void Space_Object::add_Satelite(Space_Object * satellite) {
@@ -37,6 +60,8 @@ void Space_Object::updateOrbit() {
 * for mathematical reference to this calculation
 */
 int Space_Object::drawPrep() {
+	this->draw_orbit();
+
   int push_c = 0;
 
   // We are now in the plane of orbit that this object is is.

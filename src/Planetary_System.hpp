@@ -6,6 +6,8 @@
 #include "Planetary_Body.hpp"
 #include "Math_helper.hpp"
 
+#include <list>
+
 class Planetary_System {
   public:
 
@@ -20,5 +22,6 @@ class Planetary_System {
 	  std::vector<Space_Object *> planets;
 	  // Star of this system
 	  Space_Object * star;
+	  
 };
 #endif

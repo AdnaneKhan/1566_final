@@ -10,6 +10,7 @@
 
 #include "Drawable.hpp"
 #include "Math_helper.hpp"
+#include "Texture.hpp"
 
 #include <math.h>
 #include <vector>
@@ -29,6 +30,7 @@
 class Space_Object : public Drawable {
   public:
 
+	  std::list<Space_Object *> satellites;
     int getObjectType();
 
     /**
@@ -73,6 +75,11 @@ class Space_Object : public Drawable {
 	 @param focus_sel
 	*/
 	void set_orbit(float a, float b, int focus_sel);
+
+	/**
+	Draws orbit of planet as ellipse
+	*/
+	void draw_orbit();
 
   protected:
 
@@ -133,7 +140,6 @@ class Space_Object : public Drawable {
       Orbital_Plane plane;
     } Orbit;
 
-	std::list<Space_Object *> satellites;
     Space_Object * planet;
     Orbital_Plane orbit_plane;
 	Orbit object_orbit;
@@ -150,6 +156,10 @@ class Space_Object : public Drawable {
 //
 	float radius;
 	float area;
+
+	// Pool of textures which planets can use
+	static std::list<Texture> planet_texures;
+	static int tex_count;
 };
 
 #endif
