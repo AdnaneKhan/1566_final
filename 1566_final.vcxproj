@@ -77,14 +77,18 @@
     <ClInclude Include="src\Math_helper.hpp" />
     <ClInclude Include="src\Planetary_Body.hpp" />
     <ClInclude Include="src\Planetary_System.hpp" />
+    <ClInclude Include="src\Spaceship.hpp" />
     <ClInclude Include="src\Space_Object.hpp" />
+    <ClInclude Include="src\Texture.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math_helper.cpp" />
     <ClCompile Include="src\Planetary_Body.cpp" />
     <ClCompile Include="src\Planetary_System.cpp" />
+    <ClCompile Include="src\Spaceship.cpp" />
     <ClCompile Include="src\Space_Object.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
