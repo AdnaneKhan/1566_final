@@ -5,6 +5,13 @@
 #include "Math_helper.hpp"
 
 #define MOVEMENT_TIME 20
+#define X 0
+#define Y 1
+#define Z 2
+
+
+#define MIN_SPEED 0
+#define MAX_SPEED 200
 
 class Spaceship : public Drawable {
 
@@ -18,6 +25,9 @@ public:
 	*/
 	void draw();
 
+
+
+	// Control interface of the shi
 
 	/*
 	Positions the camera to be aligned with the spaceship.
@@ -48,16 +58,60 @@ private:
 
 	void set_velocity(float new_vel);
 
+	/**
+	Advances the ship forward in its velocity direction
+	*/
+	void move_forward(float delta_mag);
+	void move_backward(float delta_mag);
+
+
+	/*
+	
+	To rotate left we rotate around the up vector as our axis
+	
+	*/
+	void look_left(float delta_deg);
+
+	/*
+	To rotate left we rotate around the up vector as our axis
+	*/
+	void look_right(float delta_deg);
+
+
+	/*
+	
+	In this case we rotate around the axis that results from the cross product of the up vector and the velocity_dir vector
+	This is because the velocity dir and orientation vectors are orthogonal.
+	
+	note that we are rotating the look direction and orientation vectors
+
+	*/
+	void look_up(float delta_deg);
+
+	/*
+
+	In this case we rotate around the axis that results from the cross product of the up vector and the velocity_dir vector
+	This is because the velocity dir and orientation vectors are orthogonal.
+
+	note that we are rotating the look direction and orientation vectors
+
+	*/
+	void look_down(float delta_deg);
 
 	// Rotation matrix representing rotation of ship
 	GLfloat rotation[16];
 
 
-	GLfloat velocity_dir[3];
-	GLfloat velocity_mag;
+	static GLfloat velocity_dir[3];
+	static GLfloat velocity_mag;
 
 	// Position of ship in world coordinates
-	GLfloat position[3];
+	static GLfloat position[3];
+
+	/*
+	This is essentially the up vector of the ship
+	*/
+	static GLfloat orientation[3];
 
 	
 };
