@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Spaceship.hpp"		
+#include "User_Interface.hpp"
 
 #define min(a,b) ((a) < (b)? a:b)
 #define FALSE 0 
@@ -38,7 +39,8 @@ void my_keyboard(unsigned char key, int x, int y);
 
 void time_update(int param);
 
-Planetary_System root(random_radius(), 2);
+Planetary_System root(100.0, 2);
+Spaceship ship;
 
 int main(int argc, char **argv) {
 
@@ -70,10 +72,10 @@ void glut_setup(void) {
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Lights");
 
-	/*initialize callback functions */
+
 	glutDisplayFunc(my_display);
 	glutReshapeFunc(my_reshape);
-	glutKeyboardFunc(my_keyboard);
+	glutKeyboardFunc(User_Interface::keyboard_interface);
 	return;
 }
 
@@ -87,7 +89,7 @@ void gl_setup(void) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(40, 1.0, 1.0, 1000.0);
+	gluPerspective(40, 1.0, 1.0, 10000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -160,32 +162,6 @@ void lighting_setup() {
 
 }
 
-void my_keyboard(unsigned char key, int x, int y) {
-
-	switch (key) {
-	case 'o':
-		glEnable(GL_LIGHT1);
-		glutPostRedisplay();
-		break;
-	case 'O':
-		glDisable(GL_LIGHT1);
-		glutPostRedisplay();
-		break;
-	case 'l':
-		light1_theta = (light1_theta + DELTA_DEG) % 360;
-		glutPostRedisplay();
-		break;
-	case 'L':
-		light1_theta = (light1_theta - DELTA_DEG) % 360;
-		glutPostRedisplay();
-		break;
-	case 'q':
-	case 'Q':
-		exit(0);
-	default: break;
-	}
-	return;
-}
 void my_display(void) {
 	GLfloat light1_pos[] = { -1, 1, 1, 0 };
 	GLfloat light1_dir[] = { 0, 0, 1 };
@@ -197,10 +173,8 @@ void my_display(void) {
 	glLoadIdentity();
 
 	
+	ship.set_camera();
 
-	gluLookAt(-100.0, -100.0, 300.0,  // x,y,z coord of the camera 
-		0, 0.0, 0.0,  // x,y,z coord of what we are looking at
-		0, 0, 1.0); // the direction of up 
 
 	glColor3f(0, .2, 1);
 	root.draw_system();
@@ -212,7 +186,7 @@ void my_display(void) {
 	glScalef(200,200, 1);
 	glTranslatef(0, 0, -5);
 	glColor3f(.0, .0, .0);
-	glutSolidCube(1);
+	//glutSolidCube(1);
 
 	glPopMatrix();
 
