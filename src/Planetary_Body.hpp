@@ -31,8 +31,6 @@ class Planetary_Body: public Space_Object {
 	  virtual void fullDraw();
 	  virtual void draw();
 
-
-
   private:
 
 	Texture * planet_tex;

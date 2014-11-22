@@ -4,6 +4,8 @@
 #include "Drawable.hpp"
 #include "Math_helper.hpp"
 
+#include <iostream>
+
 #define MOVEMENT_TIME 20
 #define X 0
 #define Y 1
@@ -12,6 +14,11 @@
 
 #define MIN_SPEED 0
 #define MAX_SPEED 200
+
+#define DEFAULT_SPEED_DELTA 3
+#define DEFAULT_LOOK_DELTA .01
+
+typedef float speed;
 
 class Spaceship : public Drawable {
 
@@ -48,6 +55,19 @@ public:
 	Stops the ship (sets magnitude of veclocity to 0)
 	*/
 	void stop_ship();
+
+	/*
+
+	To rotate left we rotate around the up vector as our axis
+
+	*/
+	void look_left(float delta_deg);
+
+	/*
+	To rotate left we rotate around the up vector as our axis
+	*/
+	void look_right(float delta_deg);
+
 private:
 
 	/**
@@ -63,20 +83,6 @@ private:
 	*/
 	void move_forward(float delta_mag);
 	void move_backward(float delta_mag);
-
-
-	/*
-	
-	To rotate left we rotate around the up vector as our axis
-	
-	*/
-	void look_left(float delta_deg);
-
-	/*
-	To rotate left we rotate around the up vector as our axis
-	*/
-	void look_right(float delta_deg);
-
 
 	/*
 	
@@ -102,16 +108,16 @@ private:
 	GLfloat rotation[16];
 
 
-	static GLfloat velocity_dir[3];
-	static GLfloat velocity_mag;
+	 GLfloat velocity_dir[3];
+	 GLfloat velocity_mag;
 
 	// Position of ship in world coordinates
-	static GLfloat position[3];
+	 GLfloat position[3];
 
 	/*
 	This is essentially the up vector of the ship
 	*/
-	static GLfloat orientation[3];
+	 GLfloat orientation[3];
 
 	
 };

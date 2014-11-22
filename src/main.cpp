@@ -75,7 +75,7 @@ void glut_setup(void) {
 
 	glutDisplayFunc(my_display);
 	glutReshapeFunc(my_reshape);
-	glutKeyboardFunc(User_Interface::keyboard_interface);
+	glutKeyboardFunc(my_keyboard);
 	return;
 }
 
@@ -108,6 +108,29 @@ void my_reshape(int w, int h) {
 
 	/* define viewport -- x, y, (origin is at lower left corner) width, height */
 	glViewport(0, 0, min(w, h), min(w, h));
+	return;
+}
+
+void my_keyboard(unsigned char key, int x, int y) {
+
+	switch (key) {
+	case 'w':
+		ship.update_velocity(DEFAULT_SPEED_DELTA);
+		break;
+	case 'a':
+		ship.look_left(DEFAULT_LOOK_DELTA);
+		break;
+	case 's':
+		ship.update_velocity(-DEFAULT_SPEED_DELTA);
+		break;
+	case 'd':
+		ship.look_right(DEFAULT_LOOK_DELTA);
+		break;
+	case 'q':
+	case 'Q':
+		exit(0);
+	default: break;
+	}
 	return;
 }
 
