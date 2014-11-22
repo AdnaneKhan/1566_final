@@ -42,6 +42,8 @@ void vector_cross(GLfloat vec_a[3], GLfloat vec_b[3], GLfloat vec_res[3]);
 void normalize_vector(GLfloat  vector[3] );
 
 float rad_to_deg(float theta_rad);
-
 float deg_to_rad(float theta_deg);
+
+void rot_vector(GLfloat angle, GLfloat x, GLfloat y, GLfloat z, GLfloat to_rotate[3]);
+
 #endif
