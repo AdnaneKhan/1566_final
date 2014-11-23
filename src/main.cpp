@@ -114,11 +114,11 @@ void my_reshape(int w, int h) {
 void my_keyboard(unsigned char key, int x, int y) {
 
 	switch (key) {
-	case 'e':
+	case 'z':
 
 		ship.update_velocity(DEFAULT_SPEED_DELTA);
 		break;
-	case 'f':
+	case 'x':
 		ship.update_velocity(-DEFAULT_SPEED_DELTA);
 		break;
 	case 'w':
@@ -133,7 +133,12 @@ void my_keyboard(unsigned char key, int x, int y) {
 	case 'd':
 		ship.look_right(DEFAULT_LOOK_DELTA);
 		break;
+	case 'e': 
+		ship.roll_right(DEFAULT_LOOK_DELTA);
+		break;
 	case 'q':
+		ship.roll_left(DEFAULT_LOOK_DELTA);
+			break;
 	case 'Q':
 		exit(0);
 	default: break;

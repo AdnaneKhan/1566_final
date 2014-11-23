@@ -80,13 +80,10 @@ void Spaceship::look_down(float delta_deg) {
 	vector_cross(this->orientation, this->velocity_dir, rotate_around);
 
 	rot_vector(-delta_deg, rotate_around[X], rotate_around[Y], rotate_around[Z], this->velocity_dir);
-	rot_vector(-delta_deg, rotate_around[X], rotate_around[Y], rotate_around[Z], this->orientation);
-
-	
+	rot_vector(-delta_deg, rotate_around[X], rotate_around[Y], rotate_around[Z], this->orientation);	
 }
 
 void Spaceship::look_left(float delta_deg) {
-
 	// Rotate the look direction vector around the orientation vector (the up vector
 	rot_vector(-delta_deg, orientation[X], orientation[Y], orientation[Z], this->velocity_dir);
 #ifdef DEBUG
@@ -101,6 +98,14 @@ void Spaceship::look_right(float delta_deg) {
 #ifdef DEBUG
 	std::cout << "Turning the ship right.\n" << velocity_dir[X] << " " << velocity_dir[Y] << " " << velocity_dir[Z] << std::endl;
 #endif
+}
+
+void Spaceship::roll_left(float delta_deg) {
+	rot_vector(delta_deg, this->velocity_dir[X], this->velocity_dir[Y], this->velocity_dir[Z], this->orientation);
+}
+
+void Spaceship::roll_right(float delta_deg){
+	rot_vector(-delta_deg, this->velocity_dir[X], this->velocity_dir[Y], this->velocity_dir[Z], this->orientation);
 }
 
 void Spaceship::update() {

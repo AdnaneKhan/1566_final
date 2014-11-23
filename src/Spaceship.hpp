@@ -88,6 +88,9 @@ public:
 	*/
 	void look_down(float delta_deg);
 
+	void roll_left(float delta_deg);
+
+	void roll_right(float delta_deg);
 
 	void update();
 
