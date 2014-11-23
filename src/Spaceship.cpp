@@ -52,10 +52,10 @@ Spaceship::Spaceship() {
 	position[Y] = -1000.0;
 	position[Z] = 300.0;
 
-	velocity_dir[X] = 0.0 - position[X];
-	velocity_dir[Y] = 0.0 - position[Y];
-	velocity_dir[Z] = 0.0 - position[Z];
-
+	velocity_dir[X] = -position[X];
+	velocity_dir[Y] = -position[Y];
+	velocity_dir[Z] = -position[Z];
+	normalize_vector(velocity_dir);
 	
 
 	orientation[X] = 0.0;
@@ -81,17 +81,28 @@ void Spaceship::look_down(float delta_deg) {
 
 	rot_vector(-delta_deg, rotate_around[X], rotate_around[Y], rotate_around[Z], this->velocity_dir);
 	rot_vector(-delta_deg, rotate_around[X], rotate_around[Y], rotate_around[Z], this->orientation);
+
+	
 }
 
 void Spaceship::look_left(float delta_deg) {
 
 	// Rotate the look direction vector around the orientation vector (the up vector
 	rot_vector(-delta_deg, orientation[X], orientation[Y], orientation[Z], this->velocity_dir);
+#ifdef DEBUG
 	std::cout << "Turning the ship left.\n" << velocity_dir[X] << " " << velocity_dir[Y] << " " << velocity_dir[Z] << std::endl;
+#endif
 }
 
 void Spaceship::look_right(float delta_deg) {
 	// Rotate the look direction vector around the orientation vector (the up vector
 	rot_vector(+delta_deg, orientation[X], orientation[Y], orientation[Z], this->velocity_dir);
+	
+#ifdef DEBUG
 	std::cout << "Turning the ship right.\n" << velocity_dir[X] << " " << velocity_dir[Y] << " " << velocity_dir[Z] << std::endl;
+#endif
+}
+
+void Spaceship::update() {
+	this->move_forward(this->velocity_mag);
 }

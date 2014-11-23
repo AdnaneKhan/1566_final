@@ -68,7 +68,7 @@ void glut_setup(void) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
 	/* make a 400x400 window with the title of "GLUT Skeleton" placed at the top left corner */
-	glutInitWindowSize(400, 400);
+	glutInitWindowSize(1024, 1024);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Lights");
 
@@ -89,7 +89,7 @@ void gl_setup(void) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(40, 1.0, 1.0, 10000.0);
+	gluPerspective(40, 1.0, 1.0, 100000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -114,14 +114,21 @@ void my_reshape(int w, int h) {
 void my_keyboard(unsigned char key, int x, int y) {
 
 	switch (key) {
-	case 'w':
+	case 'e':
+
 		ship.update_velocity(DEFAULT_SPEED_DELTA);
+		break;
+	case 'f':
+		ship.update_velocity(-DEFAULT_SPEED_DELTA);
+		break;
+	case 'w':
+		ship.look_up(-DEFAULT_LOOK_DELTA);
 		break;
 	case 'a':
 		ship.look_left(DEFAULT_LOOK_DELTA);
 		break;
 	case 's':
-		ship.update_velocity(-DEFAULT_SPEED_DELTA);
+		ship.look_down(DEFAULT_LOOK_DELTA);
 		break;
 	case 'd':
 		ship.look_right(DEFAULT_LOOK_DELTA);
@@ -198,7 +205,6 @@ void my_display(void) {
 	
 	ship.set_camera();
 
-
 	glColor3f(0, .2, 1);
 	root.draw_system();
 
@@ -237,6 +243,7 @@ void my_display(void) {
 }
 
 void time_update(int param) {
+	ship.update();
 	root.update_system();
 	glutTimerFunc(DELTA_TIME, time_update, 0);
 }
