@@ -36,6 +36,7 @@ void lighting_setup();
 void my_display(void);
 void my_reshape(int w, int h);
 void my_keyboard(unsigned char key, int x, int y);
+void mouse_control(int x, int y);
 
 void time_update(int param);
 
@@ -76,6 +77,7 @@ void glut_setup(void) {
 	glutDisplayFunc(my_display);
 	glutReshapeFunc(my_reshape);
 	glutKeyboardFunc(my_keyboard);
+	glutPassiveMotionFunc(mouse_control);
 	return;
 }
 
@@ -144,6 +146,20 @@ void my_keyboard(unsigned char key, int x, int y) {
 	default: break;
 	}
 	return;
+}
+
+
+void mouse_control( int x, int y) {
+	GLfloat turn_vector[2];
+
+	if ((x > 0 && x < 1024) && (y > 0 && y < 1024)) {
+		turn_vector[X] = (x - 1024 / 2);
+		turn_vector[Y] = (y - 1024 / 2);
+
+		ship.look_right(turn_vector[X]/1024 * DEFAULT_LOOK_DELTA);
+		ship.look_up(turn_vector[Y]/1024 * DEFAULT_LOOK_DELTA);
+			
+	}
 }
 
 void lighting_setup() {

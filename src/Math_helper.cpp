@@ -42,19 +42,32 @@ int random_planets() {
 }
 
 float vector_length(GLfloat vector[3]) {
-	GLfloat sum = vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2];
-	GLfloat mag = sqrt(sum);
+	return vector_length(vector, 3);
+}
+
+float vector_length(GLfloat * vector, int len) {
+	float sum = 0;
+	for (int i = 0; i < len; i++) {
+		sum += vector[i] * vector[i];
+	}
+
+	float mag = sqrt(sum);
 
 	return mag;
 }
-float vector_dot(GLfloat vec_a[3], GLfloat vec_b[3]) {
+
+float vector_dot(GLfloat *vec_a, GLfloat *vec_b, int len) {
 	float ret_v = 0;
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < len; i++) {
 		ret_v += vec_a[i] * vec_b[i];
 	}
 
 	return ret_v;
+}
+
+float vector_dot(GLfloat vec_a[3], GLfloat vec_b[3]) {
+	return vector_dot(vec_a, vec_b, 3);
 }
 
 void vector_cross(GLfloat vec_a[3], GLfloat vec_b[3], GLfloat vec_res[3]) {
@@ -67,6 +80,14 @@ void normalize_vector(GLfloat vector[3] ) {
 
 	// Divide each component of vector by the magnitude
 	for (int i = 0; i < 3; i++) {
+		vector[i] /= mag;
+	}
+}
+
+void normalize_vector(GLfloat * vector, int len) {
+	float mag = vector_length(vector, len);
+
+	for (int i = 0; i < len; i++) {
 		vector[i] /= mag;
 	}
 }

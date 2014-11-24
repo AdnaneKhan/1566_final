@@ -28,6 +28,11 @@ int random_planets();
   @return the length as a float
 */
 float vector_length(GLfloat vector[3]);
+/*
+* @param vector to calculate the lenght of
+@return the length as a float
+*/
+float vector_length(GLfloat *vector,int len);
 
 /**
 Calculates cross of vectors
@@ -41,8 +46,11 @@ void vector_cross(GLfloat vec_a[3], GLfloat vec_b[3], GLfloat vec_res[3]);
 
 float vector_dot(GLfloat vec_a[3], GLfloat vec_b[3]);
 
+float vector_dot(GLfloat * vec_a, GLfloat * vec_b, int len);
 
 void normalize_vector(GLfloat  vector[3] );
+void normalize_vector(GLfloat  vector[2]);
+void normalize_vector(GLfloat  vector,int len);
 
 float rad_to_deg(float theta_rad);
 float deg_to_rad(float theta_deg);
