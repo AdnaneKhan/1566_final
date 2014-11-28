@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "Spaceship.hpp"		
 #include "User_Interface.hpp"
+#include "Spacebox.hpp"
 
 #define min(a,b) ((a) < (b)? a:b)
 #define FALSE 0 
@@ -40,8 +41,10 @@ void mouse_control(int x, int y);
 
 void time_update(int param);
 
-Planetary_System root(100.0, 2);
+Planetary_System root(50.0, 4);
+Texture * all_space;
 Spaceship ship;
+Spacebox * box;
 
 int main(int argc, char **argv) {
 
@@ -102,6 +105,10 @@ void gl_setup(void) {
 }
 
 void my_setup(void) {
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	all_space = new Texture("textures/skybox.bmp", 256, 256);
+	box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
+
 	lighting_setup();
 	return;
 }
@@ -142,6 +149,8 @@ void my_keyboard(unsigned char key, int x, int y) {
 		ship.roll_left(DEFAULT_LOOK_DELTA);
 			break;
 	case 'Q':
+		delete (all_space);
+		delete(box);
 		exit(0);
 	default: break;
 	}
@@ -223,39 +232,15 @@ void my_display(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	
+	GLfloat ship_pos[3];
 	ship.set_camera();
+	ship.get_position(ship_pos);
+	//box->draw_skybox(ship_pos);
 
 	glColor3f(0, .2, 1);
 	root.draw_system();
 
-	glPushMatrix();
 
-
-
-	glScalef(200,200, 1);
-	glTranslatef(0, 0, -5);
-	glColor3f(.0, .0, .0);
-	//glutSolidCube(1);
-
-	glPopMatrix();
-
-
-	
-	// do transformation for light1 -- should have no effect on anything else
-	glPushMatrix();
-	{
-		glRotatef(light1_theta, 0, 1, 0);
-		glLightfv(GL_LIGHT1, GL_POSITION, light1_pos);
-		glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, light1_dir);
-
-		// visual aid: draw a box to show where the light is at 
-		glTranslatef(-1, 1, 1);
-		glutSolidCube(0.1);
-	}
-	glPopMatrix();
-
-	
 
 	/* buffer is ready */
 	glutSwapBuffers();

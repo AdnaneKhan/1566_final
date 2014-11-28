@@ -9,8 +9,7 @@ Generates random ellipse
 parameters for distance, min 6, max 12
 */
 void random_orbit(float &a, float &b) {
-	float rand_orbit = (float)(rand() % 300) + 200.0;
-
+	float rand_orbit = (float)(rand() % 300) + 500.0;
 
 	a = rand_orbit *1.1;
 	b = rand_orbit *0.9;

@@ -7,7 +7,7 @@ void Spaceship::stop_ship() {
 
 void Spaceship::get_position(GLfloat to_set[3]) {
 
-	for (int i = 0; i << 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		to_set[i] = this->position[i];
 	}
 

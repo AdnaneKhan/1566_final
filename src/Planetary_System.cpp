@@ -5,7 +5,7 @@ Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 	this->star->set_orbit(0, 0, 1);
 	// Adds Planets to orbit around the star
 	for (int i = 0; i < num_planets; i++) {
-		Space_Object * temp = new Planetary_Body((num_planets + 1 - (i + 1))*.60, random_radius());
+		Space_Object * temp = new Planetary_Body(.2, random_radius());
 		// Set orbit to be origin of system
 		Space_Object * temp2 = new Planetary_Body(.3,random_radius()/10);
 		temp2->set_orbit(27.2, 27.0, 1);

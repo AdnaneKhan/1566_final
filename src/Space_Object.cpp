@@ -3,11 +3,9 @@
 
 
 void Space_Object::updateOrbit() {
-	// Currently stubbed w/ constant angle update
 	// For Kepler's formula it will be necessary to use the mass of this object, the mass of the parent, and the speed 
 	// to calculate parameters for ellispe, etc
 	float temp = this->object_orbit.orbital_theta;
-	//this->object_orbit.orbital_theta = fmod((temp + .01*this->object_orbit.rate_mod), (2 * M_PI));
 
 	this->object_orbit.orbital_theta = fmod(temp+atanf((2 * area) / (radius*radius))*this->object_orbit.rate_mod, (2 * M_PI));
 
