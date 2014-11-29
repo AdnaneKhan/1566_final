@@ -7,6 +7,8 @@ void Space_Object::updateOrbit() {
 	// to calculate parameters for ellispe, etc
 	float temp = this->object_orbit.orbital_theta;
 
+
+	// THERE IS A BIT OF A MATH BUG RIGHT NOW GO OVER IT SO THAT IT ACCELERATES AT THE RIGHT PLACES
 	this->object_orbit.orbital_theta = fmod(temp + atanf((2 * orbit_area) / (orbit_rad*orbit_rad))*this->object_orbit.rate_mod, (2 * M_PI));
 
 	//////////////////////////////// CURRENTLY BORROWING CODE FROM DRAW PREP
