@@ -166,11 +166,11 @@ class Space_Object : public Drawable {
 	// to be ignored if object is stationary
 	double parentmass;
 
+	float orbit_area;
+	float orbit_rad;
+
 	GLfloat parent_pos[3];
 	GLfloat world_pos[3];
-
-	float radius;
-	float area;
 
 	// Pool of textures which planets can use
 	static std::list<Texture> planet_texures;

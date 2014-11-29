@@ -36,32 +36,23 @@ void Planetary_Body::draw_rotate() {
 
 void Planetary_Body::fullDraw() {
 	int pop_c = 0;
-	pop_c = drawPrep();
+	
 	
 	glPushMatrix();
-
+	pop_c = drawPrep();
+	// Do the actual draw
+	draw();
+	draw_rotate();
+	glPopMatrix();
 
 	
 	// Draw satellitess
 	if (this->satellites.size() > 0) {
 		for (Space_Object * o : this->satellites) {
-			glPushMatrix();
+			
 			o->fullDraw();
 		
-			glPopMatrix();
 		}
-	}
-
-	draw_rotate();
-	// Do the actual draw
-	draw();
-	glPopMatrix();
-
-
-	// Pop matrixes we pushed during prep stage
-	while (pop_c > 0) {
-		glPopMatrix();
-		pop_c--;
 	}
 }
 

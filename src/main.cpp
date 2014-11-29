@@ -19,8 +19,8 @@
 #define COUNTERCLOCKWISE  1
 #define CLOCKWISE -1
 
-#define DELTA_TIME 3
-#define DELTA_DEG  5
+#define DELTA_TIME 1
+#define DELTA_DEG  1
 
 int   light1_theta = 0;
 float zoom = 1.0;
