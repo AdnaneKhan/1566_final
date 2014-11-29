@@ -76,6 +76,22 @@ class Space_Object : public Drawable {
 	*/
 	void set_orbit(float a, float b, int focus_sel);
 
+	void set_parent_pos(float x, float y, float z);
+
+	void print_pos();
+
+	void draw_debugs() {
+		glPushMatrix();
+		glTranslatef(this->world_pos[0], this->world_pos[1], this->world_pos[2]);
+		glutSolidTorus(5, 25, 50, 50);
+		glPopMatrix();
+
+		//this->print_pos();
+		for (Space_Object * o : this->satellites) {
+			o->draw_debugs();
+		}
+	}
+
 	/**
 	Draws orbit of planet as ellipse
 	*/
@@ -116,7 +132,6 @@ class Space_Object : public Drawable {
 			   y = orbit_focus;
 
 		   }
-
 	   }
 
 		// Returns distance from focus to point on border of sphere given the angle.	  
@@ -136,14 +151,12 @@ class Space_Object : public Drawable {
 		  //// return ellipse_a*(1 - eccentricity*eccentricity) / (1 + cos(orbital_theta));
 	   }
 
-	 
       Orbital_Plane plane;
     } Orbit;
 
     Space_Object * planet;
     Orbital_Plane orbit_plane;
 	Orbit object_orbit;
-
 
     // Denotes the type of object
     int object_type;
@@ -153,7 +166,9 @@ class Space_Object : public Drawable {
 	// to be ignored if object is stationary
 	double parentmass;
 
-//
+	GLfloat parent_pos[3];
+	GLfloat world_pos[3];
+
 	float radius;
 	float area;
 

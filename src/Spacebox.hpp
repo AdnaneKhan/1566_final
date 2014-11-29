@@ -48,7 +48,6 @@ private:
 	 GLfloat mat_low_shininess[1];
 	 GLfloat mat_emission[4];
 
-
 };
 
 #endif

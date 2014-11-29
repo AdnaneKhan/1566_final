@@ -101,7 +101,6 @@ private:
 	*/
 	void movement();
 
-
 	void set_velocity(float new_vel);
 
 	/**
@@ -126,7 +125,6 @@ private:
 	*/
 	 GLfloat orientation[3];
 
-	
 };
 
 

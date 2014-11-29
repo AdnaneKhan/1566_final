@@ -19,7 +19,7 @@
 #define COUNTERCLOCKWISE  1
 #define CLOCKWISE -1
 
-#define DELTA_TIME 5
+#define DELTA_TIME 3
 #define DELTA_DEG  5
 
 int   light1_theta = 0;
@@ -94,7 +94,7 @@ void gl_setup(void) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(40, 1.0, 1.0, 100000.0);
+	gluPerspective(20, 1.0, 1.0, 100000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -235,7 +235,8 @@ void my_display(void) {
 	GLfloat ship_pos[3];
 	ship.set_camera();
 	ship.get_position(ship_pos);
-	//box->draw_skybox(ship_pos);
+
+	
 
 	glColor3f(0, .2, 1);
 	root.draw_system();
