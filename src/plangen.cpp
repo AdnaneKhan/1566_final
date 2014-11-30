@@ -1,12 +1,12 @@
 #include "plangen.hpp"
 #include "plandraw.hpp"
 
-void createPlanet(Planet *planet, PTypeEnum drawType, GLfloat radius, GLfloat resolution){
+void createPlanet(Planet * planet, PTypeEnum drawType, GLfloat radius, GLfloat resolution){
 	//First, we ensure that the input pointer is NULL, so we don't overwrite anyting
-	if (planet != NULL){
+	/*if (planet != NULL){
 		puts("Planet cannot be created: input pointer may be valid");
 		return;
-	}
+	}*/
 	//Now, we need to check the radius for validity
 	if (radius <= 0){
 		printf("Invalid radius (%f): must be greater than zero\n", radius);
@@ -19,18 +19,13 @@ void createPlanet(Planet *planet, PTypeEnum drawType, GLfloat radius, GLfloat re
 	}
 
 	//At this point, we know we have a valid set of arguments
-	planet = (Planet*)malloc(sizeof(Planet));
+//	planet = (Planet*)malloc(sizeof(Planet));
 	//We may hereby set the members of our data structure
 	planet->planetType = drawType;
 	planet->radius = radius;
 	planet->resolution = resolution;
 }
 
-void freePlanet(Planet *planet){
-	if (planet != NULL)
-		free(planet);
-}
-
-void drawPlanet(Planet *planet, GLuint optionalTexture){
+void drawPlanet(Planet * planet, GLuint optionalTexture){
 	drawSelect(planet, optionalTexture);
 }

@@ -51,7 +51,8 @@ private:
 	// Loads texture from file,
 	void load_texture(std::string file_name, int t_x, int t_y);
 	void generate_texture(textureType to_generate);
-	
+	void bind_texture();
+
 	GLuint texture;
 	GLubyte * img;
 	GLubyte brownianImage[IMG_HEIGHT][IMG_WIDTH][4];
@@ -61,6 +62,8 @@ private:
 	int x_dim;
 	int y_dim;
 	int tex;
+
+	int first_run;
 };
 
 #endif /// END TEXTURE_H GUARD

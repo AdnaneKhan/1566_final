@@ -19,7 +19,7 @@
 #define COUNTERCLOCKWISE  1
 #define CLOCKWISE -1
 
-#define DELTA_TIME 1
+#define DELTA_TIME 15
 #define DELTA_DEG  1
 
 int   light1_theta = 0;
@@ -41,7 +41,7 @@ void mouse_control(int x, int y);
 
 void time_update(int param);
 
-Planetary_System root(50.0, 4);
+Planetary_System * root;
 Texture * all_space;
 Spaceship ship;
 Spacebox * box;
@@ -101,11 +101,16 @@ void gl_setup(void) {
 	/* NEW: lighting stuff */
 	glShadeModel(GL_SMOOTH);
 	glutTimerFunc(100, time_update, 0);
+
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
 	return;
 }
 
 void my_setup(void) {
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	root = new Planetary_System(50.0, 9);
 	all_space = new Texture("textures/skybox.bmp", 256, 256);
 	box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
 
@@ -151,6 +156,7 @@ void my_keyboard(unsigned char key, int x, int y) {
 	case 'Q':
 		delete (all_space);
 		delete(box);
+		delete(root);
 		exit(0);
 	default: break;
 	}
@@ -236,12 +242,8 @@ void my_display(void) {
 	ship.set_camera();
 	ship.get_position(ship_pos);
 
-	
-
 	glColor3f(0, .2, 1);
-	root.draw_system();
-
-
+	root->draw_system();
 
 	/* buffer is ready */
 	glutSwapBuffers();
@@ -251,6 +253,6 @@ void my_display(void) {
 
 void time_update(int param) {
 	ship.update();
-	root.update_system();
+	root->update_system();
 	glutTimerFunc(DELTA_TIME, time_update, 0);
 }

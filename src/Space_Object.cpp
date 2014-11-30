@@ -7,7 +7,6 @@ void Space_Object::updateOrbit() {
 	// to calculate parameters for ellispe, etc
 	float temp = this->object_orbit.orbital_theta;
 
-
 	// THERE IS A BIT OF A MATH BUG RIGHT NOW GO OVER IT SO THAT IT ACCELERATES AT THE RIGHT PLACES
 	this->object_orbit.orbital_theta = fmod(temp + atanf((2 * orbit_area) / (orbit_rad*orbit_rad))*this->object_orbit.rate_mod, (2 * M_PI));
 
@@ -132,3 +131,5 @@ void Space_Object::set_parent_pos(float x, float y, float z) {
 void Space_Object::print_pos() {
 	std::cout << "X: " << this->world_pos[0] << "Y: " << this->world_pos[1] << "Z: " << this->world_pos[2] << std::endl;
 }
+
+Texture Space_Object::texture_pool[4] = { Texture(EARTHY_TEX, 256, 256), Texture(BADLAND_TEX, 256, 256), Texture(ICEY_TEX, 256, 256), Texture(MOON_TEX, 256, 256) };

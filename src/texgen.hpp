@@ -4,6 +4,7 @@
 #define IMG_WIDTH 256
 #define IMG_HEIGHT 256
 
+#define NUM_DYNAMIC_TEXTURES 4
 #define NUM_TEXTURES 5
 #define EARTHY_TEX   0
 #define ICEY_TEX    1

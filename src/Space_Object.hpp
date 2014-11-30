@@ -11,7 +11,6 @@
 #include "Drawable.hpp"
 #include "Math_helper.hpp"
 #include "Texture.hpp"
-
 #include <math.h>
 #include <vector>
 #include <list>
@@ -98,6 +97,8 @@ class Space_Object : public Drawable {
 	void draw_orbit();
 
   protected:
+
+	  static Texture texture_pool[NUM_DYNAMIC_TEXTURES];
 
     typedef struct Orbital_Plane {
 		

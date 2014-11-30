@@ -13,8 +13,7 @@
 void Planetary_Body::draw() {
 	glPushMatrix();
 
-	glColor3b(0, 0, 1);
-	glutSolidSphere(this->planet_radius, 50, 16);
+	drawPlanet(&this->actual_planet, this->planet_tex->get_texture());
 	glPopMatrix();
 }
 
@@ -60,8 +59,7 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	this->planet_radius = radius;
 	this->rotation_rate = rotationRate;
 
-	// Used to stub the update of orbit
-	// before kepler's can be implemented
+	// Setting values pertaining to the planet's orbit around its parent body
 	this->object_orbit.rate_mod = rotationRate;
 
 	float a;
@@ -70,6 +68,7 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 
 	this->set_orbit(a, b, 1);
 
+	// Setting rotation matrix for rotation about its own axis
 	GLfloat temp[16] = { 1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
@@ -78,6 +77,13 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	for (int i = 0; i < 16; i++) {
 		rotationMatrix[i] = temp[i];
 	}
+
+
+	this->draw_type = TEXTURED;
+	this->planet_tex = &texture_pool[0];
+	createPlanet(&this->actual_planet, this->draw_type, this->planet_radius, .2);
+
+
 }
 
 Planetary_Body::Planetary_Body() {
@@ -91,3 +97,4 @@ Planetary_Body::~Planetary_Body() {
 		satellites.pop_front();
 	}
 }
+

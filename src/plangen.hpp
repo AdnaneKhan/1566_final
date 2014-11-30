@@ -11,7 +11,5 @@ void createPlanet(Planet *planet, PTypeEnum drawType, GLfloat radius, GLfloat re
 //Draws the given planet
 void drawPlanet(Planet *planet, GLuint optionalTexture);
 
-//Frees the given planet
-void freePlanet(Planet *planet);
 
 #endif

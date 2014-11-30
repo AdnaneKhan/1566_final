@@ -3,6 +3,7 @@
 
 #include "Space_Object.hpp"
 #include "Texture.hpp"
+#include "plangen.hpp"
 
 /**
 * This class will hold state concerning a planetary object
@@ -32,6 +33,9 @@ class Planetary_Body: public Space_Object {
 	  virtual void draw();
 
   private:
+
+	  Planet actual_planet;
+	  PTypeEnum draw_type;
 
 	Texture * planet_tex;
 

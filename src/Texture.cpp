@@ -60,7 +60,29 @@ void bmp2rgb(GLubyte img[], int size) {
 	}
 }
 
+void Texture::bind_texture() {
+
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+			x_dim, y_dim,
+			0, GL_RGBA, GL_UNSIGNED_BYTE, this->brownianImage);
+
+
+}
+
 GLuint Texture::get_texture() {
+	if (!first_run) {
+		bind_texture();
+		first_run = true;
+	}
+
 	return this->texture;
 }
 
@@ -103,65 +125,20 @@ void Texture::generate_texture(textureType to_generate) {
 	switch (to_generate) {
 	case EARTHY_TEX:
 		brownian(this->brownianImage, blandLandGradient, 9999999);
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D,texture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-			x_dim, y_dim,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, this->brownianImage);
-
+		
 		break;
 	case ICEY_TEX :
 		scanLines(this->brownianImage, iceyGradient, 2999999);
 
-		// bind gas giant texture
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-			x_dim, y_dim,
-			0, GL_RGBA, GL_UNSIGNED_BYTE,this->brownianImage);
-		
+	
 		break;
 	case BADLAND_TEX: 
 		brownian(this->brownianImage, badLandGradient, 5999999);
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-			x_dim, y_dim,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, this->brownianImage);
-		
+	
 		break;
 	case MOON_TEX: 
 
 		brownian(brownianImage, moonyGradient, 999999);
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-			x_dim, y_dim,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, this->brownianImage);
 
 		break;
 	}
@@ -182,6 +159,8 @@ Texture::Texture(textureType to_generate,int t_x, int t_y) {
 	this->x_dim = t_x;
 	this->y_dim = t_y;
 	generate_texture(to_generate);
+
+	this->first_run = 0;
 }
 
 Texture::~Texture() {
