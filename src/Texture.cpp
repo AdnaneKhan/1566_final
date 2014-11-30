@@ -1,5 +1,54 @@
 #include "Texture.hpp"
 
+void Texture::blandLandGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	*r = height + (rand() / (RAND_MAX / 4));
+	*g = 3 * height + 2 * ((unsigned char)sqrtf((float)height));
+	*b = 80 + (rand() / (RAND_MAX / 8)) - 2 * height;
+
+	//These if statements were added at a later date, to possibly
+	// make this type of land less bland.
+	if (height < 5)
+		*b = *b - 2 * height*height;
+	if (height < 20)
+		*r = *r + 2 * height;
+	if (height > 30){
+		*b = *r = *g;
+	}
+	else
+		*g = *g + 2 * height + ((unsigned char)sqrtf((float)height));
+}
+
+void Texture::iceyGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	*r = height + (rand() / (RAND_MAX / 4)) + ((unsigned char)sqrtf((float)height));
+	*g = 10 * height;
+	*b = 20 + (rand() / (RAND_MAX / 8)) - 2 * height;
+}
+
+void Texture::badLandGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	*r = 3 * height + (rand() / (RAND_MAX / 4)) + ((unsigned char)sqrtf((float)height)) + 20;
+	*g = 2 * height;
+	*b = height;
+	if (height < 10){
+		*g += 30;
+		*b += 30;
+		*r -= 20;
+	}
+	if (height < 5){
+		*g += 10;
+		*b += 10;
+	}
+}
+
+void Texture::moonyGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	*r = 3 * height + ((unsigned char)sqrtf((float)height)) + 40;
+	*g = 3 * height + 40;
+	*b = 3 * height - ((unsigned char)sqrtf((float)height)) + 40;
+}
+
 void bmp2rgb(GLubyte img[], int size) {
 	int i;
 	GLubyte temp;
@@ -12,7 +61,6 @@ void bmp2rgb(GLubyte img[], int size) {
 }
 
 GLuint Texture::get_texture() {
-
 	return this->texture;
 }
 
@@ -50,11 +98,90 @@ void Texture::load_texture(std::string file_name, int t_x, int t_y) {
 		}
 }
 
+void Texture::generate_texture(textureType to_generate) {
+
+	switch (to_generate) {
+	case EARTHY_TEX:
+		brownian(this->brownianImage, blandLandGradient, 9999999);
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D,texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+			x_dim, y_dim,
+			0, GL_RGBA, GL_UNSIGNED_BYTE, this->brownianImage);
+
+		break;
+	case ICEY_TEX :
+		scanLines(this->brownianImage, iceyGradient, 2999999);
+
+		// bind gas giant texture
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+			x_dim, y_dim,
+			0, GL_RGBA, GL_UNSIGNED_BYTE,this->brownianImage);
+		
+		break;
+	case BADLAND_TEX: 
+		brownian(this->brownianImage, badLandGradient, 5999999);
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+			x_dim, y_dim,
+			0, GL_RGBA, GL_UNSIGNED_BYTE, this->brownianImage);
+		
+		break;
+	case MOON_TEX: 
+
+		brownian(brownianImage, moonyGradient, 999999);
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+			x_dim, y_dim,
+			0, GL_RGBA, GL_UNSIGNED_BYTE, this->brownianImage);
+
+		break;
+	}
+
+	this->texType = to_generate;
+}
+
 Texture::Texture(std::string file_name, int t_x, int t_y) {
 	this->img = (GLubyte*) malloc(t_x*t_y*3*(sizeof(GLubyte)));
 	// Indicates allocation was done
 	this->tex = 1;
+	this->x_dim = t_x;
+	this->y_dim = t_y;
 	load_texture(file_name, t_x, t_y);
+}
+
+Texture::Texture(textureType to_generate,int t_x, int t_y) {
+	this->x_dim = t_x;
+	this->y_dim = t_y;
+	generate_texture(to_generate);
 }
 
 Texture::~Texture() {
