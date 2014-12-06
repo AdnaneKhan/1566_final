@@ -242,7 +242,7 @@ void drawSelect(Planet * planet, GLuint textureName){
 		//If we're using textures, we need to set them up
 		usingTex = TRUE;
 		glEnable(GL_TEXTURE_2D);
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		glBindTexture(GL_TEXTURE_2D, textureName);
 
 		//And, we set our drawing function to that of our texture function

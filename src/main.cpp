@@ -25,8 +25,6 @@
 #define WINDOW_HEIGHT 1024
 #define WINDOW_WIDTH 1024
 
-#define DEAD_ZONE WINDOW_HEIGHT/6
-#define DEAD_ZONE WINDOW_WIDTH/6
 
 
 int   light1_theta = 0;
@@ -50,7 +48,7 @@ void time_update(int param);
 
 int win_h;
 int win_w;
-GLfloat turn_vector[2];
+
 
 Planetary_System * root;
 Texture * all_space;
@@ -186,33 +184,19 @@ void my_keyboard(unsigned char key, int x, int y) {
 
 void mouse_control( int x, int y) {
 	// Deadzones for X and Y
-	int x_dz_ub = (win_w / 2) + (win_w / 10);
-	int y_dz_ub = (win_h / 2) + (win_h / 10);
-
-
-	int x_dz_lb = (win_w / 2) - (win_w / 10);
-	int y_dz_lb = (win_h / 2) - (win_h / 10);
-
-	if ( !((x < x_dz_ub && x > x_dz_lb) && (y > y_dz_lb && y < y_dz_ub))) {
-		turn_vector[X] = (x - win_w / 2);
-		turn_vector[Y] = (y - win_h / 2);
-	}
-	else {
-		turn_vector[X] = 0;
-			turn_vector[Y] = 0;
-	}
+	ship.mouse_control(x, y,win_h,win_w);
 }
 
 void lighting_setup() {
 
 	GLfloat light0_amb[] = { 0.2, 0.2, 0.2, 1 };
-	GLfloat light0_diffuse[] = { 1, 0, 0, 1 };
+	GLfloat light0_diffuse[] = { 1, 1, 1, 1 };
 	GLfloat light0_specular[] = { 1, 0, 0, 1 };
 	GLfloat light0_pos[] = { 1, 1, 1, 0 };
 
 	GLfloat light1_amb[] = { 0.2, 0.2, 0.2, 1 };
-	GLfloat light1_diffuse[] = { 0, 1, 0, 1 };
-	GLfloat light1_specular[] = { 0, 1, 0, 1 };
+	GLfloat light1_diffuse[] = { 1, 1, 1, 1 };
+	GLfloat light1_specular[] = { 1, 1, 1, 1 };
 
 	GLfloat globalAmb[] = { .1, .1, .1, 1 };
 
@@ -226,17 +210,15 @@ void lighting_setup() {
 
 	//enable lighting
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	//  glEnable(GL_LIGHT1);
+
+    glEnable(GL_LIGHT1);
 	glEnable(GL_NORMALIZE);
-	glEnable(GL_COLOR_MATERIAL);
 
 
 	// setup properties of point light 0
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-	glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_amb);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
@@ -255,14 +237,25 @@ void lighting_setup() {
 }
 
 void my_display(void) {
-	GLfloat light1_pos[] = { -1, 1, 1, 0 };
-	GLfloat light1_dir[] = { 0, 0, 1 };
+	GLfloat light1_pos[] = { 0, 0, 0, 0 };
+	GLfloat light1_dir[] = { 0, 0, 0 };
 
 	/* clear the buffer */
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	
+//	glLightfv(this->light_id, GL_SPOT_DIRECTION, this->look_dir);
+//	glLighti(this->light_id, GL_SPOT_CUTOFF, this->look_angle);
+
+	glEnable(GL_LIGHT0);
+//	glLightfv(GL_LIGHT0, GL_POSITION, light1_pos);
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1_dir);
+	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
+
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 
 	GLfloat ship_pos[3];
 	ship.set_camera();
@@ -271,6 +264,9 @@ void my_display(void) {
 	glColor3f(0, .2, 1);
 	root->draw_system();
 
+
+
+
 	/* buffer is ready */
 	glutSwapBuffers();
 	glutPostRedisplay();
@@ -278,8 +274,7 @@ void my_display(void) {
 }
 
 void time_update(int param) {
-	ship.look_right(turn_vector[X] / win_w * DEFAULT_LOOK_DELTA);
-	ship.look_up(turn_vector[Y] / win_h * DEFAULT_LOOK_DELTA);
+	
 	ship.update();
 	root->update_system();
 	glutTimerFunc(DELTA_TIME, time_update, 0);

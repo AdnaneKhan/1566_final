@@ -1,6 +1,27 @@
 #include "Spaceship.hpp"
 
+void Spaceship::mouse_control(int x, int y, int win_h, int win_w) {
+	int x_dz_ub = (win_w / 2) + (win_w / 10);
+	int y_dz_ub = (win_h / 2) + (win_h / 10);
 
+
+	int x_dz_lb = (win_w / 2) - (win_w / 10);
+	int y_dz_lb = (win_h / 2) - (win_h / 10);
+
+	if (!((x < x_dz_ub && x > x_dz_lb) && (y > y_dz_lb && y < y_dz_ub))) {
+		turn_vector[X] = (x - win_w / 2) / ((float)win_w/2);
+		turn_vector[Y] = (y - win_h / 2) / ((float)win_h/2);
+		
+
+
+	}
+	else {
+		turn_vector[X] = 0;
+		turn_vector[Y] = 0;
+	}
+
+
+}
 void Spaceship::stop_ship() {
 	this->velocity_mag = 0.0f;
 }
@@ -111,5 +132,7 @@ void Spaceship::roll_right(float delta_deg){
 }
 
 void Spaceship::update() {
+	this->look_right(turn_vector[X] * DEFAULT_LOOK_DELTA);
+	this->look_up(turn_vector[Y]  * DEFAULT_LOOK_DELTA);
 	this->move_forward(this->velocity_mag);
 }

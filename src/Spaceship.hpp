@@ -18,6 +18,10 @@
 #define DEFAULT_SPEED_DELTA .25
 #define DEFAULT_LOOK_DELTA .01
 
+
+#define DEAD_ZONE WINDOW_HEIGHT/6
+#define DEAD_ZONE WINDOW_WIDTH/6
+
 typedef float speed;
 
 class Spaceship : public Drawable {
@@ -34,7 +38,7 @@ public:
 
 
 
-	// Control interface of the shi
+	void mouse_control(int x, int y, int win_h, int win_w);
 
 	/*
 	Positions the camera to be aligned with the spaceship.
@@ -113,7 +117,7 @@ private:
 	// Rotation matrix representing rotation of ship
 	GLfloat rotation[16];
 
-
+	GLfloat turn_vector[2];
 	 GLfloat velocity_dir[3];
 	 GLfloat velocity_mag;
 
