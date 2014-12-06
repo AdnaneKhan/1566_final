@@ -132,4 +132,4 @@ void Space_Object::print_pos() {
 	std::cout << "X: " << this->world_pos[0] << "Y: " << this->world_pos[1] << "Z: " << this->world_pos[2] << std::endl;
 }
 
-Texture Space_Object::texture_pool[4] = { Texture(EARTHY_TEX, 256, 256), Texture(BADLAND_TEX, 256, 256), Texture(ICEY_TEX, 256, 256), Texture(MOON_TEX, 256, 256) };
+Texture Space_Object::texture_pool[4] = { Texture(EARTHY_TEX, IMG_HEIGHT, IMG_WIDTH), Texture(ICEY_TEX, IMG_HEIGHT, IMG_WIDTH), Texture(BADLAND_TEX, IMG_HEIGHT, IMG_HEIGHT), Texture(MOON_TEX, IMG_HEIGHT, IMG_HEIGHT) };

@@ -5,6 +5,7 @@ void Spaceship::stop_ship() {
 	this->velocity_mag = 0.0f;
 }
 
+// Gets position of the spaceship in world coordinates
 void Spaceship::get_position(GLfloat to_set[3]) {
 
 	for (int i = 0; i < 3; i++) {
@@ -13,6 +14,7 @@ void Spaceship::get_position(GLfloat to_set[3]) {
 
 }
 
+// Calls lookAt so that camera is aligned with the "ship"
 void Spaceship::set_camera() {
 	// Spaceship camera now correctly positioned
 	gluLookAt(position[0], position[1], position[2], position[0] + velocity_dir[0], position[1] + velocity_dir[1], position[2] +velocity_dir[2], orientation[X], orientation[Y], orientation[Z]);
@@ -24,7 +26,7 @@ void Spaceship::draw() {
 }
 
 void Spaceship::update_velocity(speed change) {
-
+	// If the velocity isn't at its limits (high or low), then we add change to it (if change is negative speed goes down)
 	if (this->velocity_mag <= MAX_SPEED && this->velocity_mag >= MIN_SPEED) {
 		this->velocity_mag += change;
 	}

@@ -7,12 +7,13 @@
 #include <GL/glut.h>
 #endif
 
-namespace User_Interface {
-	static void keyboard_interface(unsigned char key, int x, int y);
+class User_Interface {
+	
 
-	static void mouse_interface(int pressed, int x, int y);
+	void draw_interface() {
 
-}
+	}
+};
 
 
 #endif // END USER_INTERFACE_H GUARD

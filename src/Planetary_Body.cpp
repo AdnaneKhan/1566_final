@@ -80,8 +80,8 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 
 
 	this->draw_type = TEXTURED;
-	this->planet_tex = &texture_pool[0];
-	createPlanet(&this->actual_planet, this->draw_type, this->planet_radius, .2);
+	this->planet_tex = &texture_pool[(rand() % 4)];
+	createPlanet(&this->actual_planet, this->draw_type, this->planet_radius, .1);
 
 
 }

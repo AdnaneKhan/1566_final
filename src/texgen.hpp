@@ -1,8 +1,8 @@
 #ifndef _TEXGEN_H_
 #define _TEXGEN_H_
 
-#define IMG_WIDTH 256
-#define IMG_HEIGHT 256
+#define IMG_WIDTH 1024
+#define IMG_HEIGHT 1024
 
 #define NUM_DYNAMIC_TEXTURES 4
 #define NUM_TEXTURES 5

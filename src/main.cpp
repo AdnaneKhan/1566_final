@@ -22,6 +22,13 @@
 #define DELTA_TIME 15
 #define DELTA_DEG  1
 
+#define WINDOW_HEIGHT 1024
+#define WINDOW_WIDTH 1024
+
+#define DEAD_ZONE WINDOW_HEIGHT/6
+#define DEAD_ZONE WINDOW_WIDTH/6
+
+
 int   light1_theta = 0;
 float zoom = 1.0;
 
@@ -40,6 +47,10 @@ void my_keyboard(unsigned char key, int x, int y);
 void mouse_control(int x, int y);
 
 void time_update(int param);
+
+int win_h;
+int win_w;
+GLfloat turn_vector[2];
 
 Planetary_System * root;
 Texture * all_space;
@@ -72,7 +83,10 @@ void glut_setup(void) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
 	/* make a 400x400 window with the title of "GLUT Skeleton" placed at the top left corner */
-	glutInitWindowSize(1024, 1024);
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	win_h = WINDOW_HEIGHT;
+	win_w = WINDOW_WIDTH;
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Lights");
 
@@ -120,8 +134,11 @@ void my_setup(void) {
 
 void my_reshape(int w, int h) {
 
+	win_w = min(w, h);
+	win_h = min(w, h);
+
 	/* define viewport -- x, y, (origin is at lower left corner) width, height */
-	glViewport(0, 0, min(w, h), min(w, h));
+	glViewport(0, 0, win_w, win_h);
 	return;
 }
 
@@ -150,6 +167,9 @@ void my_keyboard(unsigned char key, int x, int y) {
 	case 'e': 
 		ship.roll_right(DEFAULT_LOOK_DELTA);
 		break;
+	case ' ':
+		ship.stop_ship();
+		break;
 	case 'q':
 		ship.roll_left(DEFAULT_LOOK_DELTA);
 			break;
@@ -165,15 +185,21 @@ void my_keyboard(unsigned char key, int x, int y) {
 
 
 void mouse_control( int x, int y) {
-	GLfloat turn_vector[2];
+	// Deadzones for X and Y
+	int x_dz_ub = (win_w / 2) + (win_w / 10);
+	int y_dz_ub = (win_h / 2) + (win_h / 10);
 
-	if ((x > 0 && x < 1024) && (y > 0 && y < 1024)) {
-		turn_vector[X] = (x - 1024 / 2);
-		turn_vector[Y] = (y - 1024 / 2);
 
-		ship.look_right(turn_vector[X]/1024 * DEFAULT_LOOK_DELTA);
-		ship.look_up(turn_vector[Y]/1024 * DEFAULT_LOOK_DELTA);
-			
+	int x_dz_lb = (win_w / 2) - (win_w / 10);
+	int y_dz_lb = (win_h / 2) - (win_h / 10);
+
+	if ( !((x < x_dz_ub && x > x_dz_lb) && (y > y_dz_lb && y < y_dz_ub))) {
+		turn_vector[X] = (x - win_w / 2);
+		turn_vector[Y] = (y - win_h / 2);
+	}
+	else {
+		turn_vector[X] = 0;
+			turn_vector[Y] = 0;
 	}
 }
 
@@ -252,6 +278,8 @@ void my_display(void) {
 }
 
 void time_update(int param) {
+	ship.look_right(turn_vector[X] / win_w * DEFAULT_LOOK_DELTA);
+	ship.look_up(turn_vector[Y] / win_h * DEFAULT_LOOK_DELTA);
 	ship.update();
 	root->update_system();
 	glutTimerFunc(DELTA_TIME, time_update, 0);
