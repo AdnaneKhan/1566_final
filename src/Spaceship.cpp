@@ -11,8 +11,6 @@ void Spaceship::mouse_control(int x, int y, int win_h, int win_w) {
 	if (!((x < x_dz_ub && x > x_dz_lb) && (y > y_dz_lb && y < y_dz_ub))) {
 		turn_vector[X] = (x - win_w / 2) / ((float)win_w/2);
 		turn_vector[Y] = (y - win_h / 2) / ((float)win_h/2);
-		
-
 
 	}
 	else {
@@ -132,7 +130,7 @@ void Spaceship::roll_right(float delta_deg){
 }
 
 void Spaceship::update() {
-	this->look_right(turn_vector[X] * DEFAULT_LOOK_DELTA);
+	this->roll_right(turn_vector[X] * DEFAULT_LOOK_DELTA);
 	this->look_up(turn_vector[Y]  * DEFAULT_LOOK_DELTA);
 	this->move_forward(this->velocity_mag);
 }
