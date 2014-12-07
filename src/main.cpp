@@ -27,7 +27,6 @@
 
 
 
-int   light1_theta = 0;
 float zoom = 1.0;
 
 GLfloat vertices[][3] = {
@@ -122,7 +121,7 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(50.0, 9);
+	root = new Planetary_System(50.0, 1);
 	all_space = new Texture("textures/skybox.bmp", 256, 256);
 	box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
 
@@ -187,7 +186,6 @@ void lighting_setup() {
 	GLfloat light0_amb[] = { 0.2, 0.2, 0.2, 1 };
 	GLfloat light0_diffuse[] = { 1, 1, 1, 1 };
 	GLfloat light0_specular[] = { 1, 0, 0, 1 };
-	GLfloat light0_pos[] = { 1, 1, 1, 0 };
 
 	GLfloat light1_amb[] = { 0.2, 0.2, 0.2, 1 };
 	GLfloat light1_diffuse[] = { 1, 1, 1, 1 };
@@ -233,7 +231,6 @@ void lighting_setup() {
 
 void my_display(void) {
 	GLfloat light1_pos[] = { 0, 0, 0, 0 };
-	GLfloat light1_dir[] = { 0, 0, 0 };
 
 	/* clear the buffer */
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -243,9 +240,9 @@ void my_display(void) {
 //	glLighti(this->light_id, GL_SPOT_CUTOFF, this->look_angle);
 
 	glEnable(GL_LIGHT0);
-//	glLightfv(GL_LIGHT0, GL_POSITION, light1_pos);
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1_dir);
-	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
+	glLightfv(GL_LIGHT0, GL_POSITION, light1_pos);
+//	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1_dir);
+//	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
 
 
 	glMatrixMode(GL_MODELVIEW);
