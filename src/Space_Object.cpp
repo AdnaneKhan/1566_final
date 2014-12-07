@@ -16,12 +16,16 @@ void Space_Object::updateOrbit() {
 		float x_movement = -calc_rad * cos(this->object_orbit.orbital_theta);
 		float y_movement = -calc_rad * sin(this->object_orbit.orbital_theta);
 
-		GLfloat translate_vec[2];
+		GLfloat translate_vec[3];
+
+		// TEMPORARY UNTIL Z SHIFTING ALSO CODED
+		translate_vec[2] = 0;
 		this->object_orbit.focus_translate(translate_vec[0], translate_vec[1]);
 
 		// Set position of parent
 		this->world_pos[0] = this->parent_pos[0] + translate_vec[0] + x_movement;
 		this->world_pos[1] = this->parent_pos[1] + translate_vec[1] + y_movement;
+		this->world_pos[2] = this->parent_pos[2] + translate_vec[2];
 
 		orbit_rad = sqrt((translate_vec[0] + x_movement)*(translate_vec[0] + x_movement) + (translate_vec[1] + y_movement)*(translate_vec[1] + y_movement));
 	}
