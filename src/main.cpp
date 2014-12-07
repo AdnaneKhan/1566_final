@@ -85,7 +85,7 @@ void glut_setup(void) {
 	win_h = WINDOW_HEIGHT;
 	win_w = WINDOW_WIDTH;
 	glutInitWindowPosition(0, 0);
-	glutCreateWindow("Lights");
+	glutCreateWindow("SPACE");
 
 
 	glutDisplayFunc(my_display);
