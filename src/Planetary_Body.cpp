@@ -12,8 +12,8 @@
 */
 void Planetary_Body::draw() {
 	glPushMatrix();
-	glutSolidSphere(this->planet_radius, 20, 20);
-//	drawPlanet(&this->actual_planet, this->planet_tex->get_texture());
+//	glutSolidSphere(this->planet_radius, 20, 20);
+	drawPlanet(&this->actual_planet, this->planet_tex->get_texture());
 	glPopMatrix();
 }
 
