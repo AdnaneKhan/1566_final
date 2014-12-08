@@ -22,13 +22,17 @@
 #define DELTA_TIME 15
 #define DELTA_DEG  1
 
-#define WINDOW_HEIGHT 1024
-#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 900
+#define WINDOW_WIDTH 900
 
 
 
 int   light1_theta = 0;
 float zoom = 1.0;
+
+// HUD STUFF
+int shipForwardSpeed = 0;
+int shipBackwardSpeed = 0;
 
 GLfloat vertices[][3] = {
 	{ -1, 1, 1 }, { 1, 1, 1 }, { 1, 1, -1 }, { -1, 1, -1 },
@@ -53,7 +57,8 @@ int win_w;
 Planetary_System * root;
 Texture * all_space;
 Spaceship ship;
-Spacebox * box;
+User_Interface ui;
+//Spacebox * box;
 
 int main(int argc, char **argv) {
 
@@ -124,9 +129,9 @@ void my_setup(void) {
 
 	root = new Planetary_System(50.0, 9);
 	all_space = new Texture("textures/skybox.bmp", 256, 256);
-	box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
+	//box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
 
-	lighting_setup();
+	//lighting_setup();
 	return;
 }
 
@@ -145,14 +150,16 @@ void my_keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'w':
 		ship.update_velocity(DEFAULT_SPEED_DELTA);
-		
+		shipForwardSpeed += 1;
+		shipBackwardSpeed -= 1;
 		break;
 	case 'a':
 		ship.look_left(DEFAULT_LOOK_DELTA);
 		break;
 	case 's':
 		ship.update_velocity(-DEFAULT_SPEED_DELTA);
-
+		shipForwardSpeed -= 1;
+		shipBackwardSpeed += 1;
 		break; 
 	case 'd':
 		ship.look_right(DEFAULT_LOOK_DELTA);
@@ -168,7 +175,7 @@ void my_keyboard(unsigned char key, int x, int y) {
 			break;
 	case 'Q':
 		delete (all_space);
-		delete(box);
+		//delete(box);
 		delete(root);
 		exit(0);
 	default: break;
@@ -231,9 +238,11 @@ void lighting_setup() {
 
 }
 
-void my_display(void) {
+void my_display(void) 
+{
 	GLfloat light1_pos[] = { 0, 0, 0, 0 };
 	GLfloat light1_dir[] = { 0, 0, 0 };
+	GLfloat ship_pos[3];
 
 	/* clear the buffer */
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -242,23 +251,25 @@ void my_display(void) {
 //	glLightfv(this->light_id, GL_SPOT_DIRECTION, this->look_dir);
 //	glLighti(this->light_id, GL_SPOT_CUTOFF, this->look_angle);
 
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT0);
 //	glLightfv(GL_LIGHT0, GL_POSITION, light1_pos);
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1_dir);
-	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
+	//glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1_dir);
+	//glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
 
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 
-	GLfloat ship_pos[3];
+	
 	ship.set_camera();
 	ship.get_position(ship_pos);
 
 	glColor3f(0, .2, 1);
 	root->draw_system();
 
+	//DrawHUD();
+	ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
 
 
 

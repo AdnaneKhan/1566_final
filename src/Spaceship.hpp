@@ -46,6 +46,8 @@ public:
 	void set_camera();
 
 
+	int speed();
+
 	void get_position(GLfloat to_set[3]);
 
 	void get_lookdir(GLfloat to_set[3]);

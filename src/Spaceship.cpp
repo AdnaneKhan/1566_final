@@ -23,13 +23,16 @@ void Spaceship::stop_ship() {
 	this->velocity_mag = 0.0f;
 }
 
+int Spaceship::speed() {
+	return ((int)this->velocity_mag * 4);
+}
+
 // Gets position of the spaceship in world coordinates
 void Spaceship::get_position(GLfloat to_set[3]) {
 
 	for (int i = 0; i < 3; i++) {
 		to_set[i] = this->position[i];
 	}
-
 }
 
 // Calls lookAt so that camera is aligned with the "ship"
