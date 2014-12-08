@@ -8,11 +8,15 @@ that we have the normalization of the vector and the initial direction
 is still saved, probably for debug. Dir represents the unit vector and
 original are the arguments passed.
 
+Also contains origin of the ray, in this case will be eyeX, eyeY, and eyeZ.
+
 x, y, z are 0, 1, 2 respectively in the arrays declared publicly.
 */
 class Ray {
 public:
 	float Original[3];
+	float Origin[3];
 	float Dir[3];
 	Ray(float x, float y, float z);
+	void Ray::SetOrigin(float x, float y, float z);
 };
