@@ -29,6 +29,10 @@
 
 float zoom = 1.0;
 
+// HUD STUFF
+int shipForwardSpeed = 0;
+int shipBackwardSpeed = 0;
+
 GLfloat vertices[][3] = {
 	{ -1, 1, 1 }, { 1, 1, 1 }, { 1, 1, -1 }, { -1, 1, -1 },
 	{ -1, -1, 1 }, { 1, -1, 1 }, { 1, -1, -1 }, { -1, -1, -1 }
@@ -52,7 +56,8 @@ int win_w;
 Planetary_System * root;
 Texture * all_space;
 Spaceship ship;
-Spacebox * box;
+User_Interface ui;
+//Spacebox * box;
 
 int main(int argc, char **argv) {
 
@@ -123,7 +128,7 @@ void my_setup(void) {
 
 	root = new Planetary_System(50.0, 1);
 	all_space = new Texture("textures/skybox.bmp", 256, 256);
-	box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
+	//box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
 
 	lighting_setup();
 	return;
@@ -167,7 +172,7 @@ void my_keyboard(unsigned char key, int x, int y) {
 			break;
 	case 'Q':
 		delete (all_space);
-		delete(box);
+		//delete(box);
 		delete(root);
 		exit(0);
 	default: break;
@@ -200,7 +205,6 @@ void lighting_setup() {
 	//enable lighting
 	glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
-
 
 	// setup properties of point light 0
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_amb);
@@ -242,6 +246,9 @@ void my_display(void) {
 
 	glColor3f(0, .2, 1);
 	root->draw_system();
+
+	// Draw HUD
+	//ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
 
 	/* buffer is ready */
 	glutSwapBuffers();
