@@ -1,0 +1,10 @@
+for each pixel w:			O(n)
+	for each pixel h:		O(n)
+		for each planet:	O(n)
+			if ray intersects return intersection, which is either one or two points on sphere		O(1)
+			form ray(s) from point to light		O(1)
+			for each planet:		O(n)
+				check if these rays intersect	O(1)
+				if true color pixel, else do nothing	O(1)
+				
+Runtime analysis: O(n^4)
