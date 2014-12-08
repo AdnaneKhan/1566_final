@@ -121,7 +121,7 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(50.0, 1);
+	root = new Planetary_System(50.0, 4);
 	all_space = new Texture("textures/skybox.bmp", 256, 256);
 	box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
 
@@ -185,11 +185,7 @@ void lighting_setup() {
 
 	GLfloat light0_amb[] = { 0.2, 0.2, 0.2, 1 };
 	GLfloat light0_diffuse[] = { 1, 1, 1, 1 };
-	GLfloat light0_specular[] = { 1, 0, 0, 1 };
-
-	GLfloat light1_amb[] = { 0.2, 0.2, 0.2, 1 };
-	GLfloat light1_diffuse[] = { 1, 1, 1, 1 };
-	GLfloat light1_specular[] = { 1, 1, 1, 1 };
+	GLfloat light0_specular[] = { .1, .1, .1, 1 };
 
 	GLfloat globalAmb[] = { .1, .1, .1, 1 };
 
@@ -203,8 +199,6 @@ void lighting_setup() {
 
 	//enable lighting
 	glEnable(GL_LIGHTING);
-
-    glEnable(GL_LIGHT1);
 	glEnable(GL_NORMALIZE);
 
 
@@ -212,10 +206,6 @@ void lighting_setup() {
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-
-	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_amb);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
 
 	// reflective propoerites -- global ambiant light
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmb);
@@ -230,7 +220,7 @@ void lighting_setup() {
 }
 
 void my_display(void) {
-	GLfloat light1_pos[] = { 0, 0, 0, 0 };
+	GLfloat light0_pos[] = { 0, 0, 0, 1 };
 
 	/* clear the buffer */
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -239,15 +229,12 @@ void my_display(void) {
 //	glLightfv(this->light_id, GL_SPOT_DIRECTION, this->look_dir);
 //	glLighti(this->light_id, GL_SPOT_CUTOFF, this->look_angle);
 
+	glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);
+	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 180);
 	glEnable(GL_LIGHT0);
-	glLightfv(GL_LIGHT0, GL_POSITION, light1_pos);
-//	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1_dir);
-//	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
-
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 
 	GLfloat ship_pos[3];
 	ship.set_camera();
@@ -255,9 +242,6 @@ void my_display(void) {
 
 	glColor3f(0, .2, 1);
 	root->draw_system();
-
-
-
 
 	/* buffer is ready */
 	glutSwapBuffers();
