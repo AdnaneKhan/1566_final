@@ -11,12 +11,30 @@
 class Planetary_System {
   public:
 
-	void update_system();
-    Planetary_System(int sun_radius, int num_planets);
-	Planetary_System();
-    ~Planetary_System();
+	/*
+	  Draws the planetary system which includes the star and all planets orbiting it.
+
+	*/
 	void draw_system();
 
+	/*
+		Updates all positions of planets based on one time step.
+	*/
+	void update_system();
+
+
+	/*
+	 Initializes a planetary system with a sun with given radius and set number of planets
+	*/
+    Planetary_System(int sun_radius, int num_planets);
+
+	/*
+	Initializes a random planetary system with
+	*/
+	Planetary_System();
+
+
+    ~Planetary_System();
 
 	// Vector holding planets orbiting the center sun
 	std::vector<Space_Object *> planets;

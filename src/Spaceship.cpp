@@ -1,5 +1,7 @@
 #include "Spaceship.hpp"
 
+
+
 void Spaceship::mouse_control(int x, int y, int win_h, int win_w) {
 	int x_dz_ub = (win_w / 2) + (win_w / 10);
 	int y_dz_ub = (win_h / 2) + (win_h / 10);
@@ -11,17 +13,18 @@ void Spaceship::mouse_control(int x, int y, int win_h, int win_w) {
 	if (!((x < x_dz_ub && x > x_dz_lb) && (y > y_dz_lb && y < y_dz_ub))) {
 		turn_vector[X] = (x - win_w / 2) / ((float)win_w/2);
 		turn_vector[Y] = (y - win_h / 2) / ((float)win_h/2);
-
 	}
 	else {
 		turn_vector[X] = 0;
 		turn_vector[Y] = 0;
 	}
-
-
 }
 void Spaceship::stop_ship() {
 	this->velocity_mag = 0.0f;
+}
+
+int Spaceship::speed() {
+	return ((int)this->velocity_mag * 4);
 }
 
 // Gets position of the spaceship in world coordinates
@@ -30,7 +33,6 @@ void Spaceship::get_position(GLfloat to_set[3]) {
 	for (int i = 0; i < 3; i++) {
 		to_set[i] = this->position[i];
 	}
-
 }
 
 // Calls lookAt so that camera is aligned with the "ship"
@@ -42,6 +44,10 @@ void Spaceship::set_camera() {
 
 void Spaceship::draw() {
 
+}
+
+GLfloat Spaceship::get_roll_degrees() {
+	return orientation_degrees;
 }
 
 void Spaceship::update_velocity(speed change) {
@@ -80,8 +86,10 @@ Spaceship::Spaceship() {
 	
 
 	orientation[X] = 0.0;
-	orientation[Y] = 0.00;
+	orientation[Y] = 0.0;
 	orientation[Z] = 1.0;
+
+	orientation_degrees = 0;
 
 }
 
@@ -122,10 +130,12 @@ void Spaceship::look_right(float delta_deg) {
 }
 
 void Spaceship::roll_left(float delta_deg) {
+	orientation_degrees = fmod(orientation_degrees + delta_deg, (2 * M_PI));
 	rot_vector(delta_deg, this->velocity_dir[X], this->velocity_dir[Y], this->velocity_dir[Z], this->orientation);
 }
 
 void Spaceship::roll_right(float delta_deg){
+	orientation_degrees = fmod(orientation_degrees - delta_deg, (2 * M_PI));
 	rot_vector(-delta_deg, this->velocity_dir[X], this->velocity_dir[Y], this->velocity_dir[Z], this->orientation);
 }
 

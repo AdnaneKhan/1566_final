@@ -7,6 +7,8 @@
 #include <GL/glut.h>
 #endif
 
+#include <math.h>
+
 class User_Interface {
 public:
 
@@ -16,14 +18,14 @@ public:
 	void handle_mouse_click(int x, int y, int win_h,int win_w);
 	
 
-	void draw_interface();
+	void draw_interface(int shipForwardSpeed, int shipBackwardSpeed);
 
 private:
 	// Sets the projection matrix to ortho 2d to facilitate drawing of 2D interface
-	void set_2d();
+	//void set_2d();
 
 	// Reverts to proper 3D perspective projection
-	void revert_3d();
+	//void revert_3d();
 
 	void draw_init_menu();
 
