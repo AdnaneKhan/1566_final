@@ -51,6 +51,7 @@ class Space_Object : public Drawable {
     int drawPrep();
 
 	virtual void draw(){};
+
 	int num_satellites();
 
 	/**

@@ -31,13 +31,13 @@ public:
 	Spaceship();
 
 	/**
-	Draws the spaceship in correct orientation
-
+	Draws the spaceship in correct orientation.
 	*/
 	void draw();
 
-
-
+	/*
+	Take X and Y coordinates and window dimensions and calculates deltas for pitch and roll.
+	*/
 	void mouse_control(int x, int y, int win_h, int win_w);
 
 	/*
@@ -51,12 +51,12 @@ public:
 	void get_lookdir(GLfloat to_set[3]);
 
 	/*
-	Changes the velocity by the delta
+	Changes the velocity by the delta.
 	*/
 	void update_velocity(float delta);
 
 	/*
-	Stops the ship (sets magnitude of veclocity to 0)
+	Stops the ship (sets magnitude of veclocity to 0).
 	*/
 	void stop_ship();
 
@@ -98,6 +98,9 @@ public:
 
 	void update();
 
+	/* Returns degrees of roll of the ship */
+	float get_roll_degrees();
+
 private:
 
 	/**
@@ -128,6 +131,8 @@ private:
 	This is essentially the up vector of the ship
 	*/
 	 GLfloat orientation[3];
+
+	 GLfloat orientation_degrees;
 
 };
 

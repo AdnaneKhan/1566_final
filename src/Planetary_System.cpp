@@ -2,8 +2,11 @@
 
 Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 	this->star = new Planetary_Body(.1, sun_radius);
+
 	this->star->set_orbit(0, 0, 1);
 	this->star->set_parent_pos(0, 0, 0);
+
+
 	// Adds Planets to orbit around the star
 	for (int i = 0; i < num_planets; i++) {
 
@@ -20,10 +23,9 @@ Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 void Planetary_System::update_system() {
 	star->updateOrbit();
 }
+
 void Planetary_System::draw_system() {
-	//star->draw_debugs();
-	star->fullDraw();
-	
+	star->fullDraw();	
 }
 
 Planetary_System::Planetary_System() {
