@@ -16,4 +16,4 @@ void Raytrace(float eyeX, float eyeY, float eyeZ, float windowW, float windowH);
 Determines whether or not the passed object is intersected by the ray coming from
 the camera. Shading is done for any planet hit.
 */
-bool HitPlanet(Ray cameraRay, );
+bool HitPlanet(Ray cameraRay);

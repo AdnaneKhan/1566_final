@@ -18,4 +18,4 @@ void Raytrace(float eyeX, float eyeY, float eyeZ, float fieldOfView, float windo
 	}
 }
 
-bool HitPlanet(Ray cameraRay, );
+bool HitPlanet(Ray cameraRay);
