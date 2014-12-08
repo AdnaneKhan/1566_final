@@ -20,3 +20,8 @@ public:
 	Ray(float x, float y, float z);
 	void Ray::SetOrigin(float x, float y, float z);
 };
+
+
+class Intersection {
+
+};
