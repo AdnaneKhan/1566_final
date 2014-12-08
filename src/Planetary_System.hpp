@@ -17,11 +17,16 @@ class Planetary_System {
     ~Planetary_System();
 	void draw_system();
 
-  private:
+
 	// Vector holding planets orbiting the center sun
-	  std::vector<Space_Object *> planets;
+	std::vector<Space_Object *> planets;
+
+
+  private:
+	
 	  // Star of this system
 	  Space_Object * star;
-	  
+	 
+
 };
 #endif

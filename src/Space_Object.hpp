@@ -29,7 +29,7 @@
 class Space_Object : public Drawable {
   public:
 
-	  std::list<Space_Object *> satellites;
+	std::list<Space_Object *> satellites;
     int getObjectType();
 
     /**
