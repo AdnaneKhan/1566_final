@@ -10,27 +10,65 @@ void Raytrace(float eyeX, float eyeY, float eyeZ, float fieldOfView, float windo
 
 	midpointW = windowW / 2;
 	midpointH = windowH / 2;
-
+	
+	// For each pixel w
 	for (int w = 0; w < windowW; w++) {
+
+		// For each pixel h
 		for (int h = 0; h < windowH; h++) {
+
+			// Determine cameraRay
 			Ray cameraRay = Ray(w-midpointW, h-midpointH, midpointW/tan(fieldOfView*.5*(PI/180)));
 			cameraRay.SetOrigin(eyeX, eyeY, eyeZ);
+
+			// For each planet
 			for (Space_Object *planet : system->planets) {
+				
+				// If hit return intersection and generate rays
 				if (HitPlanet(cameraRay, planet, &t)) {
-					//DO SHIT
-				}
-				//DO SHIT
-				for (Space_Object *satellite : planet->satellites) {
-					if (HitPlanet(cameraRay, satellite, &t)) {
-						//DO SHIT
+					Intersection cur = GetIntersection(cameraRay, planet, &t);
+					if (cur.numPoints == 1) {
+						Ray lightRay = Ray(cur.pointOne[0], cur.pointOne[1], cur.pointOne[2]);
+						// Detemrine if light ray intersects and color pixel
 					}
-					//DO SHIT
+					else if (cur.numPoints == 2) {
+						Ray lightRayOne = Ray(cur.pointOne[0], cur.pointOne[1], cur.pointOne[2]);
+						Ray lightRayTwo = Ray(cur.pointTwo[0], cur.pointTwo[1], cur.pointTwo[2]);
+						// Determine if light ray intersects and color pixel
+					}
 				}
+
+				// For each satellite of the planet
+				for (Space_Object *satellite : planet->satellites) {
+
+					// If hit return intersection and generate rays
+					if (HitPlanet(cameraRay, planet, &t)) {
+						Intersection cur = GetIntersection(cameraRay, planet, &t);
+						if (cur.numPoints == 1) {
+							Ray lightRay = Ray(cur.pointOne[0], cur.pointOne[1], cur.pointOne[2]);
+							// Detemrine if light ray intersects and color pixel
+						}
+						else if (cur.numPoints == 2) {
+							Ray lightRayOne = Ray(cur.pointOne[0], cur.pointOne[1], cur.pointOne[2]);
+							Ray lightRayTwo = Ray(cur.pointTwo[0], cur.pointTwo[1], cur.pointTwo[2]);
+							// Determine if light ray intersects and color pixel
+						}
+					}
+
+				}
+
 			}
+
 		}
+
 	}
+
 }
 
-bool HitPlanet(Ray cameraRay, Space_Object *sphere, float *t) {
+Intersection GetIntersection(Ray ray, Space_Object *sphere, float *t) {
+	return NULL;
+}
+
+bool HitPlanet(Ray ray, Space_Object *sphere, float *t) {
 	return false;
 }

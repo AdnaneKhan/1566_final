@@ -16,6 +16,13 @@ void Raytrace(float eyeX, float eyeY, float eyeZ, float windowW, float windowH, 
 /*** HitPlanet ***/
 /*
 Determines whether or not the passed object is intersected by the ray coming from
-the camera. Shading is done for any planet hit.
+the camera and returns the points associated. Shading is done for any planet hit.
+Function is used after HitPlanet().
 */
-bool HitPlanet(Ray cameraRay, Space_Object *sphere, float *t);
+Intersection GetIntersection(Ray ray, Space_Object *sphere, float *t);
+
+/*
+More generic function that returns a bool based on whether or not there is
+an intersection at all.
+*/
+bool HitPlanet(Ray ray, Space_Object *sphere, float *t);
