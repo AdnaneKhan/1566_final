@@ -185,7 +185,7 @@ void lighting_setup() {
 
 	GLfloat light0_amb[] = { 0.2, 0.2, 0.2, 1 };
 	GLfloat light0_diffuse[] = { 1, 1, 1, 1 };
-	GLfloat light0_specular[] = { .1, .1, .1, 1 };
+	GLfloat light0_specular[] = { .4, .4, .4, 1 };
 
 	GLfloat globalAmb[] = { .1, .1, .1, 1 };
 
