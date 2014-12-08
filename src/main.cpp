@@ -121,7 +121,7 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(50.0, 4);
+	root = new Planetary_System(50.0, 1);
 	all_space = new Texture("textures/skybox.bmp", 256, 256);
 	box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
 
@@ -187,13 +187,13 @@ void lighting_setup() {
 	GLfloat light0_diffuse[] = { 1, 1, 1, 1 };
 	GLfloat light0_specular[] = { .4, .4, .4, 1 };
 
-	GLfloat globalAmb[] = { .1, .1, .1, 1 };
+	GLfloat globalAmb[] = { 0, 0, 0, 1 };
 
 	GLfloat no_mat[] = { 0, 0, 0, 1 };
 	GLfloat mat_amb_diff[] = { .1, .5, .8, 1 };
 	GLfloat mat_specular[] = { 1, 1, 1, 1 };
 	GLfloat mat_no_shininess[] = { 0 };
-	GLfloat mat_low_shininess[] = { 5 };
+	GLfloat mat_low_shininess[] = { 2.5 };
 	GLfloat mat_high_shininess[] = { 100 };
 	GLfloat mat_emission[] = { .3, .2, .2, 0 };
 
@@ -215,7 +215,7 @@ void lighting_setup() {
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_amb_diff);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_high_shininess);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_low_shininess);
 
 }
 
