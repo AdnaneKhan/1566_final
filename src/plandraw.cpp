@@ -55,6 +55,8 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z){
 	unitX /= unitMag;
 	unitY /= unitMag;
 	unitZ /= unitMag;
+
+	glNormal3f(unitX, unitY, unitZ);
 	
 	//Then, thanks to the formula from the notes (& Wikipedia)...
 	*u = 0.5 + atan2f(unitZ, unitX)/(2*M_PI);
@@ -62,8 +64,8 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z){
 	
 }
 
-static void drawTextureQuad(float topLeft[3], float topRight[3], 
-							float bottomRight[3], float bottomLeft[3]){
+static void drawTextureQuad(float topLeft[3], float topRight[3],
+	float bottomRight[3], float bottomLeft[3]){
 	//Draws a textured quad by computing the u and v coordinates of the texture from our x, y, z
 	float u = 0, v = 0;
 	float u1 = 0, v1 = 0;
@@ -80,7 +82,7 @@ static void drawTextureQuad(float topLeft[3], float topRight[3],
 	//However, since UV coordinates wrap around, we can get to
 	// the point where we have a "belt" of the entire texture
 	// compressed to a conspicuous section around x ~=0
-	//Hence, we keep track of the first U,V coordinate, and we
+	// Hence, we keep track of the first U,V coordinate, and we
 	// check all further ones based on our "original" location
 	if (u1 < 0.75 && u > 0.75)
 		u1 += 1.0;
