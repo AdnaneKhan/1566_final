@@ -57,7 +57,7 @@ Planetary_System * root;
 Texture * all_space;
 Spaceship ship;
 User_Interface ui;
-//Spacebox * box;
+Spacebox * box;
 
 int main(int argc, char **argv) {
 
@@ -128,7 +128,7 @@ void my_setup(void) {
 
 	root = new Planetary_System(50.0, 1);
 	all_space = new Texture("textures/skybox.bmp", 256, 256);
-	//box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
+	box = new Spacebox(1.0, all_space, all_space, all_space, all_space, all_space, all_space);
 
 	lighting_setup();
 	return;
@@ -239,17 +239,16 @@ void my_display(void) {
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-
-
-	// Draw HUD
-	ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
-	
 	GLfloat ship_pos[3];
-	ship.set_camera();
+
 	ship.get_position(ship_pos);
 
-	glColor3f(0, .2, 1);
+	box->draw_skybox(ship_pos);
+	// Draw HUD
+	ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
+		
+	ship.set_camera();
+
 	root->draw_system();
 
 

@@ -60,9 +60,9 @@ void Spacebox::draw_skybox(GLfloat position[3]) {
 
 
 	glPushMatrix();
-	glTranslatef(position[0], position[1], position[2]);
+	//glTranslatef(position[0], position[1], position[2]);
 	glEnable(GL_TEXTURE_2D);
-	set_lighting();
+	//set_lighting();
 
 	for (int i = 0; i < 5; i++) {
 
@@ -73,7 +73,7 @@ void Spacebox::draw_skybox(GLfloat position[3]) {
 	glPopMatrix();
 
 
-		glDepthMask(1);
+	glDepthMask(1);
 	glEnable(GL_DEPTH_TEST);
 	glPopMatrix();
 
