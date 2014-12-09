@@ -19,7 +19,7 @@ Spacebox::~Spacebox() {
 
 void Spacebox::apply_textures(int face_num) {
 
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBindTexture(GL_TEXTURE_2D, this->textures[face_num]->get_texture());
 
 }
