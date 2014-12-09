@@ -40,9 +40,7 @@ private:
 	 void apply_textures(int face_num);
 	 void move_skybox(float x, float y, float z);
 	 void draw_face(int face_num);
-	// Lighting must be turned off before drawing the spacebbox
-	 void set_lighting();
-
+	
 	 GLfloat mat_amb_diff[4];
 	 GLfloat mat_specular[4];
 	 GLfloat mat_low_shininess[1];

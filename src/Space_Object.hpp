@@ -148,15 +148,6 @@ class Space_Object : public Drawable {
 			   return 0;
 		   }
 		   return ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
-		  // float radius = ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
-		  // float x_movement;
-		  // float y_movement;
-		  // focus_translate(x_movement, y_movement);
-		  // x_movement += radius * cos(orbital_theta);
-		  // y_movement += radius * sin(orbital_theta);
-
-		  // return sqrt(x_movement*x_movement + y_movement*y_movement);
-		  //// return ellipse_a*(1 - eccentricity*eccentricity) / (1 + cos(orbital_theta));
 	   }
 
       Orbital_Plane plane;

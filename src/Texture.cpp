@@ -153,6 +153,7 @@ Texture::Texture(std::string file_name, int t_x, int t_y) {
 	this->x_dim = t_x;
 	this->y_dim = t_y;
 	load_texture(file_name, t_x, t_y);
+	this->first_run = 1;
 }
 
 Texture::Texture(textureType to_generate,int t_x, int t_y) {

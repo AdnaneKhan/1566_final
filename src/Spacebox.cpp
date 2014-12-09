@@ -11,22 +11,6 @@ Spacebox::Spacebox(int size, Texture * side1, Texture *side2, Texture* side3, Te
 	textures[4] = side5;
 	textures[5] = side6;
 
-
-	this->mat_emission[0] = .55;
-	this->mat_emission[1] = .55;
-	this->mat_emission[2] = .5;
-	this->mat_emission[3] = 0;
-
-	this->mat_specular[0] = .2;
-	this->mat_specular[1] = .5;
-	this->mat_specular[2] = .2;
-	this->mat_specular[3] = 1;
-
-	this->mat_amb_diff[0] = .05;
-	this->mat_amb_diff[1] = .1;
-	this->mat_amb_diff[2] = .05;
-	this->mat_amb_diff[3] = 1;
-
 }
 
 Spacebox::~Spacebox() {
@@ -35,21 +19,12 @@ Spacebox::~Spacebox() {
 
 void Spacebox::apply_textures(int face_num) {
 
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, this->textures[face_num]->get_texture());
 
 }
 
-void Spacebox::set_lighting() {
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_amb_diff);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_amb_diff);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emission);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_low_shininess);
-}
-
 void Spacebox::draw_skybox(GLfloat position[3]) {
-
 	glPushMatrix();
 	float m[4][4];
 	glGetFloatv(GL_MODELVIEW_MATRIX, m[0]);
@@ -58,19 +33,14 @@ void Spacebox::draw_skybox(GLfloat position[3]) {
 	glDisable(GL_DEPTH_TEST);
 	glDepthMask(0);
 
-
-	glPushMatrix();
-	//glTranslatef(position[0], position[1], position[2]);
 	glEnable(GL_TEXTURE_2D);
-	//set_lighting();
-
+	
 	for (int i = 0; i < 5; i++) {
 
 		apply_textures(i);
 		draw_face(i);
 	}
 	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
 
 
 	glDepthMask(1);

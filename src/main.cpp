@@ -25,6 +25,7 @@
 #define WINDOW_HEIGHT 1024
 #define WINDOW_WIDTH 1024
 
+
 GLfloat vertices[][3] = {
 	{ -1, 1, 1 }, { 1, 1, 1 }, { 1, 1, -1 }, { -1, 1, -1 },
 	{ -1, -1, 1 }, { 1, -1, 1 }, { 1, -1, -1 }, { -1, -1, -1 }
@@ -102,7 +103,7 @@ void gl_setup(void) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(20, 1.0, 1.0, 100000.0);
+	gluPerspective(40, 1.0, 1.0, 100000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -118,9 +119,9 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(50.0, 1);
-	all_space = new Texture("textures/skybox.bmp", 256, 256);
-	box = new Spacebox(1.0, all_space, all_space, all_space, all_space, all_space, all_space);
+	root = new Planetary_System(50.0, 8);
+	all_space = new Texture("textures/stars3.bmp", 1024, 1024);
+	box = new Spacebox(1, all_space, all_space, all_space, all_space, all_space, all_space);
 
 	lighting_setup();
 	return;
@@ -232,19 +233,19 @@ void my_display(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	GLfloat ship_pos[3];
-
-
+	
 	// Gets position of ship
 	ship.get_position(ship_pos);
 
-	// Draws Skybox
 	box->draw_skybox(ship_pos);
 	// Draw HUD
 	ui.draw_interface(ship.get_velocity());
 	
 	// Sets the Camera
 	ship.set_camera();
-
+	
+	
+	// Draws Skybox
 	root->draw_system();
 
 	/* buffer is ready */

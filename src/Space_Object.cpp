@@ -10,7 +10,6 @@ void Space_Object::updateOrbit() {
 	// THERE IS A BIT OF A MATH BUG RIGHT NOW GO OVER IT SO THAT IT ACCELERATES AT THE RIGHT PLACES
 	this->object_orbit.orbital_theta = fmod(temp + atanf((2 * orbit_area) / (orbit_rad*orbit_rad))*this->object_orbit.rate_mod, (2 * M_PI));
 
-	//////////////////////////////// CURRENTLY BORROWING CODE FROM DRAW PREP
 	if (this->object_orbit.ellipse_a != 0 && this->object_orbit.ellipse_b != 0) {
 		float calc_rad = this->object_orbit.curr_rad();
 		float x_movement = -calc_rad * cos(this->object_orbit.orbital_theta);
@@ -22,7 +21,7 @@ void Space_Object::updateOrbit() {
 		translate_vec[2] = 0;
 		this->object_orbit.focus_translate(translate_vec[0], translate_vec[1]);
 
-		// Set position of parent
+		// Move w.r.t parent position
 		this->world_pos[0] = this->parent_pos[0] + translate_vec[0] + x_movement;
 		this->world_pos[1] = this->parent_pos[1] + translate_vec[1] + y_movement;
 		this->world_pos[2] = this->parent_pos[2] + translate_vec[2];
@@ -34,9 +33,6 @@ void Space_Object::updateOrbit() {
 		this->world_pos[1] = 0;
 		this->world_pos[2] = 0;
 	}
-
-	/// END BORROWED CODE
-	////////////////////////////////////////////////////////////////////////////
 
 	// Update Satellites
 	if (this->satellites.size() > 0) {
@@ -89,8 +85,6 @@ void Space_Object::draw_orbit() {
 */
 void Space_Object::drawPrep() {
   this->draw_orbit();
-
-
   glTranslatef(this->world_pos[0], this->world_pos[1], this->world_pos[2]);
 
 }
