@@ -29,6 +29,7 @@
 class Space_Object : public Drawable {
   public:
 
+	GLfloat world_pos[3];
 	std::list<Space_Object *> satellites;
     int getObjectType();
 
@@ -47,6 +48,8 @@ class Space_Object : public Drawable {
     *  - Need to get the plane to correspond to orbital plane
     *  - Need to get object to its current orbital position
     */
+
+	virtual int get_radius();
 
     int drawPrep();
 
@@ -172,7 +175,6 @@ class Space_Object : public Drawable {
 	float orbit_rad;
 
 	GLfloat parent_pos[3];
-	GLfloat world_pos[3];
 
 	// Pool of textures which planets can use
 	static std::list<Texture> planet_texures;

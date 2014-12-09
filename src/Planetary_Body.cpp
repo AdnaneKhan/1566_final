@@ -98,3 +98,7 @@ Planetary_Body::~Planetary_Body() {
 	}
 }
 
+int Planetary_Body::get_radius() {
+	return planet_radius;
+}
+
