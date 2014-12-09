@@ -2,6 +2,7 @@
 #include "Ray.hpp"
 #include "Planetary_System.hpp"
 #include "Space_Object.hpp"
+#include "Planetary_Body.hpp"
 
 /*** Raytrace ***/
 /* 
@@ -13,16 +14,18 @@ between the ray and the sphere through the viewport.
 */
 void Raytrace(float eyeX, float eyeY, float eyeZ, float windowW, float windowH, Planetary_System system);
 
-/*** HitPlanet ***/
+/*** HitPlanet and GetIntersection ***/
 /*
 Determines whether or not the passed object is intersected by the ray coming from
 the camera and returns the points associated. Shading is done for any planet hit.
-Function is used after HitPlanet().
+Function is used after HitPlanet(). Returns null if nothing is hit
 */
-Intersection GetIntersection(Ray ray, Space_Object *sphere, float *t);
+Intersection GetIntersection(Ray ray, Space_Object *sphere);
 
 /*
 More generic function that returns a bool based on whether or not there is
 an intersection at all.
 */
-bool HitPlanet(Ray ray, Space_Object *sphere, float *t);
+bool HitPlanet(Ray ray, Space_Object *sphere);
+
+float discriminant(float a, float b, float c);

@@ -4,10 +4,8 @@
 
 void Raytrace(float eyeX, float eyeY, float eyeZ, float fieldOfView, float windowW, float windowH, Planetary_System *system) {
 	float midpointW, midpointH;
-	float t;
 	std::list<Space_Object *> allSpheres;
-
-	t = 0.0;
+	Intersection cur = NULL;
 
 	midpointW = windowW / 2;
 	midpointH = windowH / 2;
@@ -27,38 +25,77 @@ void Raytrace(float eyeX, float eyeY, float eyeZ, float fieldOfView, float windo
 		for (int h = 0; h < windowH; h++) {
 
 			// Determine cameraRay
-			Ray cameraRay = Ray(w-midpointW, h-midpointH, midpointW/tan(fieldOfView*.5*(PI/180)));
+			Ray cameraRay = Ray((w-midpointW)-eyeX, (h-midpointH)-eyeY, (midpointW/tan(fieldOfView*.5*(PI/180)))-eyeZ);
 			cameraRay.SetOrigin(eyeX, eyeY, eyeZ);
 
 			// For each planet
 			for (Space_Object *planet : allSpheres) {
 				
 				// If hit return intersection and generate rays
-				if (HitPlanet(cameraRay, planet, &t)) {
-					Intersection cur = GetIntersection(cameraRay, planet, &t);
-					if (cur.numPoints == 1) {
-						Ray lightRay = Ray(cur.pointOne[0], cur.pointOne[1], cur.pointOne[2]);
-						// Detemrine if light ray intersects and color pixel
-					}
-					else if (cur.numPoints == 2) {
-						Ray lightRayOne = Ray(cur.pointOne[0], cur.pointOne[1], cur.pointOne[2]);
-						Ray lightRayTwo = Ray(cur.pointTwo[0], cur.pointTwo[1], cur.pointTwo[2]);
-						// Determine if light ray intersects and color pixel
+				if (HitPlanet(cameraRay, planet)) {
+					Intersection cur = GetIntersection(cameraRay, planet);
+					Ray lightRay = Ray(cur.point[0], cur.point[1], cur.point[2]);
+					for (Space_Object *shadowFeeler : allSpheres) {
+						if (HitPlanet(lightRay, shadowFeeler)) {
+							//Color the pixel
+						}
 					}
 				}
-
 			}
-
 		}
+	}
+}
 
+Intersection GetIntersection(Ray ray, Space_Object *sphere) {
+	float a, b, c;
+	float radius;
+	float cx, cy, cz;
+	float t;
+	Intersection ret(1);
+
+	radius = sphere->get_radius();
+	cx = sphere->world_pos[0];
+	cy = sphere->world_pos[1];
+	cz = sphere->world_pos[2];
+
+	a = ray.Dir[0] * ray.Dir[0] + ray.Dir[1] * ray.Dir[1] + ray.Dir[2] * ray.Dir[2];
+	b = (2 * ray.Dir[0] * (ray.Origin[0] - cx)) + (2 * ray.Dir[1] * (ray.Origin[1] - cy)) + (2 * ray.Dir[2] * (ray.Origin[2] - cz));
+	c = (cx*cx) + (cy*cy) + (cz*cz) + (ray.Origin[0] * ray.Origin[0]) + (ray.Origin[1] * ray.Origin[1]) + (ray.Origin[2] * ray.Origin[2]) +
+		(-2 * (cx*ray.Origin[0] + cy*ray.Origin[1] + cz*ray.Origin[2])) - (radius*radius);
+
+	t = (((-1)*b) - sqrt(discriminant(a, b, c))) / (2 * a);
+
+	for (int i = 0; i < 3; i++) {
+		ret.point[i] = ray.Origin[i] + (t*ray.Dir[i]);
 	}
 
+	return ret;
+}	
+
+bool HitPlanet(Ray ray, Space_Object *sphere) {
+	float a, b, c;
+	float radius;
+	float cx, cy, cz;
+	bool ret = false;
+
+	radius = sphere->get_radius();
+	cx = sphere->world_pos[0];
+	cy = sphere->world_pos[1];
+	cz = sphere->world_pos[2];
+
+	a = ray.Dir[0] * ray.Dir[0] + ray.Dir[1] * ray.Dir[1] + ray.Dir[2] * ray.Dir[2];
+	b = (2 * ray.Dir[0] * (ray.Origin[0] - cx)) + (2 * ray.Dir[1] * (ray.Origin[1] - cy)) + (2 * ray.Dir[2] * (ray.Origin[2] - cz));
+	c = (cx*cx) + (cy*cy) + (cz*cz) + (ray.Origin[0] * ray.Origin[0]) + (ray.Origin[1] * ray.Origin[1]) + (ray.Origin[2] * ray.Origin[2]) +
+		(-2 * (cx*ray.Origin[0] + cy*ray.Origin[1] + cz*ray.Origin[2])) - (radius*radius);
+
+	if (discriminant(a, b, c) >= 0) {
+		ret = true;
+	}
+
+	return ret;
 }
 
-Intersection GetIntersection(Ray ray, Space_Object *sphere, float *t) {
-	return NULL;
-}
 
-bool HitPlanet(Ray ray, Space_Object *sphere, float *t) {
-	return false;
+float discriminant(float a, float b, float c) {
+	return pow(b, 2) + (4 * a * c);
 }
