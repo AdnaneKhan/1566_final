@@ -241,16 +241,19 @@ void my_display(void) {
 	glLoadIdentity();
 	GLfloat ship_pos[3];
 
+
+	// Gets position of ship
 	ship.get_position(ship_pos);
 
+	// Draws Skybox
 	box->draw_skybox(ship_pos);
 	// Draw HUD
-	ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
-		
+	ui.draw_interface(ship.get_velocity());
+	
+	// Sets the Camera
 	ship.set_camera();
 
 	root->draw_system();
-
 
 	/* buffer is ready */
 	glutSwapBuffers();

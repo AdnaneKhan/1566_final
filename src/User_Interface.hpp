@@ -18,7 +18,7 @@ public:
 	void handle_mouse_click(int x, int y, int win_h,int win_w);
 	
 
-	void draw_interface(int shipForwardSpeed, int shipBackwardSpeed);
+	void draw_interface(float velocity_mag);
 
 private:
 	// Sets the projection matrix to ortho 2d to facilitate drawing of 2D interface

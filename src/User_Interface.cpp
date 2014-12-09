@@ -70,8 +70,11 @@ void drawSpeedGage_Backward(GLfloat x, GLfloat y, float start, float end)
 	
 }
 
-void User_Interface::draw_interface(int shipForwardSpeed, int shipBackwardSpeed)
+void User_Interface::draw_interface(float velocity_mag)
 {
+
+	int shipForwardSpeed = (int)velocity_mag * 4;
+	int shipBackwardSpeed = (int)velocity_mag * -4;
 
 	float i;
 	glPushAttrib(GL_LIGHTING_BIT);

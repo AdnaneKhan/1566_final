@@ -103,6 +103,8 @@ public:
 	/* Returns degrees of roll of the ship */
 	float get_roll_degrees();
 
+	float get_velocity();
+
 private:
 
 	/**
