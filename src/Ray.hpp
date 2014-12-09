@@ -29,10 +29,7 @@ depending on where the camera ray intersects with the sphere.
 class Intersection {
 public:
 	int numPoints;
-	float pointOne[3];
-	float pointTwo[3];
+	float point[3];
 	Intersection(int n);
-	void Intersection::SetNumPoints(int n);
-	void Intersection::SetPointOne(float x, float y, float z);
-	void Intersection::SetPointTwo(float x, float y, float z);
+	void Intersection::SetPoint(float x, float y, float z);
 };
