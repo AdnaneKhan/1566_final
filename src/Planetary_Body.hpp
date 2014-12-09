@@ -20,6 +20,7 @@ class Planetary_Body: public Space_Object {
     * @param z component of vector to rotate about
     * @param theta angle to rotate (in degrees)
     */
+
       void rotate(GLfloat x, GLfloat y, GLfloat z, GLfloat theta_rad);
       void rotate(GLfloat rotate_vector[3], float theta_rad);
       // TODO find out how textures will play into this.
@@ -51,7 +52,6 @@ class Planetary_Body: public Space_Object {
     * This denotes the rotation ABOUT THE OBJECT'S OWN axis.
     */
     float rotation_rate;
-	int planet_radius;
 };
 
 #endif

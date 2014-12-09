@@ -11,6 +11,7 @@
 #include "Drawable.hpp"
 #include "Math_helper.hpp"
 #include "Texture.hpp"
+#include "Ray.hpp"
 #include <math.h>
 #include <vector>
 #include <list>
@@ -29,7 +30,10 @@
 class Space_Object : public Drawable {
   public:
 
+	int planet_radius;
+	GLfloat world_pos[3];
 	std::list<Space_Object *> satellites;
+	std::list<Point *> toBeShaded;
     int getObjectType();
 
     /**
@@ -47,6 +51,8 @@ class Space_Object : public Drawable {
     *  - Need to get the plane to correspond to orbital plane
     *  - Need to get object to its current orbital position
     */
+
+	virtual int get_radius(){ return planet_radius; };
 
     int drawPrep();
 
@@ -172,7 +178,6 @@ class Space_Object : public Drawable {
 	float orbit_rad;
 
 	GLfloat parent_pos[3];
-	GLfloat world_pos[3];
 
 	// Pool of textures which planets can use
 	static std::list<Texture> planet_texures;

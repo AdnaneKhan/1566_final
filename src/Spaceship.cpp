@@ -50,7 +50,7 @@ GLfloat Spaceship::get_roll_degrees() {
 	return orientation_degrees;
 }
 
-void Spaceship::update_velocity(speed change) {
+void Spaceship::update_velocity(float change) {
 	// If the velocity isn't at its limits (high or low), then we add change to it (if change is negative speed goes down)
 	if (this->velocity_mag <= MAX_SPEED && this->velocity_mag >= MIN_SPEED) {
 		this->velocity_mag += change;

@@ -22,12 +22,11 @@
 #define DELTA_TIME 15
 #define DELTA_DEG  1
 
-#define WINDOW_HEIGHT 900
-#define WINDOW_WIDTH 900
+#define WINDOW_HEIGHT 1024
+#define WINDOW_WIDTH 1024
 
 
 
-int   light1_theta = 0;
 float zoom = 1.0;
 
 // HUD STUFF
@@ -91,7 +90,7 @@ void glut_setup(void) {
 	win_h = WINDOW_HEIGHT;
 	win_w = WINDOW_WIDTH;
 	glutInitWindowPosition(0, 0);
-	glutCreateWindow("Lights");
+	glutCreateWindow("SPACE");
 
 
 	glutDisplayFunc(my_display);
@@ -127,11 +126,11 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(50.0, 9);
+	root = new Planetary_System(50.0, 1);
 	all_space = new Texture("textures/skybox.bmp", 256, 256);
 	//box = new Spacebox(10000, all_space, all_space, all_space, all_space, all_space, all_space);
 
-	//lighting_setup();
+	lighting_setup();
 	return;
 }
 
@@ -150,16 +149,14 @@ void my_keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'w':
 		ship.update_velocity(DEFAULT_SPEED_DELTA);
-		shipForwardSpeed += 1;
-		shipBackwardSpeed -= 1;
+		
 		break;
 	case 'a':
 		ship.look_left(DEFAULT_LOOK_DELTA);
 		break;
 	case 's':
 		ship.update_velocity(-DEFAULT_SPEED_DELTA);
-		shipForwardSpeed -= 1;
-		shipBackwardSpeed += 1;
+
 		break; 
 	case 'd':
 		ship.look_right(DEFAULT_LOOK_DELTA);
@@ -193,38 +190,26 @@ void lighting_setup() {
 
 	GLfloat light0_amb[] = { 0.2, 0.2, 0.2, 1 };
 	GLfloat light0_diffuse[] = { 1, 1, 1, 1 };
-	GLfloat light0_specular[] = { 1, 0, 0, 1 };
-	GLfloat light0_pos[] = { 1, 1, 1, 0 };
+	GLfloat light0_specular[] = { .4, .4, .4, 1 };
 
-	GLfloat light1_amb[] = { 0.2, 0.2, 0.2, 1 };
-	GLfloat light1_diffuse[] = { 1, 1, 1, 1 };
-	GLfloat light1_specular[] = { 1, 1, 1, 1 };
-
-	GLfloat globalAmb[] = { .1, .1, .1, 1 };
+	GLfloat globalAmb[] = { 0, 0, 0, 1 };
 
 	GLfloat no_mat[] = { 0, 0, 0, 1 };
 	GLfloat mat_amb_diff[] = { .1, .5, .8, 1 };
 	GLfloat mat_specular[] = { 1, 1, 1, 1 };
 	GLfloat mat_no_shininess[] = { 0 };
-	GLfloat mat_low_shininess[] = { 5 };
+	GLfloat mat_low_shininess[] = { 2.5 };
 	GLfloat mat_high_shininess[] = { 100 };
 	GLfloat mat_emission[] = { .3, .2, .2, 0 };
 
 	//enable lighting
 	glEnable(GL_LIGHTING);
-
-    glEnable(GL_LIGHT1);
 	glEnable(GL_NORMALIZE);
-
 
 	// setup properties of point light 0
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-
-	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_amb);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
 
 	// reflective propoerites -- global ambiant light
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmb);
@@ -234,15 +219,12 @@ void lighting_setup() {
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_amb_diff);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_high_shininess);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_low_shininess);
 
 }
 
-void my_display(void) 
-{
-	GLfloat light1_pos[] = { 0, 0, 0, 0 };
-	GLfloat light1_dir[] = { 0, 0, 0 };
-	GLfloat ship_pos[3];
+void my_display(void) {
+	GLfloat light0_pos[] = { 0, 0, 0, 1 };
 
 	/* clear the buffer */
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -251,27 +233,22 @@ void my_display(void)
 //	glLightfv(this->light_id, GL_SPOT_DIRECTION, this->look_dir);
 //	glLighti(this->light_id, GL_SPOT_CUTOFF, this->look_angle);
 
-	//glEnable(GL_LIGHT0);
-//	glLightfv(GL_LIGHT0, GL_POSITION, light1_pos);
-	//glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1_dir);
-	//glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
-
+	glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);
+	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 180);
+	glEnable(GL_LIGHT0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-
-	
+	GLfloat ship_pos[3];
 	ship.set_camera();
 	ship.get_position(ship_pos);
 
 	glColor3f(0, .2, 1);
 	root->draw_system();
 
-	//DrawHUD();
-	ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
-
-
+	// Draw HUD
+	//ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
 
 	/* buffer is ready */
 	glutSwapBuffers();
