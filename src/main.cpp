@@ -103,7 +103,7 @@ void gl_setup(void) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(40, 1.0, 1.0, 100000.0);
+	gluPerspective(20, 1.0, 1.0, 100000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -119,7 +119,7 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(50.0, 8);
+	root = new Planetary_System(200.0, 8);
 	all_space = new Texture("textures/stars3.bmp", 1024, 1024);
 	box = new Spacebox(1, all_space, all_space, all_space, all_space, all_space, all_space);
 
@@ -243,7 +243,6 @@ void my_display(void) {
 	
 	// Sets the Camera
 	ship.set_camera();
-	
 	
 	// Draws Skybox
 	root->draw_system();

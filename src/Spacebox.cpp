@@ -26,7 +26,6 @@ void Spacebox::apply_textures(int face_num) {
 
 /*
 
-
 Src: https://www.opengl.org/discussion_boards/showthread.php/134414-Outer-space-skybox-textures
 
 */

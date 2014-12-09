@@ -16,45 +16,34 @@ void Planetary_Body::draw() {
 	glPopMatrix();
 }
 
-void Planetary_Body::rotate(GLfloat rot_axis[3], float angle_rad) {
-	rotate(rot_axis[0], rot_axis[1], rot_axis[2], angle_rad);
-}
-
-void Planetary_Body::rotate(GLfloat x, GLfloat y, GLfloat z, float angle_rad) {
-	glPushMatrix();
-	glMultMatrixf(rotationMatrix);
-	glRotatef(rad_to_deg(angle_rad), x, y,z);
-	glGetFloatv(GL_MODELVIEW_MATRIX, rotationMatrix);
-	glPopMatrix();
-}
-
 void Planetary_Body::draw_rotate() {
-	glMultMatrixf(rotationMatrix);
+	glRotatef( rad_to_deg(this->rotation),this->rotationAxis[0],this->rotationAxis[1],this->rotationAxis[2]);
 }
 
 void Planetary_Body::fullDraw() {
 	
 	glPushMatrix();
+	
 	drawPrep();
+	glPushMatrix();
+	draw_rotate();
+
 	// Do the actual draw
 	draw();
-	draw_rotate();
+	glPopMatrix();
 	glPopMatrix();
 
-	
 	// Draw satellitess
 	if (this->satellites.size() > 0) {
 		for (Space_Object * o : this->satellites) {
-			
-			o->fullDraw();
-		
+			o->fullDraw();	
 		}
 	}
 }
 
 Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	this->planet_radius = radius;
-	this->rotation_rate = rotationRate;
+	this->rotation_rate = random_rot_rate();
 
 	// Setting values pertaining to the planet's orbit around its parent body
 	this->object_orbit.rate_mod = rotationRate;
@@ -75,12 +64,12 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 		rotationMatrix[i] = temp[i];
 	}
 
+	random_rot_axis(this->rotationAxis);
+	this->rotation = 0;
 
 	this->draw_type = TEXTURED;
 	this->planet_tex = &texture_pool[(rand() % 4)];
 	createPlanet(&this->actual_planet, this->draw_type, this->planet_radius, .1);
-
-
 }
 
 Planetary_Body::Planetary_Body() {

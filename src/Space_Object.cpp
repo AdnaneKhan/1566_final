@@ -34,13 +34,23 @@ void Space_Object::updateOrbit() {
 		this->world_pos[2] = 0;
 	}
 
+	rotate(this->rotation_rate);
+
 	// Update Satellites
 	if (this->satellites.size() > 0) {
 		for (Space_Object * o : this->satellites) {
 			o->set_parent_pos(this->world_pos[0], this->world_pos[1], this->world_pos[2]);
 			o->updateOrbit();
+
 		}
 	}
+}
+
+
+void Space_Object::rotate( float angle_rad) {
+
+	this->rotation = fmod(rotation + angle_rad, 2 * M_PI);
+
 }
 
 void Space_Object::draw_orbit() {

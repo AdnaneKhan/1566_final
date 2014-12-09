@@ -56,5 +56,7 @@ float rad_to_deg(float theta_rad);
 float deg_to_rad(float theta_deg);
 
 void rot_vector(GLfloat angle, GLfloat x, GLfloat y, GLfloat z, GLfloat to_rotate[3]);
+void my_rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z, GLfloat res_matrix[16], GLfloat source_matrix[16]);
 
+void random_rot_axis(GLfloat rot_axis[3]);
 #endif

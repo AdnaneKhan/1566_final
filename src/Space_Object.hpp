@@ -92,7 +92,6 @@ class Space_Object : public Drawable {
 		glutSolidTorus(5, 25, 50, 50);
 		glPopMatrix();
 
-		//this->print_pos();
 		for (Space_Object * o : this->satellites) {
 			o->draw_debugs();
 		}
@@ -105,7 +104,8 @@ class Space_Object : public Drawable {
 
   protected:
 
-	  static Texture texture_pool[NUM_DYNAMIC_TEXTURES];
+
+	  void rotate(float theta_rad);
 
     typedef struct Orbital_Plane {
 		
@@ -159,11 +159,6 @@ class Space_Object : public Drawable {
 
     // Denotes the type of object
     int object_type;
-   
-	// Mass to be used for kepler's calculations
-	double mass;
-	// to be ignored if object is stationary
-	double parentmass;
 
 	float orbit_area;
 	float orbit_rad;
@@ -171,8 +166,26 @@ class Space_Object : public Drawable {
 	GLfloat parent_pos[3];
 
 	// Pool of textures which planets can use
+	static Texture texture_pool[NUM_DYNAMIC_TEXTURES];
 	static std::list<Texture> planet_texures;
 	static int tex_count;
+
+
+	GLfloat rotationAxis[3];
+
+	/**
+	* Stores a gl matrix that will be used to rotate this object prior to drawinng  it.
+	*/
+	GLfloat rotationMatrix[16];
+	/**
+	* Multiplier in float relative to the cock speed of the universe
+	* value from 0 to 1, 1 means it rotates 360 degrees per tick,
+	* 0 means it does not rotate
+	*
+	* This denotes the rotation ABOUT THE OBJECT'S OWN axis.
+	*/
+	float rotation_rate;
+	float rotation;
 };
 
 #endif
