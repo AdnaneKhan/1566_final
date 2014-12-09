@@ -191,7 +191,7 @@ void lighting_setup() {
 	GLfloat mat_amb_diff[] = { .1, .5, .8, 1 };
 	GLfloat mat_specular[] = { 1, 1, 1, 1 };
 	GLfloat mat_no_shininess[] = { 0 };
-	GLfloat mat_low_shininess[] = { 2.5 };
+	GLfloat mat_low_shininess[] = { 1.5 };
 	GLfloat mat_high_shininess[] = { 100 };
 	GLfloat mat_emission[] = { .3, .2, .2, 0 };
 
