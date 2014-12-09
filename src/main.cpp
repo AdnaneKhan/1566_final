@@ -25,14 +25,6 @@
 #define WINDOW_HEIGHT 1024
 #define WINDOW_WIDTH 1024
 
-
-
-float zoom = 1.0;
-
-// HUD STUFF
-int shipForwardSpeed = 0;
-int shipBackwardSpeed = 0;
-
 GLfloat vertices[][3] = {
 	{ -1, 1, 1 }, { 1, 1, 1 }, { 1, 1, -1 }, { -1, 1, -1 },
 	{ -1, -1, 1 }, { 1, -1, 1 }, { 1, -1, -1 }, { -1, -1, -1 }
