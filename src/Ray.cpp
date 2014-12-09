@@ -25,3 +25,9 @@ void Intersection::SetPoint(float x, float y, float z) {
 	point[1] = y;
 	point[2] = z;
 }
+
+Point::Point(float a, float b, float c) {
+	x = a;
+	y = b;
+	z = c;
+}

@@ -8,3 +8,8 @@ for each pixel w:			O(n)
 				if true color pixel, else do nothing	O(1)
 				
 Runtime analysis: O(n^4)
+
+How to color pixels:
+	Have each space object have vertices which need to be colored
+	draw line that connects all vertices, should make shadow
+	hope it works ¯\_(ツ)_/¯

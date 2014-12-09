@@ -11,6 +11,7 @@
 #include "Drawable.hpp"
 #include "Math_helper.hpp"
 #include "Texture.hpp"
+#include "Ray.hpp"
 #include <math.h>
 #include <vector>
 #include <list>
@@ -32,6 +33,7 @@ class Space_Object : public Drawable {
 	int planet_radius;
 	GLfloat world_pos[3];
 	std::list<Space_Object *> satellites;
+	std::list<Point *> toBeShaded;
     int getObjectType();
 
     /**

@@ -1,3 +1,6 @@
+#ifndef RAY_H
+#define RAY_H
+
 #include "common.h"
 
 /*** Simple Ray Class ***/
@@ -33,3 +36,11 @@ public:
 	Intersection(int n);
 	void Intersection::SetPoint(float x, float y, float z);
 };
+
+class Point {
+public:
+	float x, y, z;
+	Point(float a, float b, float c);
+};
+
+#endif
