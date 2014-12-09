@@ -32,6 +32,7 @@ public:
 	float pointOne[3];
 	float pointTwo[3];
 	Intersection(int n);
+	void Intersection::SetNumPoints(int n);
 	void Intersection::SetPointOne(float x, float y, float z);
 	void Intersection::SetPointTwo(float x, float y, float z);
 };

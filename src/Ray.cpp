@@ -20,6 +20,10 @@ Intersection::Intersection(int n) {
 	numPoints = n;
 }
 
+void Intersection::SetNumPoints(int n) {
+	numPoints = n;
+}
+
 void Intersection::SetPointOne(float x, float y, float z) {
 	pointOne[0] = x;
 	pointOne[1] = y;
