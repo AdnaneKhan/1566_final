@@ -24,8 +24,15 @@ void Spacebox::apply_textures(int face_num) {
 
 }
 
+/*
+
+
+Src: https://www.opengl.org/discussion_boards/showthread.php/134414-Outer-space-skybox-textures
+
+*/
 void Spacebox::draw_skybox(GLfloat position[3]) {
 	glPushMatrix();
+
 	float m[4][4];
 	glGetFloatv(GL_MODELVIEW_MATRIX, m[0]);
 	m[3][0] = 0; m[3][1] = 0; m[3][2] = 0;
