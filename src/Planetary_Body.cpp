@@ -11,10 +11,7 @@
 * CURRENTLY STUBBED using just a radius 1 sphere
 */
 void Planetary_Body::draw() {
-	glPushMatrix();
-//	glutSolidSphere(this->planet_radius, 20, 20);
 	drawPlanet(&this->actual_planet, this->planet_tex->get_texture());
-	glPopMatrix();
 }
 
 void Planetary_Body::rotate(GLfloat rot_axis[3], float angle_rad) {
@@ -34,16 +31,11 @@ void Planetary_Body::draw_rotate() {
 }
 
 void Planetary_Body::fullDraw() {
-	int pop_c = 0;
-	
-	
-	glPushMatrix();
-	pop_c = drawPrep();
+
+	drawPrep();
 	// Do the actual draw
 	draw();
 	draw_rotate();
-	glPopMatrix();
-
 	
 	// Draw satellitess
 	if (this->satellites.size() > 0) {
