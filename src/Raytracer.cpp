@@ -33,11 +33,11 @@ void Raytrace(float eyeX, float eyeY, float eyeZ, float fieldOfView, float windo
 				
 				// If hit return intersection and generate rays
 				if (HitPlanet(cameraRay, planet)) {
-					Intersection cur = GetIntersection(cameraRay, planet);
-					Ray lightRay = Ray(cur.point[0], cur.point[1], cur.point[2]);
+					Intersection *cur = new Intersection(GetIntersection(cameraRay, planet));
+					Ray lightRay = Ray(cur->point[0], cur->point[1], cur->point[2]);
 					for (Space_Object *shadowFeeler : allSpheres) {
 						if (HitPlanet(lightRay, shadowFeeler)) {
-							//Color the pixel
+							planet->toBeShaded.emplace_back(cur);
 						}
 					}
 				}
