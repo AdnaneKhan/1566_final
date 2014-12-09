@@ -1,4 +1,5 @@
 #include "plandraw.hpp"
+#include "Raytracer.hpp"
 
 static float centerVec[3] = { CTR, CTR, CTR };
 

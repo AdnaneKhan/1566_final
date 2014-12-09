@@ -237,7 +237,7 @@ void my_display(void) {
 	// Gets position of ship
 	ship.get_position(ship_pos);
 
-	box->draw_skybox(ship_pos);
+	//box->draw_skybox(ship_pos);
 	// Draw HUD
 	ui.draw_interface(ship.get_velocity());
 	
@@ -246,6 +246,7 @@ void my_display(void) {
 	
 	// Draws Skybox
 	root->draw_system();
+	//root->draw_system();
 
 	/* buffer is ready */
 	glutSwapBuffers();
