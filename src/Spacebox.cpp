@@ -51,7 +51,16 @@ void Spacebox::set_lighting() {
 void Spacebox::draw_skybox(GLfloat position[3]) {
 
 	glPushMatrix();
-	glTranslatef(position[0] , position[1] , position[2] );
+	float m[4][4];
+	glGetFloatv(GL_MODELVIEW_MATRIX, m[0]);
+	m[3][0] = 0; m[3][1] = 0; m[3][2] = 0;
+	glLoadMatrixf(m[0]);
+	glDisable(GL_DEPTH_TEST);
+	glDepthMask(0);
+
+
+	glPushMatrix();
+	glTranslatef(position[0], position[1], position[2]);
 	glEnable(GL_TEXTURE_2D);
 	set_lighting();
 
@@ -62,6 +71,13 @@ void Spacebox::draw_skybox(GLfloat position[3]) {
 	}
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
+
+
+		glDepthMask(1);
+	glEnable(GL_DEPTH_TEST);
+	glPopMatrix();
+
+
 }
 
 void Spacebox::draw_face(int face_num) {

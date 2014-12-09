@@ -87,14 +87,12 @@ void Space_Object::draw_orbit() {
 * https://gamedev.stackexchange.com/questions/50880/rotating-plane-to-be-parallel-to-given-normal-via-change-of-basis
 * for mathematical reference to this calculation
 */
-int Space_Object::drawPrep() {
+void Space_Object::drawPrep() {
   this->draw_orbit();
 
-  int push_c = 0;
 
   glTranslatef(this->world_pos[0], this->world_pos[1], this->world_pos[2]);
 
-  return push_c;
 }
 
 void Space_Object::set_orbit(float a, float b, int focus_sel) {

@@ -54,7 +54,7 @@ class Space_Object : public Drawable {
 
 	virtual int get_radius(){ return planet_radius; };
 
-    int drawPrep();
+    void drawPrep();
 
 	virtual void draw(){};
 
