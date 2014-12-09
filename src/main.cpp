@@ -240,6 +240,11 @@ void my_display(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+
+
+	// Draw HUD
+	ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
+	
 	GLfloat ship_pos[3];
 	ship.set_camera();
 	ship.get_position(ship_pos);
@@ -247,8 +252,6 @@ void my_display(void) {
 	glColor3f(0, .2, 1);
 	root->draw_system();
 
-	// Draw HUD
-	//ui.draw_interface(shipForwardSpeed, shipBackwardSpeed);
 
 	/* buffer is ready */
 	glutSwapBuffers();

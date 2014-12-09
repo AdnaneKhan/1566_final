@@ -72,7 +72,11 @@ void drawSpeedGage_Backward(GLfloat x, GLfloat y, float start, float end)
 
 void User_Interface::draw_interface(int shipForwardSpeed, int shipBackwardSpeed)
 {
+
 	float i;
+	glPushAttrib(GL_LIGHTING_BIT);
+	glDisable(GL_LIGHTING);
+
 	/* Hud */
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
@@ -285,7 +289,8 @@ void User_Interface::draw_interface(int shipForwardSpeed, int shipBackwardSpeed)
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
-	//glPopMatrix();        ----and this?
+
+	glPopAttrib();
 
 	// END HUD
 }
