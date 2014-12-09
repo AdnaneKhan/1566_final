@@ -52,7 +52,6 @@ class Planetary_Body: public Space_Object {
     * This denotes the rotation ABOUT THE OBJECT'S OWN axis.
     */
     float rotation_rate;
-	int planet_radius;
 };
 
 #endif

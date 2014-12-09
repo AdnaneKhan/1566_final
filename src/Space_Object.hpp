@@ -29,6 +29,7 @@
 class Space_Object : public Drawable {
   public:
 
+	int planet_radius;
 	GLfloat world_pos[3];
 	std::list<Space_Object *> satellites;
     int getObjectType();
@@ -49,7 +50,7 @@ class Space_Object : public Drawable {
     *  - Need to get object to its current orbital position
     */
 
-	virtual int get_radius();
+	virtual int get_radius(){ return planet_radius; };
 
     int drawPrep();
 
