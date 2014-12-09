@@ -222,10 +222,6 @@ void my_display(void) {
 	/* clear the buffer */
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	
-//	glLightfv(this->light_id, GL_SPOT_DIRECTION, this->look_dir);
-//	glLighti(this->light_id, GL_SPOT_CUTOFF, this->look_angle);
-
 	glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);
 	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 180);
 	glEnable(GL_LIGHT0);

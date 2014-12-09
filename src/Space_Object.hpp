@@ -84,6 +84,7 @@ class Space_Object : public Drawable {
 
 	void set_parent_pos(float x, float y, float z);
 
+
 	void print_pos();
 
 	void draw_debugs() {
@@ -150,7 +151,6 @@ class Space_Object : public Drawable {
 		   return ((ellipse_a * ellipse_b) / sqrt((ellipse_b*cos(orbital_theta))*(ellipse_b*cos(orbital_theta)) + (ellipse_a)*(sin(orbital_theta))*(ellipse_a)*(sin(orbital_theta))));
 	   }
 
-      Orbital_Plane plane;
     } Orbit;
 
     Space_Object * planet;

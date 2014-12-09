@@ -11,21 +11,53 @@ void Space_Object::updateOrbit() {
 	this->object_orbit.orbital_theta = fmod(temp + atanf((2 * orbit_area) / (orbit_rad*orbit_rad))*this->object_orbit.rate_mod, (2 * M_PI));
 
 	if (this->object_orbit.ellipse_a != 0 && this->object_orbit.ellipse_b != 0) {
+		GLfloat translate_vec[3];
+		GLfloat rot_axis[3];
+
+		// Default normal is 0,0,1 (x,y plane)
+		GLfloat up_norm[] = { 0, 0, 1 };
+
 		float calc_rad = this->object_orbit.curr_rad();
 		float x_movement = -calc_rad * cos(this->object_orbit.orbital_theta);
 		float y_movement = -calc_rad * sin(this->object_orbit.orbital_theta);
 
-		GLfloat translate_vec[3];
-
-		// TEMPORARY UNTIL Z SHIFTING ALSO CODED
+		// W.r.t parent there is no vertical translation at this stage (it is calculcated during rotation phase)
 		translate_vec[2] = 0;
 		this->object_orbit.focus_translate(translate_vec[0], translate_vec[1]);
 
-		// Move w.r.t parent position
-		this->world_pos[0] = this->parent_pos[0] + translate_vec[0] + x_movement;
-		this->world_pos[1] = this->parent_pos[1] + translate_vec[1] + y_movement;
-		this->world_pos[2] = this->parent_pos[2] + translate_vec[2];
+		// Calculate rotation such that point will lie on new plane defined by orbital normal and the point of the parent.
+		GLfloat trans_norm[3];
+		GLfloat trans_non_normalizes[3];
+		
+		// Position w.r.t parent
+		trans_non_normalizes[0] = trans_norm[0] = x_movement + translate_vec[0];
+		trans_non_normalizes[1] = trans_norm[1] = y_movement + translate_vec[1];
+		trans_non_normalizes[2] = trans_norm[2] = 0.0f;
 
+		// Normalize vector (used for plane calculations)s
+		normalize_vector(trans_norm);
+
+		/**
+		* CITING:
+		* https://gamedev.stackexchange.com/questions/50880/rotating-plane-to-be-parallel-to-given-normal-via-change-of-basis
+		* for mathematical reference to this calculation
+		*/
+
+		vector_cross(up_norm, this->orbit_plane.planeNormal, rot_axis);
+		normalize_vector(rot_axis);
+
+		// Calculate rotation angle to switch to new plane
+		GLfloat rot_angle = asin(vector_length(rot_axis));
+
+		// Rotate the point to lie on new plane
+		rot_vector((rot_angle), rot_axis[0], rot_axis[1], rot_axis[2], trans_non_normalizes);
+		
+		// Move w.r.t parent position
+		this->world_pos[0] = this->parent_pos[0] + trans_non_normalizes[0];
+		this->world_pos[1] = this->parent_pos[1] + trans_non_normalizes[1]; 
+		this->world_pos[2] = this->parent_pos[2] + trans_non_normalizes[2];
+
+		// Calculate new orbital radius (used for kepler's calculations)
 		orbit_rad = sqrt((translate_vec[0] + x_movement)*(translate_vec[0] + x_movement) + (translate_vec[1] + y_movement)*(translate_vec[1] + y_movement));
 	}
 	else {
@@ -48,9 +80,7 @@ void Space_Object::updateOrbit() {
 
 
 void Space_Object::rotate( float angle_rad) {
-
 	this->rotation = fmod(rotation + angle_rad, 2 * M_PI);
-
 }
 
 void Space_Object::draw_orbit() {
@@ -62,7 +92,6 @@ void Space_Object::draw_orbit() {
 
 	this->object_orbit.focus_translate(t_x, t_y);;
 
-	glTranslatef(this->parent_pos[0]+t_x, this->parent_pos[1]+t_y, 0);
 	glColor3f(0, 1, 0);
 	glBegin(GL_LINE_LOOP);
 
@@ -70,8 +99,28 @@ void Space_Object::draw_orbit() {
 	for (i = 0; i<360; i++)
 	{
 		float rad = deg_to_rad(i);
-		glVertex2f(cos(rad)*this->object_orbit.ellipse_a,
-		sin(rad)*this->object_orbit.ellipse_b);
+		// Calculate rotation such that point will lie on new plane defined by orbital normal and the point of the parent.
+		GLfloat trans_norm[3];
+		GLfloat trans_non_normalizes[3];
+
+
+		trans_non_normalizes[0] = trans_norm[0] =cos(rad)*this->object_orbit.ellipse_a + t_x;
+		trans_non_normalizes[1] = trans_norm[1] = sin(rad)*this->object_orbit.ellipse_b + t_y;
+		trans_non_normalizes[2] = trans_norm[2] =  0.0f;
+		normalize_vector(trans_norm);
+
+		GLfloat up_norm[] = { 0, 0, 1 };
+		GLfloat rot_axis[3];
+		vector_cross(up_norm, this->orbit_plane.planeNormal, rot_axis);
+		normalize_vector(rot_axis);
+
+		GLfloat rot_angle = asin(vector_length(rot_axis));
+		rot_vector((rot_angle), rot_axis[0], rot_axis[1], rot_axis[2], trans_non_normalizes);
+
+		trans_non_normalizes[0] += this->parent_pos[0];
+		trans_non_normalizes[1] += this->parent_pos[1];
+		trans_non_normalizes[2] += this->parent_pos[2];
+		glVertex3fv(trans_non_normalizes);
 	}
 
 	glEnd();
@@ -88,14 +137,13 @@ void Space_Object::draw_orbit() {
  {
 	 return satellites.size();
  }
-/**
-* CITING:
-* https://gamedev.stackexchange.com/questions/50880/rotating-plane-to-be-parallel-to-given-normal-via-change-of-basis
-* for mathematical reference to this calculation
-*/
+
 void Space_Object::drawPrep() {
+
   this->draw_orbit();
+
   glTranslatef(this->world_pos[0], this->world_pos[1], this->world_pos[2]);
+
 
 }
 
@@ -122,16 +170,19 @@ void Space_Object::set_orbit(float a, float b, int focus_sel) {
 	this->orbit_plane.planePoint[1] = 4;
 	this->orbit_plane.planePoint[2] = 0;
 
-	// TODO: generate random norma to devaite from current
-	this->orbit_plane.planeNormal[0] = 1;
-	this->orbit_plane.planeNormal[1] = 1;
-	this->orbit_plane.planeNormal[2] = 1;
+	random_rot_axis(this->orbit_plane.planeNormal);
+	normalize_vector(this->orbit_plane.planeNormal);
 }
 
 void Space_Object::set_parent_pos(float x, float y, float z) {
 	this->parent_pos[0] = x;
 	this->parent_pos[1] = y;
 	this->parent_pos[2] = z;
+
+	this->orbit_plane.planePoint[0] = x;
+	this->orbit_plane.planePoint[1] = y;
+	this->orbit_plane.planePoint[2] = z;
+
 }
 
 void Space_Object::print_pos() {

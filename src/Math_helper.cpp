@@ -137,7 +137,7 @@ void my_rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z, GLfloat res_matri
 void random_rot_axis(GLfloat rot_axis[3]) {
 	rot_axis[0] = (float) (rand() % 20);
 	rot_axis[1] = (float)(rand() % 20);
-	rot_axis[2] = (float)(rand() % 20);
+	rot_axis[2] = (float)(rand() % 20) + 70.0;
 
 	normalize_vector(rot_axis);
 }
