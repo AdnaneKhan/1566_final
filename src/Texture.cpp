@@ -1,5 +1,65 @@
 #include "Texture.hpp"
 
+void Texture::turbulentBlueGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	if (height < CHAR_MAX / 8)
+		*r = 8 * height;
+	else
+		*r = CHAR_MAX;
+	if (height < CHAR_MAX / 2 - 5)
+		*g = 2 * height + 5;
+	else
+		*g = CHAR_MAX;
+	*b = *g / 2;
+}
+
+void Texture::noisySunGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	*r = (rand() + height) % 255;
+	*g = *r / 4 + height;
+	*b = *r / 10 + height;
+}
+
+void Texture::turbulentYellowGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	if (height < CHAR_MAX / 8)
+		*r = 8 * height;
+	else
+		*r = CHAR_MAX;
+	*g = *r;
+	if (height < CHAR_MAX / 4)
+		*b = 4 * height;
+	else
+		*b = CHAR_MAX;
+
+}
+
+void Texture::turbulentRedGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	if (height < CHAR_MAX / 8)
+		*r = 8 * height;
+	else
+		*r = CHAR_MAX;
+	if (height < CHAR_MAX / 2 - 5)
+		*g = 2 * height + 5;
+	else
+		*g = CHAR_MAX;
+	*b = *g / 2;
+}
+
+void Texture::turbulentGreenGradient(unsigned char height,
+	unsigned char *r, unsigned char *g, unsigned char *b){
+	if (height < CHAR_MAX / 8)
+		*g = 8 * height;
+	else
+		*g = CHAR_MAX;
+	if (height < CHAR_MAX / 2 - 5)
+		*r = 2 * height + 5;
+	else
+		*r = CHAR_MAX;
+	*b = *r / 2;
+}
+
 void Texture::blandLandGradient(unsigned char height,
 	unsigned char *r, unsigned char *g, unsigned char *b){
 	*r = height + (rand() / (RAND_MAX / 4));
