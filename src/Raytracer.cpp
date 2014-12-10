@@ -22,27 +22,27 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
 	Ray cur = Ray(x, y, z);
 	cur.SetOrigin(0, 0, 0);
 
-	/*for (Space_Object *planet : allSpheres) {
+	for (Space_Object *planet : allSpheres) {
 		if (cur_planet_pos[0] == planet->world_pos[0] && cur_planet_pos[1] == planet->world_pos[1] && cur_planet_pos[2] == planet->world_pos[2]) {
 			printf("Match found.\n");
 			currentPlanet = planet;
 			break;
 		}
-	}*/
+	}
 
 	// Make sure we're on front side of the planet
-	//if (!HitPlanet(cur, currentPlanet)) {
+	if (!HitPlanet(cur, currentPlanet)) {
 		// Determine if Ray intersects with any other planets
 		for (Space_Object *planet : allSpheres) {
 			if (cur_planet_pos[0] != planet->world_pos[0] || cur_planet_pos[1] != planet->world_pos[1] || cur_planet_pos[2] != planet->world_pos[2]) {
 				if (HitPlanet(cur, planet)) {
-				
+					printf("Hit detected!\n");
 					flag = 1;
 					break;
 				}
 			}
 		}
-	//}
+	}
 
 	return flag;
 	
