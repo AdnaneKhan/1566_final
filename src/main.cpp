@@ -142,7 +142,6 @@ void my_keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'w':
 		ship.update_velocity(DEFAULT_SPEED_DELTA);
-		
 		break;
 	case 'a':
 		ship.look_left(DEFAULT_LOOK_DELTA);
@@ -165,7 +164,7 @@ void my_keyboard(unsigned char key, int x, int y) {
 			break;
 	case 'Q':
 		delete (all_space);
-		//delete(box);
+		delete(box);
 		delete(root);
 		exit(0);
 	default: break;

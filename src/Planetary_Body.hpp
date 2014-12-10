@@ -17,6 +17,7 @@ class Planetary_Body: public Space_Object {
 
 
       Planetary_Body(float rotationRate, int radius);
+	  Planetary_Body(float rotationRate, int radius, textureType tType);
 	  Planetary_Body();
 	  ~Planetary_Body();
 
@@ -31,8 +32,6 @@ class Planetary_Body: public Space_Object {
 	  PTypeEnum draw_type;
 
 	Texture * planet_tex;
-
-
 };
 
 #endif

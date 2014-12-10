@@ -41,7 +41,39 @@ void Planetary_Body::fullDraw() {
 	}
 }
 
+Planetary_Body::Planetary_Body(float rotationRate, int radius, textureType tType) {
+	this->planet_radius = radius;
+	this->rotation_rate = random_rot_rate();
+
+	// Setting values pertaining to the planet's orbit around its parent body
+	this->object_orbit.rate_mod = rotationRate;
+
+	float a;
+	float b;
+	random_orbit(a, b);
+
+	this->set_orbit(a, b, 1);
+
+	// Setting rotation matrix for rotation about its own axis
+	GLfloat temp[16] = { 1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f };
+
+	for (int i = 0; i < 16; i++) {
+		rotationMatrix[i] = temp[i];
+	}
+
+	random_rot_axis(this->rotationAxis);
+	this->rotation = 0;
+
+	this->draw_type = TEXTURED;
+	this->planet_tex = &texture_pool[tType];
+	createPlanet(&this->actual_planet, this->draw_type, this->planet_radius, .1);
+}
+
 Planetary_Body::Planetary_Body(float rotationRate, int radius) {
+	textureType  tex_t = (rand() % 4);
 	this->planet_radius = radius;
 	this->rotation_rate = random_rot_rate();
 

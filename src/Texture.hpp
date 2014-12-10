@@ -46,19 +46,19 @@ public:
 	static void moonyGradient(unsigned char height,
 		unsigned char *r, unsigned char *g, unsigned char *b);
 
-	void turbulentBlueGradient(unsigned char height,
+	static void turbulentBlueGradient(unsigned char height,
 		unsigned char *r, unsigned char *g, unsigned char *b);
 
-	void noisySunGradient(unsigned char height,
+	static void noisySunGradient(unsigned char height,
 		unsigned char *r, unsigned char *g, unsigned char *b);
 
-	void turbulentYellowGradient(unsigned char height,
+	static void turbulentYellowGradient(unsigned char height,
 		unsigned char *r, unsigned char *g, unsigned char *b);
 
-	void turbulentRedGradient(unsigned char height,
+	static void turbulentRedGradient(unsigned char height,
 		unsigned char *r, unsigned char *g, unsigned char *b);
 
-	void turbulentGreenGradient(unsigned char height,
+	static void turbulentGreenGradient(unsigned char height,
 		unsigned char *r, unsigned char *g, unsigned char *b);
 private:
 

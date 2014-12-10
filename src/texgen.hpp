@@ -1,13 +1,14 @@
 #ifndef _TEXGEN_H_
 #define _TEXGEN_H_
 
-#define NUM_DYNAMIC_TEXTURES 4
-#define NUM_TEXTURES 5
+#define NUM_DYNAMIC_TEXTURES 5
+#define NUM_TEXTURES 6
 #define EARTHY_TEX   0
 #define ICEY_TEX    1
 #define BADLAND_TEX 2
 #define MOON_TEX 3
 #define LAND_TEX 4
+#define TURB_RED 5
 
 #define IMG_WIDTH 1024
 #define IMG_HEIGHT 1024

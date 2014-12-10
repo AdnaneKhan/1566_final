@@ -201,6 +201,8 @@ void Texture::generate_texture(textureType to_generate) {
 		brownian(brownianImage, moonyGradient, 999999);
 
 		break;
+	case TURB_RED:
+		multiBrown(this->brownianImage, turbulentRedGradient, 5999999, MAX_WALKERS);
 	}
 
 	this->texType = to_generate;
