@@ -9,7 +9,7 @@
 void createPlanet(Planet *planet, PTypeEnum drawType, GLfloat radius, GLfloat resolution);
 
 //Draws the given planet
-void drawPlanet(Planet *planet, GLuint optionalTexture);
+void drawPlanet(Planet *planet, GLuint optionalTexture, float world_pos[3], int planet_radius);
 
 
 #endif

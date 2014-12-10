@@ -26,6 +26,6 @@ void createPlanet(Planet * planet, PTypeEnum drawType, GLfloat radius, GLfloat r
 	planet->resolution = resolution;
 }
 
-void drawPlanet(Planet * planet, GLuint optionalTexture){
-	drawSelect(planet, optionalTexture);
+void drawPlanet(Planet *planet, GLuint optionalTexture, float world_pos[3], int planet_radius){
+	drawSelect(planet, optionalTexture, world_pos, planet_radius);
 }

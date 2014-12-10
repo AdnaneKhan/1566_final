@@ -12,7 +12,7 @@
 */
 void Planetary_Body::draw() {
 	glPushMatrix();
-	drawPlanet(&this->actual_planet, this->planet_tex->get_texture());
+	drawPlanet(&this->actual_planet, this->planet_tex->get_texture(), this->world_pos, this->planet_radius);
 	glPopMatrix();
 }
 
@@ -22,7 +22,7 @@ void Planetary_Body::draw_rotate() {
 
 void Planetary_Body::fullDraw() {
 	
-	glPushMatrix();
+	glPushMatrix(); 
 	
 	drawPrep();
 	glPushMatrix();
@@ -69,7 +69,7 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 
 	this->draw_type = TEXTURED;
 	this->planet_tex = &texture_pool[(rand() % 4)];
-	createPlanet(&this->actual_planet, this->draw_type, this->planet_radius, .1);
+	createPlanet(&this->actual_planet, this->draw_type, this->planet_radius, .5);
 }
 
 Planetary_Body::Planetary_Body() {
