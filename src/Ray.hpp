@@ -29,12 +29,12 @@ public:
 Tracks points that need to be modified for shadows, has either one or two points
 depending on where the camera ray intersects with the sphere.
 */
-class Intersection {
+class Vertex {
 public:
 	int numPoints;
 	float point[3];
-	Intersection(int n);
-	void Intersection::SetPoint(float x, float y, float z);
+	Vertex(int n);
+	void Vertex::SetPoint(float x, float y, float z);
 };
 
 class Point {

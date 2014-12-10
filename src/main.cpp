@@ -11,6 +11,7 @@
 #include "Spaceship.hpp"		
 #include "User_Interface.hpp"
 #include "Spacebox.hpp"
+#include "Raytracer.hpp"
 
 #define min(a,b) ((a) < (b)? a:b)
 #define FALSE 0 
@@ -119,7 +120,7 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(200.0, 8);
+	root = new Planetary_System(200.0, 2);
 	all_space = new Texture("textures/stars3.bmp", 1024, 1024);
 	box = new Spacebox(1, all_space, all_space, all_space, all_space, all_space, all_space);
 
@@ -190,7 +191,7 @@ void lighting_setup() {
 	GLfloat mat_amb_diff[] = { .1, .5, .8, 1 };
 	GLfloat mat_specular[] = { 1, 1, 1, 1 };
 	GLfloat mat_no_shininess[] = { 0 };
-	GLfloat mat_low_shininess[] = { 2.5 };
+	GLfloat mat_low_shininess[] = { 1.5 };
 	GLfloat mat_high_shininess[] = { 100 };
 	GLfloat mat_emission[] = { .3, .2, .2, 0 };
 
@@ -232,15 +233,19 @@ void my_display(void) {
 	// Gets position of ship
 	ship.get_position(ship_pos);
 
-	box->draw_skybox(ship_pos);
+	//box->draw_skybox(ship_pos);
 	// Draw HUD
 	ui.draw_interface(ship.get_velocity());
 	
 	// Sets the Camera
 	ship.set_camera();
 	
+	// Passes system to raytracer
+	RayTracer::SetPlanetarySystem(root);
+
 	// Draws Skybox
 	root->draw_system();
+	//root->draw_system();
 
 	/* buffer is ready */
 	glutSwapBuffers();

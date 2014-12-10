@@ -20,6 +20,11 @@ Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 		temp->add_Satelite(temp2);
 		star->add_Satelite(temp);
 	}
+
+}
+
+std::list<Space_Object *>  Planetary_System::orbiting_planets() {
+	return (this->star->satellites);
 }
 
 void Planetary_System::update_system() {

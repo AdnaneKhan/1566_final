@@ -1,5 +1,5 @@
 #include "plandraw.hpp"
-
+#include "Raytracer.hpp"
 static float centerVec[3] = { CTR, CTR, CTR };
 
 static quadDrawMethod_t currentDrawMethod;
@@ -44,10 +44,12 @@ static void spherizeCoordv(float center[3], float point[3], float radius){
 	spherizeCoord(center[0], center[1], center[2], &(point[0]), &(point[1]), &(point[2]), radius);
 }
 
-static void xyz_to_uv(float *u, float *v, float x, float y, float z){
+static void xyz_to_uv(float *u, float *v, float x, float y, float z, float world_pos[3], int planet_radius){
 	float unitX = x - CTR;
 	float unitY = y - CTR;
 	float unitZ = z - CTR;
+
+	int flag = 0;
 
 	//First, we find the unit vector of our current vertex position
 	// pointing toward the sphere's origin
@@ -56,7 +58,14 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z){
 	unitY /= unitMag;
 	unitZ /= unitMag;
 
-	glNormal3f(unitX, unitY, unitZ);
+	//flag = RayTracer::Raytrace(x, y, z, world_pos);
+	flag = 0;
+	if (flag == 0) {
+		glNormal3f(unitX, unitY, unitZ);
+	}
+	else if (flag == 1) {
+		glNormal3f(-unitX, -unitY, -unitZ);
+	}
 	
 	//Then, thanks to the formula from the notes (& Wikipedia)...
 	*u = 0.5 + atan2f(unitZ, unitX)/(2*M_PI);
@@ -65,20 +74,20 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z){
 }
 
 static void drawTextureQuad(float topLeft[3], float topRight[3],
-	float bottomRight[3], float bottomLeft[3]){
+	float bottomRight[3], float bottomLeft[3], float world_pos[3], int planet_radius){
 	//Draws a textured quad by computing the u and v coordinates of the texture from our x, y, z
 	float u = 0, v = 0;
 	float u1 = 0, v1 = 0;
 
 	//So, we convert our coordinate to UV space
-	xyz_to_uv(&u, &v, topLeft[0], topLeft[1], topLeft[2]);
+	xyz_to_uv(&u, &v, topLeft[0], topLeft[1], topLeft[2], world_pos, planet_radius);
 	//We map it to the given texture
 	glTexCoord2f(u, v);
 	//And draw the specified vertex with that texture coordinate
 	glVertex3fv(topLeft);
 
 	//Then, we do this for the other three vertices
-	xyz_to_uv(&u1, &v1, topRight[0], topRight[1], topRight[2]);
+	xyz_to_uv(&u1, &v1, topRight[0], topRight[1], topRight[2], world_pos, planet_radius);
 	//However, since UV coordinates wrap around, we can get to
 	// the point where we have a "belt" of the entire texture
 	// compressed to a conspicuous section around x ~=0
@@ -91,7 +100,7 @@ static void drawTextureQuad(float topLeft[3], float topRight[3],
 	glTexCoord2f(u1, v1);
 	glVertex3fv(topRight);
 
-	xyz_to_uv(&u1, &v1, bottomRight[0], bottomRight[1], bottomRight[2]);
+	xyz_to_uv(&u1, &v1, bottomRight[0], bottomRight[1], bottomRight[2], world_pos, planet_radius);
 	if (u1 < 0.75 && u > 0.75)
 		u1 += 1.0;
 	else if (u1 > 0.75 && u < 0.75)
@@ -99,7 +108,7 @@ static void drawTextureQuad(float topLeft[3], float topRight[3],
 	glTexCoord2f(u1, v1);
 	glVertex3fv(bottomRight);
 
-	xyz_to_uv(&u1, &v1, bottomLeft[0], bottomLeft[1], bottomLeft[2]);
+	xyz_to_uv(&u1, &v1, bottomLeft[0], bottomLeft[1], bottomLeft[2], world_pos, planet_radius);
 	if (u1 < 0.75 && u > 0.75)
 		u1 += 1.0;
 	else if (u1 > 0.75 && u < 0.75)
@@ -109,7 +118,7 @@ static void drawTextureQuad(float topLeft[3], float topRight[3],
 }
 
 static void drawFlatQuad(float topLeft[3], float topRight[3], 
-						 float bottomRight[3], float bottomLeft[3]){
+	float bottomRight[3], float bottomLeft[3], float world_pos[3], int planet_radius){
 	//All this really does is draw the quad in order. It will only look spherical if used in spherizeAndDraw
 	glVertex3fv(topLeft);
 	glVertex3fv(topRight);
@@ -118,14 +127,14 @@ static void drawFlatQuad(float topLeft[3], float topRight[3],
 }
 
 static void drawCoarseGradientQuad(float topLeft[3], float topRight[3],
-								   float bottomRight[3], float bottomLeft[3]){
+	float bottomRight[3], float bottomLeft[3], float world_pos[3], int planet_radius){
 	//This will set the quad's color equal to the top left coordinate value
 	glColor3fv(topLeft);
-	drawFlatQuad(topLeft, topRight, bottomRight, bottomLeft);
+	drawFlatQuad(topLeft, topRight, bottomRight, bottomLeft, world_pos, planet_radius);
 }
 
 static void drawFineGradientQuad(float topLeft[3], float topRight[3],
-							     float bottomRight[3], float bottomLeft[3]){
+	float bottomRight[3], float bottomLeft[3], float world_pos[3], int planet_radius){
 	//This takes each corner of the quad and sets its color to be equal to its coordinates
 	glColor3fv(topLeft);
 	glVertex3fv(topLeft);
@@ -140,17 +149,17 @@ static void drawFineGradientQuad(float topLeft[3], float topRight[3],
 
 //This will spherize the coordinate vectors given, and then use the currentDrawMethod
 static void spherizeAndDraw(float topLeft[3], float topRight[3], 
-							float bottomRight[3], float bottomLeft[3], float radius){
+							float bottomRight[3], float bottomLeft[3], float radius, float world_pos[3], int planet_radius){
 	spherizeCoordv(centerVec, topLeft, radius);
 	spherizeCoordv(centerVec, topRight, radius);
 	spherizeCoordv(centerVec, bottomRight, radius);
 	spherizeCoordv(centerVec, bottomLeft, radius);
 
-	currentDrawMethod(topLeft, topRight, bottomRight, bottomLeft);
+	currentDrawMethod(topLeft, topRight, bottomRight, bottomLeft, world_pos, planet_radius);
 }
 
 //This is the legitimate drawing function
-static void drawThePlanet(Planet *planet){
+static void drawThePlanet(Planet *planet, float world_pos[3], int planet_radius){
 	float i, j;
 
 	for (i = 0; i < 1; i += planet->resolution){
@@ -164,7 +173,7 @@ static void drawThePlanet(Planet *planet){
 				GLfloat bL[] = { i, j + planet->resolution, 0 };
 
 				//And draw them
-				spherizeAndDraw(tL, tR, bR, bL, planet->radius);
+				spherizeAndDraw(tL, tR, bR, bL, planet->radius, world_pos, planet_radius);
 			}
 		}
 		glEnd();
@@ -177,7 +186,7 @@ static void drawThePlanet(Planet *planet){
 				GLfloat bL[] = { i, j + planet->resolution, 1 };
 
 				//And so forth
-				spherizeAndDraw(tL, tR, bR, bL, planet->radius);
+				spherizeAndDraw(tL, tR, bR, bL, planet->radius, world_pos, planet_radius);
 			}
 		}
 		glEnd();
@@ -190,7 +199,7 @@ static void drawThePlanet(Planet *planet){
 				GLfloat bR[] = { i + planet->resolution, 0, j + planet->resolution };
 				GLfloat bL[] = { i, 0, j+planet->resolution };
 
-				spherizeAndDraw(tL, tR, bR, bL, planet->radius);
+				spherizeAndDraw(tL, tR, bR, bL, planet->radius, world_pos, planet_radius);
 			}
 		}
 		glEnd();
@@ -201,7 +210,7 @@ static void drawThePlanet(Planet *planet){
 				GLfloat bR[] = { i + planet->resolution, 1, j + planet->resolution };
 				GLfloat bL[] = { i, 1, j + planet->resolution };
 
-				spherizeAndDraw(tL, tR, bR, bL, planet->radius);
+				spherizeAndDraw(tL, tR, bR, bL, planet->radius, world_pos, planet_radius);
 			}
 		}
 		glEnd();
@@ -214,7 +223,7 @@ static void drawThePlanet(Planet *planet){
 				GLfloat bR[] = { 0, i + planet->resolution, j + planet->resolution };
 				GLfloat bL[] = { 0, i, j + planet->resolution };
 
-				spherizeAndDraw(tL, tR, bR, bL, planet->radius);
+				spherizeAndDraw(tL, tR, bR, bL, planet->radius, world_pos, planet_radius);
 			}
 		}
 		glEnd();
@@ -225,7 +234,7 @@ static void drawThePlanet(Planet *planet){
 				GLfloat bR[] = { 1, i + planet->resolution, j + planet->resolution };
 				GLfloat bL[] = { 1, i, j + planet->resolution };
 
-				spherizeAndDraw(tL, tR, bR, bL, planet->radius);
+				spherizeAndDraw(tL, tR, bR, bL, planet->radius, world_pos, planet_radius);
 			}
 		}
 		glEnd();
@@ -236,7 +245,7 @@ static void drawThePlanet(Planet *planet){
 
 //What drawSelect actually does is just set up the function pointer
 // to be used in our drawThePlanet function
-void drawSelect(Planet * planet, GLuint textureName){
+void drawSelect(Planet * planet, GLuint textureName, float world_pos[3], int planet_radius){
 	int usingTex = FALSE;
 
 	switch (planet->planetType){
@@ -277,7 +286,7 @@ void drawSelect(Planet * planet, GLuint textureName){
 		return;
 	}
 	glPushMatrix(); {
-		drawThePlanet(planet);
+		drawThePlanet(planet, world_pos, planet_radius);
 	}glPopMatrix();
 
 	if (usingTex == TRUE){
