@@ -246,7 +246,7 @@ void my_display(void) {
 	ship.set_camera();
 	
 	// Passes system to raytracer
-	SetPlanetarySystem(root);
+	RayTracer::SetPlanetarySystem(root);
 
 	// Draws Skybox
 	root->draw_system();

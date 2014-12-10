@@ -36,9 +36,7 @@ class Planetary_System {
 
     ~Planetary_System();
 
-	// Vector holding planets orbiting the center sun
-	std::vector<Space_Object *> planets;
-
+	std::list<Space_Object *>  orbiting_planets();
 
   private:
 	

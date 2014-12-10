@@ -58,7 +58,7 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z, float world
 	unitY /= unitMag;
 	unitZ /= unitMag;
 
-	flag = Raytrace(x, y, z, world_pos);
+	flag = RayTracer::Raytrace(x, y, z, world_pos);
 
 	if (flag == 0) {
 		glNormal3f(unitX, unitY, unitZ);

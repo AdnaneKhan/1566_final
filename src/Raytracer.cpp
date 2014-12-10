@@ -2,19 +2,16 @@
 
 #define PI 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328
 
-Planetary_System *curSystem;
 
-void SetPlanetarySystem(Planetary_System *system) {
-	curSystem = system;
-}
+Planetary_System * RayTracer::curSystem = nullptr;
 
-int Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
+int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
 	std::list<Space_Object *> allSpheres;
 	Space_Object *currentPlanet = NULL;
 	int flag = 0;
 
 	// Load all planets into big ol list
-	for (Space_Object *planet : curSystem->planets) {
+	for (Space_Object *planet : curSystem->orbiting_planets()) {
 		allSpheres.emplace_back(planet);
 		for (Space_Object *satellite : planet->satellites) {
 			allSpheres.emplace_back(satellite);
@@ -39,7 +36,7 @@ int Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
 		for (Space_Object *planet : allSpheres) {
 			if (cur_planet_pos[0] != planet->world_pos[0] || cur_planet_pos[1] != planet->world_pos[1] || cur_planet_pos[2] != planet->world_pos[2]) {
 				if (HitPlanet(cur, planet)) {
-					printf("Planet hit!\n");
+				
 					flag = 1;
 					break;
 				}
@@ -103,7 +100,7 @@ int Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
 //	return ret;
 //}	
 
-bool HitPlanet(Ray ray, Space_Object *sphere) {
+bool RayTracer::HitPlanet(Ray ray, Space_Object *sphere) {
 	float a, b, c;
 	float radius;
 	float cx, cy, cz;
@@ -127,6 +124,10 @@ bool HitPlanet(Ray ray, Space_Object *sphere) {
 }
 
 
-float discriminant(float a, float b, float c) {
+float RayTracer::discriminant(float a, float b, float c) {
 	return pow(b, 2) + (-4 * a * c);
+}
+
+void RayTracer::SetPlanetarySystem(Planetary_System *system) {
+	curSystem = system;
 }
