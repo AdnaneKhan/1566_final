@@ -11,6 +11,7 @@
 #include "Spaceship.hpp"		
 #include "User_Interface.hpp"
 #include "Spacebox.hpp"
+#include "Raytracer.hpp"
 
 #define min(a,b) ((a) < (b)? a:b)
 #define FALSE 0 
@@ -244,6 +245,9 @@ void my_display(void) {
 	// Sets the Camera
 	ship.set_camera();
 	
+	// Passes system to raytracer
+	SetPlanetarySystem(root);
+
 	// Draws Skybox
 	root->draw_system();
 	//root->draw_system();
