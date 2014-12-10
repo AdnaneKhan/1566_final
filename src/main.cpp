@@ -48,6 +48,9 @@ void time_update(int param);
 int win_h;
 int win_w;
 
+int m_x;
+int m_y;
+
 
 Planetary_System * root;
 Texture * all_space;
@@ -171,6 +174,15 @@ void my_keyboard(unsigned char key, int x, int y) {
 	case 'P':
 		planetFollowMode = 0;
 		break;
+	case '1':
+		ui.set_ui_color(0);
+		break;
+	case '2':
+		ui.set_ui_color(1);
+		break;
+	case '3':
+		ui.set_ui_color(2);
+		break;
 	case 'q':
 		ship.roll_left(DEFAULT_LOOK_DELTA);
 			break;
@@ -186,6 +198,9 @@ void my_keyboard(unsigned char key, int x, int y) {
 
 
 void mouse_control( int x, int y) {
+
+	m_x = x;
+	m_y = y;
 	// Deadzones for X and Y
 	ship.mouse_control(x, y,win_h,win_w);
 }
@@ -247,7 +262,7 @@ void my_display(void) {
 
 		//box->draw_skybox(ship_pos);
 		// Draw HUD
-		ui.draw_interface(ship.get_velocity());
+		ui.draw_interface(ship.get_velocity(),m_x,m_y,ship.get_roll_degrees());
 
 		// Sets the Camera
 		ship.set_camera();
