@@ -7,7 +7,7 @@
 #define NUM_PTYPES 4
 
 typedef enum planet_type_specifier {
-	TEXTURED, FLAT, COARSE_GRADIENT, FINE_GRADIENT
+	TEXTURED, FLAT, COARSE_GRADIENT, FINE_GRADIENT,STAR
 } PTypeEnum;
 
 typedef struct planet_struct {

@@ -7,8 +7,7 @@
 #define ICEY_TEX    1
 #define BADLAND_TEX 2
 #define MOON_TEX 3
-#define LAND_TEX 4
-#define TURB_RED 5
+#define TURB_RED 4
 
 #define IMG_WIDTH 1024
 #define IMG_HEIGHT 1024

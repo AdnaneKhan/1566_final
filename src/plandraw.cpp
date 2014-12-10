@@ -240,6 +240,16 @@ void drawSelect(Planet * planet, GLuint textureName){
 	int usingTex = FALSE;
 
 	switch (planet->planetType){
+	case STAR:
+		//If we're using textures, we need to set them up
+		usingTex = TRUE;
+		glEnable(GL_TEXTURE_2D);
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD);
+		glBindTexture(GL_TEXTURE_2D, textureName);
+
+		//And, we set our drawing function to that of our texture function
+		currentDrawMethod = &drawTextureQuad;
+		break;
 	case TEXTURED:
 		//If we're using textures, we need to set them up
 		usingTex = TRUE;

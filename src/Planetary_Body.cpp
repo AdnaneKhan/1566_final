@@ -67,7 +67,7 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius, textureType tType
 	random_rot_axis(this->rotationAxis);
 	this->rotation = 0;
 
-	this->draw_type = TEXTURED;
+	this->draw_type = STAR;
 	this->planet_tex = &texture_pool[tType];
 	createPlanet(&this->actual_planet, this->draw_type, this->planet_radius, .1);
 }
