@@ -23,7 +23,7 @@ Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 
 }
 
-std::list<Space_Object *>  Planetary_System::orbiting_planets() {
+std::deque<Space_Object *>  Planetary_System::orbiting_planets() {
 	return (this->star->satellites);
 }
 

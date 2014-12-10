@@ -5,7 +5,7 @@
 #include "Space_Object.hpp"
 #include "Planetary_Body.hpp"
 #include "Math_helper.hpp"
-
+#include <deque>
 #include <list>
 
 class Planetary_System {
@@ -36,7 +36,7 @@ class Planetary_System {
 
     ~Planetary_System();
 
-	std::list<Space_Object *>  orbiting_planets();
+	std::deque<Space_Object *>  orbiting_planets();
 
   private:
 	
