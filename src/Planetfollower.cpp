@@ -49,25 +49,22 @@ void Planetfollower::ChangeToSatellite() {
 
 void Planetfollower::InitializeCamera() {
 	float line_to_object[3];
-	float signVector[3];
+	//float signVector[3];
 	float lineMag;
 	if (planetOrSatellite == 0) {
 		for (int i = 0; i < 3; i++) {
 			line_to_object[i] = currentPlanet->world_pos[i];
-			signVector[i] = line_to_object[i] / line_to_object[i];
+			//signVector[i] = line_to_object[i] / line_to_object[i];
 		}
 		lineMag = sqrt(pow(line_to_object[0], 2) + pow(line_to_object[1], 2) + pow(line_to_object[2], 2));
 		for (int i = 0; i < 3; i++) {
 			camera_pos[i] = (line_to_object[i] + ((line_to_object[i] / lineMag)*(currentPlanet->get_radius() * 15)));
-			//looking_at[i] = 0;
-			looking_at[i] = currentPlanet->world_pos[i];
-			//up_vec[i] = currentPlanet->get_orbital_plane().planeNormal[i];
+			looking_at[i] = 0;
+			//looking_at[i] = currentPlanet->world_pos[i];
+			up_vec[i] = currentPlanet->get_orbital_plane().planeNormal[i];
 			printf("%f", up_vec[i]);
 		}
 		printf("\n");
-		up_vec[0] = 0;
-		up_vec[1] = 0;
-		up_vec[2] = 1;
 		//camera_pos[2] += 50;
 	}
 	/*else if (planetOrSatellite == 1) {
