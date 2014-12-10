@@ -33,7 +33,7 @@ class Space_Object : public Drawable {
 	int planet_radius;
 	GLfloat world_pos[3];
 	std::list<Space_Object *> satellites;
-	std::list<Intersection *> toBeShaded;
+	std::list<Vertex *> vertices;
     int getObjectType();
 
     /**
