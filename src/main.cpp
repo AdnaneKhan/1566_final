@@ -8,7 +8,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Spaceship.hpp"		
+#include "Spaceship.hpp"	
+#include "Planetfollower.hpp"
 #include "User_Interface.hpp"
 #include "Spacebox.hpp"
 #include "Raytracer.hpp"
@@ -26,6 +27,7 @@
 #define WINDOW_HEIGHT 1024
 #define WINDOW_WIDTH 1024
 
+int planetFollowMode = 0;
 
 GLfloat vertices[][3] = {
 	{ -1, 1, 1 }, { 1, 1, 1 }, { 1, 1, -1 }, { -1, 1, -1 },
@@ -50,6 +52,7 @@ int win_w;
 Planetary_System * root;
 Texture * all_space;
 Spaceship ship;
+Planetfollower planetcamera;
 User_Interface ui;
 Spacebox * box;
 
@@ -123,6 +126,8 @@ void my_setup(void) {
 	root = new Planetary_System(200.0, 2);
 	all_space = new Texture("textures/stars3.bmp", 1024, 1024);
 	box = new Spacebox(1, all_space, all_space, all_space, all_space, all_space, all_space);
+	
+	planetcamera.SetSolarSystem(root);
 
 	lighting_setup();
 	return;
@@ -159,6 +164,12 @@ void my_keyboard(unsigned char key, int x, int y) {
 		break;
 	case ' ':
 		ship.stop_ship();
+		break;
+	case 'p':
+		planetFollowMode = 1;
+		break;
+	case 'P':
+		planetFollowMode = 0;
 		break;
 	case 'q':
 		ship.roll_left(DEFAULT_LOOK_DELTA);
@@ -230,18 +241,27 @@ void my_display(void) {
 	glLoadIdentity();
 	GLfloat ship_pos[3];
 	
-	// Gets position of ship
-	ship.get_position(ship_pos);
+	if (planetFollowMode == 0) {
+		// Gets position of ship
+		ship.get_position(ship_pos);
 
-	//box->draw_skybox(ship_pos);
-	// Draw HUD
-	ui.draw_interface(ship.get_velocity());
-	
-	// Sets the Camera
-	ship.set_camera();
+		//box->draw_skybox(ship_pos);
+		// Draw HUD
+		ui.draw_interface(ship.get_velocity());
+
+		// Sets the Camera
+		ship.set_camera();
+	}
+	else if (planetFollowMode == 1) {
+		// Loads planet camera
+		planetcamera.InitializeCamera();
+
+		// Moves the camera to the right place
+		planetcamera.MoveCamera();
+	}
 	
 	// Passes system to raytracer
-	RayTracer::SetPlanetarySystem(root);
+	//RayTracer::SetPlanetarySystem(root);
 
 	// Draws Skybox
 	root->draw_system();
