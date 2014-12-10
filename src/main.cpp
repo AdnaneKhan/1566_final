@@ -130,6 +130,8 @@ void my_setup(void) {
 	all_space = new Texture("textures/stars3.bmp", 1024, 1024);
 	box = new Spacebox(1, all_space, all_space, all_space, all_space, all_space, all_space);
 	
+	ui.set_window_parameters(WINDOW_HEIGHT, WINDOW_WIDTH);
+
 	planetcamera.SetSolarSystem(root);
 
 	lighting_setup();
