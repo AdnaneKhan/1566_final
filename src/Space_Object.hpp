@@ -16,6 +16,7 @@
 #include <vector>
 #include <list>
 #include <iostream>
+#include <deque>
 
 #define GRAV 6.67e-11;
 
@@ -30,9 +31,17 @@
 class Space_Object : public Drawable {
   public:
 
+	typedef struct Orbital_Plane {
+
+		GLfloat planeNormal[3];
+		GLfloat planePoint[3];
+	} Orbital_Plane;
+
+	Orbital_Plane orbit_plane;
+
 	int planet_radius;
 	GLfloat world_pos[3];
-	std::list<Space_Object *> satellites;
+	std::deque<Space_Object *> satellites;
 	std::list<Vertex *> vertices;
     int getObjectType();
 
@@ -103,16 +112,21 @@ class Space_Object : public Drawable {
 	*/
 	void draw_orbit();
 
+	/**
+	Gets the orbital plane
+	*/
+	Orbital_Plane get_orbital_plane(){ return orbit_plane; };
+
   protected:
 
 
 	  void rotate(float theta_rad);
 
-    typedef struct Orbital_Plane {
+  /*  typedef struct Orbital_Plane {
 		
       GLfloat planeNormal[3];
 	  GLfloat planePoint[3];
-    } Orbital_Plane;
+    } Orbital_Plane;*/
 
     // Defines the orbit of space object, note that this ellipse
     // is in polar coordinates
@@ -154,7 +168,6 @@ class Space_Object : public Drawable {
     } Orbit;
 
     Space_Object * planet;
-    Orbital_Plane orbit_plane;
 	Orbit object_orbit;
 
     // Denotes the type of object

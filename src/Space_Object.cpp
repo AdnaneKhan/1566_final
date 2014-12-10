@@ -73,7 +73,6 @@ void Space_Object::updateOrbit() {
 		for (Space_Object * o : this->satellites) {
 			o->set_parent_pos(this->world_pos[0], this->world_pos[1], this->world_pos[2]);
 			o->updateOrbit();
-
 		}
 	}
 }
