@@ -1,3 +1,6 @@
+#ifndef RAYTRACER_H
+#define RAYTRACER_H
+
 #include "common.h"
 #include "Ray.hpp"
 #include "Planetary_System.hpp"
@@ -12,7 +15,7 @@ as well as the slides found at http://people.cs.pitt.edu/~hwa/cs1566. The functi
 takes in the viewport and finds which pixels to color based upon the intersection
 between the ray and the sphere through the viewport.
 */
-void Raytrace(float eyeX, float eyeY, float eyeZ, float windowW, float windowH, Planetary_System system);
+int Raytrace(float x, float y, float z, float cur_planet_pos[3]);
 
 /*** HitPlanet and GetIntersection ***/
 /*
@@ -20,7 +23,7 @@ Determines whether or not the passed object is intersected by the ray coming fro
 the camera and returns the points associated. Shading is done for any planet hit.
 Function is used after HitPlanet(). Returns null if nothing is hit
 */
-Intersection GetIntersection(Ray ray, Space_Object *sphere);
+void SetPlanetarySystem(Planetary_System *system);
 
 /*
 More generic function that returns a bool based on whether or not there is
@@ -29,3 +32,5 @@ an intersection at all.
 bool HitPlanet(Ray ray, Space_Object *sphere);
 
 float discriminant(float a, float b, float c);
+
+#endif

@@ -16,11 +16,11 @@ void Ray::SetOrigin(float x, float y, float z) {
 	Origin[2] = z;
 }
 
-Intersection::Intersection(int n) {
+Vertex::Vertex(int n) {
 	numPoints = n;
 }
 
-void Intersection::SetPoint(float x, float y, float z) {
+void Vertex::SetPoint(float x, float y, float z) {
 	point[0] = x;
 	point[1] = y;
 	point[2] = z;
