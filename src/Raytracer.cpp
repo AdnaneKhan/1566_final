@@ -10,11 +10,22 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
 	Space_Object *currentPlanet = NULL;
 	int flag = 0;
 
+	/*TO DO: Convert x,y,z to world coordinates*/
+	// Convert x, y, z to world coordinates
+
+	/* END TO DO */
+
 	// Load all planets into big ol list
+	// Only loading satellites right now
 	for (Space_Object *planet : curSystem->orbiting_planets()) {
-		allSpheres.emplace_back(planet);
-		for (Space_Object *satellite : planet->satellites) {
-			allSpheres.emplace_back(satellite);
+		if (cur_planet_pos[0] == planet->world_pos[0] && cur_planet_pos[1] == planet->world_pos[1] && cur_planet_pos[2] == planet->world_pos[2]) {
+			allSpheres.emplace_back(planet);
+			if (planet->satellites.size() != 0) {
+				for (Space_Object *satellite : planet->satellites) {
+					allSpheres.emplace_back(satellite);
+				}
+			}
+			break;
 		}
 	}
 
@@ -22,23 +33,26 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
 	Ray cur = Ray(x, y, z);
 	cur.SetOrigin(0, 0, 0);
 
+	// Mark current planet we're working with right now
 	for (Space_Object *planet : allSpheres) {
 		if (cur_planet_pos[0] == planet->world_pos[0] && cur_planet_pos[1] == planet->world_pos[1] && cur_planet_pos[2] == planet->world_pos[2]) {
-			printf("Match found.\n");
+			//printf("Match found.\n");
 			currentPlanet = planet;
 			break;
 		}
 	}
 
-	// Make sure we're on front side of the planet
-	if (!HitPlanet(cur, currentPlanet)) {
-		// Determine if Ray intersects with any other planets
-		for (Space_Object *planet : allSpheres) {
-			if (cur_planet_pos[0] != planet->world_pos[0] || cur_planet_pos[1] != planet->world_pos[1] || cur_planet_pos[2] != planet->world_pos[2]) {
-				if (HitPlanet(cur, planet)) {
-					printf("Hit detected!\n");
-					flag = 1;
-					break;
+	if (currentPlanet != NULL) {
+		// Make sure we're on front side of the planet
+		if (!HitPlanet(cur, currentPlanet)) {
+			// Determine if Ray intersects with any other planets
+			for (Space_Object *planet : allSpheres) {
+				if (cur_planet_pos[0] != planet->world_pos[0] || cur_planet_pos[1] != planet->world_pos[1] || cur_planet_pos[2] != planet->world_pos[2]) {
+					if (HitPlanet(cur, planet)) {
+						//printf("Hit detected!\n");
+						flag = 1;
+						break;
+					}
 				}
 			}
 		}
