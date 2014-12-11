@@ -20,8 +20,10 @@ public:
 	float Original[3];
 	float Origin[3];
 	float Dir[3];
+	int flag;
 	Ray(float x, float y, float z);
 	void Ray::SetOrigin(float x, float y, float z);
+	void Ray::SetFlag(int n);
 };
 
 /*** Intersection Class ***/
