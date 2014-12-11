@@ -78,7 +78,7 @@ void multiBrown(unsigned char dest[IMG_HEIGHT][IMG_WIDTH][4], triGradientMethod_
 void brownian(unsigned char destination[IMG_HEIGHT][IMG_WIDTH][4],
 	triGradientMethod_t drawMethod, long numPoints){
 	//All we do here is give our randomWalk function equally spaced weights
-	//randomWalk(destination, drawMethod, numPoints, (RAND_MAX / 4), (RAND_MAX / 2), ((RAND_MAX/4)*3), 1);
+
 	multiBrown(destination, drawMethod, numPoints, 1);
 }
 
@@ -90,6 +90,5 @@ void multiScan(unsigned char dest[IMG_HEIGHT][IMG_WIDTH][4], triGradientMethod_t
 void scanLines(unsigned char destination[IMG_HEIGHT][IMG_WIDTH][4],
 	triGradientMethod_t drawMethod, long numPoints){
 	//We simply call randomWalk with a greater bias toward horizontal movement
-	//randomWalk(destination, drawMethod, numPoints, RAND_MAX / 8, RAND_MAX / 4, RAND_MAX / 2, 1);
 	multiScan(destination, drawMethod, numPoints, 1);
 }

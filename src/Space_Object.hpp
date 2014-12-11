@@ -18,16 +18,6 @@
 #include <iostream>
 #include <deque>
 
-#define GRAV 6.67e-11;
-
-#define PLANET 1
-#define COMET 2
-#define SPACE_SHIP 3
-// POSSIBLE: Creature would have a "squiggly" oribit as a result of
-// applying a sin wave fluctuation to the radius resulting from the
-// ellipse calculation.
-//#define CREATURE 4
-
 class Space_Object : public Drawable {
   public:
 
@@ -173,8 +163,6 @@ class Space_Object : public Drawable {
     Space_Object * planet;
 	Orbit object_orbit;
 
-    // Denotes the type of object
-    int object_type;
 
 	float orbit_area;
 	float orbit_rad;
@@ -184,25 +172,17 @@ class Space_Object : public Drawable {
 	// Pool of textures which planets can use
 	static Texture texture_pool[NUM_DYNAMIC_TEXTURES];
 	static std::list<Texture> planet_texures;
-	static int tex_count;
 
-
-	GLfloat rotationAxis[3];
-
+	
 	/**
-	* Stores a gl matrix that will be used to rotate this object prior to drawinng  it.
-	*/
-	GLfloat rotationMatrix[16];
-	/**
-	* Multiplier in float relative to the cock speed of the universe
-	* value from 0 to 1, 1 means it rotates 360 degrees per tick,
-	* 0 means it does not rotate
-	*
+	* Rot rate in radians is added every time stop to the plaent
 	* This denotes the rotation ABOUT THE OBJECT'S OWN axis.
 	*/
 	float rotation_rate;
 	float rotation;
+	GLfloat rotationAxis[3];
 
+	// Whether raytracing is on or not (pertains to drawing orbit lines)
 	static int ray_flag;
 };
 

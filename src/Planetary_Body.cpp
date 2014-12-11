@@ -54,16 +54,6 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius, textureType tType
 
 	this->set_orbit(a, b, 1);
 
-	// Setting rotation matrix for rotation about its own axis
-	GLfloat temp[16] = { 1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f };
-
-	for (int i = 0; i < 16; i++) {
-		rotationMatrix[i] = temp[i];
-	}
-
 	random_rot_axis(this->rotationAxis);
 	this->rotation = 0;
 	random_rot_axis(this->orbit_plane.planeNormal);
@@ -86,16 +76,6 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 	random_orbit(a, b);
 
 	this->set_orbit(a, b, 1);
-
-	// Setting rotation matrix for rotation about its own axis
-	GLfloat temp[16] = { 1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f };
-
-	for (int i = 0; i < 16; i++) {
-		rotationMatrix[i] = temp[i];
-	}
 
 	random_rot_axis(this->rotationAxis);
 	random_rot_axis(this->orbit_plane.planeNormal);

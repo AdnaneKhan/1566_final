@@ -28,8 +28,8 @@ class Planetary_Body: public Space_Object {
 
   private:
 
-	  Planet actual_planet;
-	  PTypeEnum draw_type;
+	 Planet actual_planet;
+	 PTypeEnum draw_type;
 
 	Texture * planet_tex;
 };

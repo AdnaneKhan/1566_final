@@ -73,11 +73,6 @@ void Spaceship::update_velocity(float change) {
 			this->velocity_mag = MAX_SPEED;
 		}
 	}
-
-	
-
-	
-
 }
 
 void Spaceship::move_forward(float delta_mag) {
