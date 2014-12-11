@@ -2,8 +2,6 @@
 
 Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 	this->star = new Planetary_Body(.1, sun_radius,TURB_RED);
-	
-
 	this->star->set_orbit(0, 0, 1);
 	this->star->set_parent_pos(0, 0, 0);
 
