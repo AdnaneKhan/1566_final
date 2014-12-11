@@ -2,6 +2,14 @@
 #include "Space_Object.hpp"
 
 
+void Space_Object::orbit_on() {
+	ray_flag = 0;
+}
+
+void Space_Object::orbit_off() {
+	ray_flag = 1;
+}
+
 void Space_Object::updateOrbit() {
 	// For Kepler's formula it will be necessary to use the mass of this object, the mass of the parent, and the speed 
 	// to calculate parameters for ellispe, etc
@@ -137,8 +145,9 @@ void Space_Object::draw_orbit() {
  }
 
 void Space_Object::drawPrep() {
-
-  this->draw_orbit();
+	if (!ray_flag) {
+		this->draw_orbit();
+	}
 
   glTranslatef(this->world_pos[0], this->world_pos[1], this->world_pos[2]);
 
@@ -188,3 +197,6 @@ void Space_Object::print_pos() {
 }
 
 Texture Space_Object::texture_pool[NUM_DYNAMIC_TEXTURES] = { Texture(EARTHY_TEX, IMG_HEIGHT, IMG_WIDTH), Texture(ICEY_TEX, IMG_HEIGHT, IMG_WIDTH), Texture(BADLAND_TEX, IMG_HEIGHT, IMG_HEIGHT), Texture(MOON_TEX, IMG_HEIGHT, IMG_HEIGHT) ,Texture(TURB_RED, IMG_HEIGHT,IMG_WIDTH)};
+
+
+int Space_Object::ray_flag = 0;

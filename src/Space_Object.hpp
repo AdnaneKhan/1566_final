@@ -76,6 +76,9 @@ class Space_Object : public Drawable {
 	*/
 	void updateOrbit();
 
+	static void orbit_on();
+	static void orbit_off();
+
     /**
     * Adds satellite to orbit around this object
      */
@@ -199,6 +202,8 @@ class Space_Object : public Drawable {
 	*/
 	float rotation_rate;
 	float rotation;
+
+	static int ray_flag;
 };
 
 #endif

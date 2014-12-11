@@ -211,10 +211,12 @@ void my_keyboard(unsigned char key, int x, int y) {
 		ui.set_ui_color(2);
 		break;
 	case 'r':
+		root->star->orbit_off();
 		RayTracer::TurnOnOff(1);
 		planetsMoving = 0;
 		break;
 	case 'R':
+		root->star->orbit_off();
 		RayTracer::TurnOnOff(0);
 		break;
 	case 'm':
