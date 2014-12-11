@@ -568,7 +568,7 @@ void User_Interface::draw_interface(float velocity_mag, int mousex, int mousey, 
 	glLoadIdentity();
 	gluOrtho2D(-10, 10, -10, 10);
 	glMatrixMode(GL_MODELVIEW);
-	//glPushMatrix();        ----Not sure if I need this
+	glPushMatrix();      
 	glLoadIdentity();
 	glDisable(GL_CULL_FACE);
 
@@ -821,6 +821,7 @@ void User_Interface::draw_interface(float velocity_mag, int mousex, int mousey, 
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 
+	glPopMatrix();
 	glPopAttrib();
 
 	// END HUD

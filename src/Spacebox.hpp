@@ -30,7 +30,7 @@ public:
 	~Spacebox();
 
 	// Draws skybox at the specified position
-	void draw_skybox(GLfloat position[3]);
+	void draw_skybox();
 
 private:
 

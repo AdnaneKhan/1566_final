@@ -29,7 +29,12 @@ void Spacebox::apply_textures(int face_num) {
 Src: https://www.opengl.org/discussion_boards/showthread.php/134414-Outer-space-skybox-textures
 
 */
-void Spacebox::draw_skybox(GLfloat position[3]) {
+void Spacebox::draw_skybox() {
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	
+	gluPerspective(90, 1.0, 1.0, 100000.0);
 	glPushMatrix();
 
 	float m[4][4];
@@ -41,7 +46,7 @@ void Spacebox::draw_skybox(GLfloat position[3]) {
 
 	glEnable(GL_TEXTURE_2D);
 	
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 6; i++) {
 
 		apply_textures(i);
 		draw_face(i);
@@ -52,6 +57,10 @@ void Spacebox::draw_skybox(GLfloat position[3]) {
 	glDepthMask(1);
 	glEnable(GL_DEPTH_TEST);
 	glPopMatrix();
+
+
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
 
 
 }
@@ -99,7 +108,7 @@ void Spacebox::draw_face(int face_num) {
 		glBindTexture(GL_TEXTURE_2D, textures[face_num]->get_texture());
 		glBegin(GL_QUADS);
 		glTexCoord2d(1.0f, 0.0f);	glVertex3f(-side_len, side_len, -side_len);	// Top Right Of The Quad (Left)
-		glTexCoord2d(1.0f, 1.0f);	glVertex3f(-side_len, -side_len, -side_len);	// Top Left Of The Quad (Left)
+		glTexCoord2d(1.0f, 1.0f);	glVertex3f(-side_len, -side_len, -side_len);// Top Left Of The Quad (Left)
 		glTexCoord2d(0.0f, 1.0f);	glVertex3f(-side_len, -side_len, side_len);	// Bottom Left Of The Quad (Left)
 		glTexCoord2d(0.0f, 0.0f);	glVertex3f(-side_len, side_len, side_len);	// Bottom Right Of The Quad (Left)
 
@@ -123,7 +132,10 @@ void Spacebox::draw_face(int face_num) {
 		glBindTexture(GL_TEXTURE_2D, textures[face_num]->get_texture());
 		glBegin(GL_QUADS);
 
-
+		glTexCoord2d(1.0f, 1.0f);	glVertex3f(-side_len, -side_len, -side_len);// Top Right Of The Quad (Right)
+		glTexCoord2d(0.0f, 1.0f);	glVertex3f( side_len, -side_len, -side_len);// Top Left Of The Quad (Right)
+		glTexCoord2d(0.0f, 0.0f);	glVertex3f(-side_len, -side_len, side_len);	// Bottom Left Of The Quad (Right)
+		glTexCoord2d(1.0f, 0.0f);	glVertex3f(-side_len, -side_len, side_len);	// Bottom Right Of The Quad (Right)
 
 		glEnd();
 

@@ -286,6 +286,8 @@ void lighting_setup() {
 void my_display(void) {
 	GLfloat light0_pos[] = { 0, 0, 0, 1 };
 
+
+
 	/* clear the buffer */
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -293,20 +295,28 @@ void my_display(void) {
 	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 180);
 	glEnable(GL_LIGHT0);
 
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	box->draw_skybox();
+
 	GLfloat ship_pos[3];
 	
 	if (planetFollowMode == 0) {
 		// Gets position of ship
 		ship.get_position(ship_pos);
 
-		//box->draw_skybox(ship_pos);
-		// Draw HUD
-		ui.draw_interface(ship.get_velocity(),m_x,m_y,ship.get_roll_degrees());
+	
 
 		// Sets the Camera
 		ship.set_camera();
+
+	
+
+		// Draw HUD
+		ui.draw_interface(ship.get_velocity(), m_x, m_y, ship.get_roll_degrees());
+		
 	}
 	else if (planetFollowMode == 1) {
 		// Loads planet camera
