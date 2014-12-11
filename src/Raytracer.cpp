@@ -13,6 +13,14 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3], int 
 
 	/*TO DO: Convert x,y,z to world coordinates*/
 	// Convert x, y, z to world coordinates
+	float unit_vector_mag = sqrt(x*x + y*y + z*z);
+	x = x / unit_vector_mag;
+	y = y / unit_vector_mag;
+	z = z / unit_vector_mag;
+
+	x = (float) cur_planet_pos[0] + x*planet_radius;
+	y = (float) cur_planet_pos[1] + y*planet_radius;
+	z = (float) cur_planet_pos[2] + z*planet_radius;
 
 	/* END TO DO */
 
@@ -21,10 +29,10 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3], int 
 	for (Space_Object *planet : curSystem->orbiting_planets()) {
 		if (cur_planet_pos[0] == planet->world_pos[0] && cur_planet_pos[1] == planet->world_pos[1] && cur_planet_pos[2] == planet->world_pos[2]) {
 			allSpheres.emplace_back(planet);
-			printf("Planet loaded.");
-			if (planet->num_satellites > 0) {
+			//printf("Planet loaded.");
+			if (planet->satellites.size() > 0) {
 				for (Space_Object *satellite : planet->satellites) {
-					printf("Satellite loaded.");
+					//printf("Satellite loaded.");
 					allSpheres.emplace_back(satellite);
 				}
 			}
@@ -57,7 +65,7 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3], int 
 			for (Space_Object *planet : allSpheres) {
 				if (cur_planet_pos[0] != planet->world_pos[0] || cur_planet_pos[1] != planet->world_pos[1] || cur_planet_pos[2] != planet->world_pos[2]) {
 					if (HitPlanet(cur, planet)) {
-						//printf("Hit detected!\n");
+						printf("Hit detected!\n");
 						flag = 1;
 						break;
 					}
