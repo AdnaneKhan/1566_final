@@ -183,6 +183,12 @@ void my_keyboard(unsigned char key, int x, int y) {
 	case 'G':
 		planetcamera.ChangeToLocal();
 		break;
+	case 'j':
+		planetcamera.planetTheta += 5;
+		break;
+	case 'k':
+		planetcamera.planetTheta -= 5;
+		break;
 	case '[':
 		planetcamera.ChangeToPlanet();
 		break;
