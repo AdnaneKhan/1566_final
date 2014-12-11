@@ -22,7 +22,7 @@ public:
 	takes in the viewport and finds which pixels to color based upon the intersection
 	between the ray and the sphere through the viewport.
 	*/
-	static int Raytrace(float x, float y, float z, float cur_planet_pos[3], int planet_radius);
+	static Ray Raytrace(float x, float y, float z, float cur_planet_pos[3], int planet_radius);
 
 	/*** HitPlanet and GetIntersection ***/
 	/*

@@ -14,7 +14,13 @@ void Ray::SetOrigin(float x, float y, float z) {
 	Origin[0] = x;
 	Origin[1] = y;
 	Origin[2] = z;
+
 }
+
+void Ray::SetFlag(int n) {
+	flag = n;
+}
+
 
 Vertex::Vertex(int n) {
 	numPoints = n;

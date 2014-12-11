@@ -1,5 +1,8 @@
 #include "plandraw.hpp"
+#include "Math_helper.hpp"
 #include "Raytracer.hpp"
+#include "Ray.hpp"
+
 static float centerVec[3] = { CTR, CTR, CTR };
 
 static quadDrawMethod_t currentDrawMethod;
@@ -49,7 +52,11 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z, float world
 	float unitY = y - CTR;
 	float unitZ = z - CTR;
 
-	int flag = 0;
+	float world_pos_x, world_pos_y, world_pos_z;
+	float world_pos_mag = sqrt(world_pos[0] * world_pos[0] + world_pos[1] * world_pos[1] + world_pos[2] * world_pos[2]);
+	world_pos_x = world_pos[0] / world_pos_mag;
+	world_pos_y = world_pos[1] / world_pos_mag;
+	world_pos_z = world_pos[2] / world_pos_mag;
 
 	//First, we find the unit vector of our current vertex position
 	// pointing toward the sphere's origin
@@ -58,13 +65,15 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z, float world
 	unitY /= unitMag;
 	unitZ /= unitMag;
 
+	
+
 	if (RayTracer::CheckStatus() == 1) {
-		flag = RayTracer::Raytrace(x - CTR, y - CTR, z - CTR, world_pos, planet_radius);
-		if (flag == 0) {
+		Ray normal = RayTracer::Raytrace(x - CTR, y - CTR, z - CTR, world_pos, planet_radius);
+		if (normal.flag == 0) {
 			glNormal3f(unitX, unitY, unitZ);
 		}
-		else if (flag == 1) {
-			glNormal3f(-unitX, -unitY, -unitZ);
+		else if (normal.flag == 1) {
+			glNormal3f(world_pos_x,world_pos_y,world_pos_z);
 		}
 	}
 	else {

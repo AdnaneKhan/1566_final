@@ -127,7 +127,4 @@ void Planetfollower::MoveCamera() {
 	gluLookAt(camera_pos[0], camera_pos[1], camera_pos[2],
 			  looking_at[0], looking_at[1], looking_at[2], 
 			  up_vec[0], up_vec[1], up_vec[2]);
-	printf("%f,%f,%f\n%f,%f,%f\n%f,%f,%f\n\n", camera_pos[0], camera_pos[1], camera_pos[2],
-		looking_at[0], looking_at[1], looking_at[2],
-		up_vec[0], up_vec[1], up_vec[2]);
 }

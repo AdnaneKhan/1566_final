@@ -26,7 +26,7 @@ void Planetary_Body::fullDraw() {
 	
 	drawPrep();
 	glPushMatrix();
-	draw_rotate();
+	//draw_rotate();
 
 	// Do the actual draw
 	draw();
