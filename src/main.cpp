@@ -210,11 +210,19 @@ void my_keyboard(unsigned char key, int x, int y) {
 	case '3':
 		ui.set_ui_color(2);
 		break;
+	case 'r':
+		RayTracer::TurnOnOff(1);
+		planetsMoving = 0;
+		break;
+	case 'R':
+		RayTracer::TurnOnOff(0);
+		break;
 	case 'm':
 		planetsMoving = 0;
 		break;
 	case 'M':
 		planetsMoving = 1;
+		RayTracer::TurnOnOff(0);
 		break;
 	case 'q':
 		ship.roll_left(DEFAULT_LOOK_DELTA);
@@ -309,7 +317,7 @@ void my_display(void) {
 	}
 	
 	// Passes system to raytracer
-	//RayTracer::SetPlanetarySystem(root);
+	RayTracer::SetPlanetarySystem(root);
 
 	// Draws System
 	root->draw_system();

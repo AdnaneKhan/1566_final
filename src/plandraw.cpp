@@ -58,13 +58,17 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z, float world
 	unitY /= unitMag;
 	unitZ /= unitMag;
 
-	//flag = RayTracer::Raytrace(x, y, z, world_pos);
-	flag = 0;
-	if (flag == 0) {
-		glNormal3f(unitX, unitY, unitZ);
+	if (RayTracer::CheckStatus() == 1) {
+		flag = RayTracer::Raytrace(x - CTR, y - CTR, z - CTR, world_pos, planet_radius);
+		if (flag == 0) {
+			glNormal3f(unitX, unitY, unitZ);
+		}
+		else if (flag == 1) {
+			glNormal3f(-unitX, -unitY, -unitZ);
+		}
 	}
-	else if (flag == 1) {
-		glNormal3f(-unitX, -unitY, -unitZ);
+	else {
+		glNormal3f(unitX, unitY, unitZ);
 	}
 	
 	//Then, thanks to the formula from the notes (& Wikipedia)...
