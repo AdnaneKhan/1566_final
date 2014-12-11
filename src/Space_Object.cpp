@@ -44,7 +44,6 @@ void Space_Object::updateOrbit() {
 		*/
 
 		vector_cross(up_norm, this->orbit_plane.planeNormal, rot_axis);
-		normalize_vector(rot_axis);
 
 		// Calculate rotation angle to switch to new plane
 		GLfloat rot_angle = asin(vector_length(rot_axis));
@@ -111,7 +110,7 @@ void Space_Object::draw_orbit() {
 		GLfloat up_norm[] = { 0, 0, 1 };
 		GLfloat rot_axis[3];
 		vector_cross(up_norm, this->orbit_plane.planeNormal, rot_axis);
-		normalize_vector(rot_axis);
+
 
 		GLfloat rot_angle = asin(vector_length(rot_axis));
 		rot_vector((rot_angle), rot_axis[0], rot_axis[1], rot_axis[2], trans_non_normalizes);
