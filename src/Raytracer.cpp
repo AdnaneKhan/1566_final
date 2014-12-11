@@ -6,7 +6,7 @@ int RayTracer::active = 0;
 
 Planetary_System * RayTracer::curSystem = nullptr;
 
-int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3], int planet_radius) {
+Ray RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3], int planet_radius) {
 	std::list<Space_Object *> allSpheres;
 	Space_Object *currentPlanet = nullptr;
 	int flag = 0;
@@ -27,27 +27,26 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3], int 
 	// Load all planets into big ol list
 	// Only loading satellites right now
 	for (Space_Object *planet : curSystem->orbiting_planets()) {
-		if (cur_planet_pos[0] == planet->world_pos[0] && cur_planet_pos[1] == planet->world_pos[1] && cur_planet_pos[2] == planet->world_pos[2]) {
-			allSpheres.emplace_back(planet);
-			//printf("Planet loaded.");
-			if (planet->satellites.size() > 0) {
-				for (Space_Object *satellite : planet->satellites) {
-					//printf("Satellite loaded.");
-					allSpheres.emplace_back(satellite);
-				}
+		allSpheres.emplace_back(planet);
+		if (planet->num_satellites() > 0) {
+			for (Space_Object *satellite : planet->satellites) {
+				//printf("Satellite loaded.");
+				allSpheres.emplace_back(satellite);
 			}
-			break;
-		}
+		}			
 	}
 
 	// Early escape if there's nothing to compare against but itself
 	if (allSpheres.size() == 1) {
-		return flag;
+		Ray ret = Ray(0, 0, 0);
+		ret.SetFlag(0);
+		return ret;
 	}
 
 	// Make Ray
 	Ray cur = Ray(x, y, z);
 	cur.SetOrigin(0, 0, 0);
+	cur.SetFlag(0);
 
 	// Mark current planet we're working with right now
 	for (Space_Object *planet : allSpheres) {
@@ -59,22 +58,17 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3], int 
 	}
 
 	if (currentPlanet != NULL) {
-		// Make sure we're on front side of the planet
-		if (!HitPlanet(cur, currentPlanet)) {
-			// Determine if Ray intersects with any other planets
-			for (Space_Object *planet : allSpheres) {
-				if (cur_planet_pos[0] != planet->world_pos[0] || cur_planet_pos[1] != planet->world_pos[1] || cur_planet_pos[2] != planet->world_pos[2]) {
-					if (HitPlanet(cur, planet)) {
-						printf("Hit detected!\n");
-						flag = 1;
-						break;
-					}
-				}
+		// Determine if Ray intersects with any other planets
+		for (Space_Object *planet : allSpheres) {
+				if (HitPlanet(cur, planet)) {
+					//printf("Hit detected!\n");
+					cur.SetFlag(1);
+					break;
 			}
 		}
 	}
 
-	return flag;
+	return cur;
 	
 	// For each pixel w
 	//for (int w = 0; w < windowW; w++) {
