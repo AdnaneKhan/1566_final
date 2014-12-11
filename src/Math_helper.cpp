@@ -15,7 +15,6 @@ void random_orbit(float &a, float &b) {
 	b = rand_orbit *0.9;
 }
 
-
 /*
 * Returns a random radius from 1 to 5
 *

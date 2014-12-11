@@ -300,20 +300,13 @@ void my_display(void) {
 	glLoadIdentity();
 
 	box->draw_skybox();
-
 	GLfloat ship_pos[3];
 	
 	if (planetFollowMode == 0) {
 		// Gets position of ship
 		ship.get_position(ship_pos);
-
-	
-
 		// Sets the Camera
 		ship.set_camera();
-
-	
-
 		// Draw HUD
 		ui.draw_interface(ship.get_velocity(), m_x, m_y, ship.get_roll_degrees());
 		
@@ -324,7 +317,10 @@ void my_display(void) {
 
 		// Moves the camera to the right place
 		planetcamera.MoveCamera();
+		
 	}
+
+
 	
 	// Passes system to raytracer
 	RayTracer::SetPlanetarySystem(root);
