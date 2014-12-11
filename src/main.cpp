@@ -127,7 +127,7 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(200.0, 4);
+	root = new Planetary_System(200.0, 1);
 	all_space = new Texture("textures/stars3.bmp", 1024, 1024);
 	box = new Spacebox(1, all_space, all_space, all_space, all_space, all_space, all_space);
 	
@@ -311,9 +311,8 @@ void my_display(void) {
 	// Passes system to raytracer
 	//RayTracer::SetPlanetarySystem(root);
 
-	// Draws Skybox
+	// Draws System
 	root->draw_system();
-	//root->draw_system();
 
 	/* buffer is ready */
 	glutSwapBuffers();
@@ -322,7 +321,6 @@ void my_display(void) {
 }
 
 void time_update(int param) {
-	
 	ship.update();
 	if (planetsMoving == 1) {
 		root->update_system();

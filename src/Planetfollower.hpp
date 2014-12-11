@@ -20,6 +20,7 @@ public:
 	int planet;
 	int planetOrSatellite;
 	int localOrGlobal;
+	float planetTheta;
 
 	float camera_pos[3];
 	float up_vec[3];
