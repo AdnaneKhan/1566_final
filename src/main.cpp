@@ -58,6 +58,7 @@ Spaceship ship;
 Planetfollower planetcamera;
 User_Interface ui;
 Spacebox * box;
+int planetsMoving;
 
 int main(int argc, char **argv) {
 
@@ -133,6 +134,7 @@ void my_setup(void) {
 	ui.set_window_parameters(WINDOW_HEIGHT, WINDOW_WIDTH);
 
 	planetcamera.SetSolarSystem(root);
+	planetsMoving = 1;
 
 	lighting_setup();
 	return;
@@ -201,6 +203,12 @@ void my_keyboard(unsigned char key, int x, int y) {
 		break;
 	case '3':
 		ui.set_ui_color(2);
+		break;
+	case 'm':
+		planetsMoving = 0;
+		break;
+	case 'M':
+		planetsMoving = 1;
 		break;
 	case 'q':
 		ship.roll_left(DEFAULT_LOOK_DELTA);
@@ -310,6 +318,8 @@ void my_display(void) {
 void time_update(int param) {
 	
 	ship.update();
-	root->update_system();
+	if (planetsMoving == 1) {
+		root->update_system();
+	}
 	glutTimerFunc(DELTA_TIME, time_update, 0);
 }
