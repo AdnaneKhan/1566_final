@@ -13,6 +13,7 @@
 #include "User_Interface.hpp"
 #include "Spacebox.hpp"
 #include "Raytracer.hpp"
+#include <time.h>
 
 #define min(a,b) ((a) < (b)? a:b)
 #define FALSE 0 
@@ -126,7 +127,7 @@ void gl_setup(void) {
 }
 
 void my_setup(void) {
-
+	srand(time(NULL));
 	root = new Planetary_System(200.0, 8);
 	all_space = new Texture("textures/stars3.bmp", 1024, 1024);
 	box = new Spacebox(1, all_space);

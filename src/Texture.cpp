@@ -3,14 +3,14 @@
 void Texture::turbulentBlueGradient(unsigned char height,
 	unsigned char *r, unsigned char *g, unsigned char *b){
 	if (height < CHAR_MAX / 8)
-		*r = 8 * height;
+		*b = 8 * height;
 	else
-		*r = CHAR_MAX;
+		*b = CHAR_MAX;
 	if (height < CHAR_MAX / 2 - 5)
 		*g = 2 * height + 5;
 	else
 		*g = CHAR_MAX;
-	*b = *g / 2;
+	*r = *g / 2;
 }
 
 void Texture::noisySunGradient(unsigned char height,
@@ -189,7 +189,6 @@ void Texture::generate_texture(textureType to_generate) {
 		break;
 	case ICEY_TEX :
 		scanLines(this->brownianImage, iceyGradient, 2999999);
-
 	
 		break;
 	case BADLAND_TEX: 
@@ -197,9 +196,16 @@ void Texture::generate_texture(textureType to_generate) {
 	
 		break;
 	case MOON_TEX: 
-
 		brownian(brownianImage, moonyGradient, 999999);
-
+		break;
+	case TURB_BLUE:
+		multiScan(brownianImage, turbulentBlueGradient, 999999,MAX_WALKERS);
+		break;
+	case TURB_YELLOW:
+		brownian(brownianImage, turbulentYellowGradient, 99999);
+		break;
+	case TURB_GREEN:
+		multiScan(brownianImage, turbulentGreenGradient, 999999, MAX_WALKERS);
 		break;
 	case TURB_RED:
 		multiBrown(this->brownianImage, turbulentRedGradient, 999999,MAX_WALKERS);
