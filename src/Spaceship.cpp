@@ -65,12 +65,12 @@ void Spaceship::update_velocity(float change) {
 	if (this->velocity_mag <= MAX_SPEED && this->velocity_mag >= MIN_SPEED) {
 		this->velocity_mag = change + velocity_mag;
 
-		if (this->velocity_mag > MAX_SPEED) {
-			this->velocity_mag = MAX_SPEED;
+		if (this->velocity_mag < MIN_SPEED) {
+			this->velocity_mag = MIN_SPEED;
 		}
 
-		if (this->velocity_mag < MAX_SPEED) {
-			this->velocity_mag = MIN_SPEED;
+		if (this->velocity_mag > MAX_SPEED) {
+			this->velocity_mag = MAX_SPEED;
 		}
 	}
 
