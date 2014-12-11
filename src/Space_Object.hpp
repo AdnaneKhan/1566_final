@@ -22,9 +22,7 @@ class Space_Object : public Drawable {
   public:
 
 	typedef struct Orbital_Plane {
-
 		GLfloat planeNormal[3];
-		GLfloat planePoint[3];
 	} Orbital_Plane;
 
 	Orbital_Plane orbit_plane;

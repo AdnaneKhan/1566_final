@@ -172,11 +172,6 @@ void Space_Object::set_orbit(float a, float b, int focus_sel) {
 		this->object_orbit.orbit_focus = sqrt(b*b - a*a) ;
 		this->object_orbit.eccentricity = this->object_orbit.orbit_focus / sqrt(this->object_orbit.orbit_focus*this->object_orbit.orbit_focus + a*a);
 	}
-
-	this->orbit_plane.planePoint[0] = 5;
-	this->orbit_plane.planePoint[1] = 4;
-	this->orbit_plane.planePoint[2] = 0;
-
 	random_rot_axis(this->orbit_plane.planeNormal);
 	normalize_vector(this->orbit_plane.planeNormal);
 }
@@ -185,10 +180,6 @@ void Space_Object::set_parent_pos(float x, float y, float z) {
 	this->parent_pos[0] = x;
 	this->parent_pos[1] = y;
 	this->parent_pos[2] = z;
-
-	this->orbit_plane.planePoint[0] = x;
-	this->orbit_plane.planePoint[1] = y;
-	this->orbit_plane.planePoint[2] = z;
 
 }
 
