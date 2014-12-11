@@ -176,6 +176,18 @@ void my_keyboard(unsigned char key, int x, int y) {
 	case 'P':
 		planetFollowMode = 0;
 		break;
+	case '[':
+		planetcamera.ChangeToPlanet();
+		break;
+	case ']':
+		planetcamera.ChangeToSatellite();
+		break;
+	case '+':
+		planetcamera.SwitchPlanet(1);
+		break;
+	case '-':
+		planetcamera.SwitchPlanet(-1);
+		break;
 	case '1':
 		ui.set_ui_color(0);
 		break;
@@ -271,7 +283,7 @@ void my_display(void) {
 	}
 	else if (planetFollowMode == 1) {
 		// Loads planet camera
-		planetcamera.InitializeCamera();
+		planetcamera.UpdateCamera();
 
 		// Moves the camera to the right place
 		planetcamera.MoveCamera();

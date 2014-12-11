@@ -16,10 +16,8 @@ public:
 	Space_Object *currentSatellite;
 
 	std::deque<Space_Object *> listOfPlanets;
-	std::deque<Space_Object *> listOfSatellites;
 
 	int planet;
-	int satellite;
 	int planetOrSatellite;
 
 	float camera_pos[3];
@@ -62,13 +60,13 @@ public:
 	/*
 	Initializes camera around planet.
 	*/
-	void Planetfollower::InitializeCamera();
+	void Planetfollower::UpdateCamera();
 
 	/*** UpdateCamera ***/
 	/*
-	Updates the the camera position.
+	Updates the the camera using angle provided.
 	*/
-	void Planetfollower::UpdateCamera();
+	void Planetfollower::RotateCamera();
 
 	/*** MoveCamera ***/
 	/*
