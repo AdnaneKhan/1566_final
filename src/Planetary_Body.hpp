@@ -19,6 +19,7 @@ class Planetary_Body: public Space_Object {
       Planetary_Body(float rotationRate, int radius);
 	  Planetary_Body(float rotationRate, int radius, textureType tType);
 	  Planetary_Body();
+
 	  ~Planetary_Body();
 
 	  // Inherited functions from Space_object

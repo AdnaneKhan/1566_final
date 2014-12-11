@@ -19,7 +19,7 @@ void Spacebox::apply_textures() {
 }
 
 /*
-
+Citing
 Src: https://www.opengl.org/discussion_boards/showthread.php/134414-Outer-space-skybox-textures
 
 */

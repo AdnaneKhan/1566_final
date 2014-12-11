@@ -9,16 +9,11 @@
 
 #include "Texture.hpp"
 
-#define TOP 0
-#define FRONT 1
-#define BACK 2
-#define LEFT 3
-#define RIGHT 4
-#define BOTTOM 5
-
 
 /**
 Defines a spacebox (essentially a skybox) for the solar system
+
+Original plan was to make it a full cubemap style, but we opted for just a billboard in interest of time
 
 */
 class Spacebox {	
