@@ -10,12 +10,18 @@ void Spaceship::mouse_control(int x, int y, int win_h, int win_w) {
 	int x_dz_lb = (win_w / 2) - (win_w / 10);
 	int y_dz_lb = (win_h / 2) - (win_h / 10);
 
-	if (!((x < x_dz_ub && x > x_dz_lb) && (y > y_dz_lb && y < y_dz_ub))) {
-		turn_vector[X] = (x - win_w / 2) / ((float)win_w/2);
-		turn_vector[Y] = (y - win_h / 2) / ((float)win_h/2);
-	}
-	else {
+
+	
+	if (x > (win_w - win_w/20) || y > (win_h - win_h/20) || y < win_h/20 || x < win_w/20) { // Edges are deadzones since we want movemnet to stop if mouse leaves
 		turn_vector[X] = 0;
+		turn_vector[Y] = 0;
+	}
+	else if (!((x < x_dz_ub && x > x_dz_lb) && (y > y_dz_lb && y < y_dz_ub))) { // Not in middle deadzone
+		turn_vector[X] = (x - win_w / 2) / ((float)win_w / 2);
+		turn_vector[Y] = (y - win_h / 2) / ((float)win_h / 2);
+	}
+ 	else {
+		turn_vector[X] = 0; // in middle deadzone
 		turn_vector[Y] = 0;
 	}
 }
