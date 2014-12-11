@@ -73,7 +73,7 @@ static void xyz_to_uv(float *u, float *v, float x, float y, float z, float world
 			glNormal3f(unitX, unitY, unitZ);
 		}
 		else if (normal.flag == 1) {
-			glNormal3f(-world_pos_x,-world_pos_y,-world_pos_z);
+			glNormal3f(world_pos_x,world_pos_y,world_pos_z);
 		}
 	}
 	else {
