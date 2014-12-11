@@ -8,8 +8,11 @@
 #include "Planetary_Body.hpp"
 
 class RayTracer {
-	public:
+public:
 	static Planetary_System *curSystem;
+
+	// Integer which determines whether or not the raytracer is active
+	static int active;
 
 	/*** Raytrace ***/
 	/*
@@ -19,7 +22,7 @@ class RayTracer {
 	takes in the viewport and finds which pixels to color based upon the intersection
 	between the ray and the sphere through the viewport.
 	*/
-	static int Raytrace(float x, float y, float z, float cur_planet_pos[3]);
+	static int Raytrace(float x, float y, float z, float cur_planet_pos[3], int planet_radius);
 
 	/*** HitPlanet and GetIntersection ***/
 	/*
@@ -36,6 +39,10 @@ class RayTracer {
 	static bool HitPlanet(Ray ray, Space_Object *sphere);
 
 	static float discriminant(float a, float b, float c);
+
+	static void TurnOnOff(int status);
+
+	static int CheckStatus();
 };
 
 

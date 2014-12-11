@@ -2,12 +2,13 @@
 
 #define PI 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328
 
+int RayTracer::active = 0;
 
 Planetary_System * RayTracer::curSystem = nullptr;
 
-int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
+int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3], int planet_radius) {
 	std::list<Space_Object *> allSpheres;
-	Space_Object *currentPlanet = NULL;
+	Space_Object *currentPlanet = nullptr;
 	int flag = 0;
 
 	/*TO DO: Convert x,y,z to world coordinates*/
@@ -20,13 +21,20 @@ int RayTracer::Raytrace(float x, float y, float z, float cur_planet_pos[3]) {
 	for (Space_Object *planet : curSystem->orbiting_planets()) {
 		if (cur_planet_pos[0] == planet->world_pos[0] && cur_planet_pos[1] == planet->world_pos[1] && cur_planet_pos[2] == planet->world_pos[2]) {
 			allSpheres.emplace_back(planet);
-			if (planet->satellites.size() != 0) {
+			printf("Planet loaded.");
+			if (planet->num_satellites > 0) {
 				for (Space_Object *satellite : planet->satellites) {
+					printf("Satellite loaded.");
 					allSpheres.emplace_back(satellite);
 				}
 			}
 			break;
 		}
+	}
+
+	// Early escape if there's nothing to compare against but itself
+	if (allSpheres.size() == 1) {
+		return flag;
 	}
 
 	// Make Ray
@@ -120,7 +128,7 @@ bool RayTracer::HitPlanet(Ray ray, Space_Object *sphere) {
 	float cx, cy, cz;
 	bool ret = false;
 
-	radius = sphere->planet_radius;
+	radius = (float) sphere->planet_radius;
 	cx = sphere->world_pos[0];
 	cy = sphere->world_pos[1];
 	cz = sphere->world_pos[2];
@@ -144,4 +152,12 @@ float RayTracer::discriminant(float a, float b, float c) {
 
 void RayTracer::SetPlanetarySystem(Planetary_System *system) {
 	curSystem = system;
+}
+
+void RayTracer::TurnOnOff(int status) {
+	RayTracer::active = status;
+}
+
+int RayTracer::CheckStatus() {
+	return RayTracer::active;
 }
