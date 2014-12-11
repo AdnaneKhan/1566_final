@@ -216,7 +216,7 @@ void my_keyboard(unsigned char key, int x, int y) {
 		planetsMoving = 0;
 		break;
 	case 'R':
-		root->star->orbit_off();
+		root->star->orbit_on();
 		RayTracer::TurnOnOff(0);
 		break;
 	case 'm':
@@ -322,8 +322,6 @@ void my_display(void) {
 		
 	}
 
-
-	
 	// Passes system to raytracer
 	RayTracer::SetPlanetarySystem(root);
 
