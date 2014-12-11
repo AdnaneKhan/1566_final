@@ -127,7 +127,7 @@ void gl_setup(void) {
 
 void my_setup(void) {
 
-	root = new Planetary_System(200.0, 1);
+	root = new Planetary_System(200.0, 3);
 	all_space = new Texture("textures/stars3.bmp", 1024, 1024);
 	box = new Spacebox(1, all_space, all_space, all_space, all_space, all_space, all_space);
 	
