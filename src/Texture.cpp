@@ -202,7 +202,6 @@ void Texture::generate_texture(textureType to_generate) {
 
 		break;
 	case TURB_RED:
-		std::cout << "gen red\n";
 		multiBrown(this->brownianImage, turbulentRedGradient, 999999,MAX_WALKERS);
 		break;
 	}
