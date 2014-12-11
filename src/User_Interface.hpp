@@ -23,15 +23,7 @@ public:
 	void set_window_parameters(int height, int width);
 
 private:
-	// Sets the projection matrix to ortho 2d to facilitate drawing of 2D interface
-	//void set_2d();
 
-	// Reverts to proper 3D perspective projection
-	//void revert_3d();
-
-	void draw_init_menu();
-
-	void draw_game_ui();
 
 	int window_height;
 	int window_width;
