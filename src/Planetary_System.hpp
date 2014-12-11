@@ -37,11 +37,9 @@ class Planetary_System {
     ~Planetary_System();
 
 	std::deque<Space_Object *>  orbiting_planets();
-
-  private:
 	
-	  // Star of this system
-	  Space_Object * star;
+	// Star of this system
+	Space_Object * star;
 	 
 
 };
