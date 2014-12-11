@@ -13,11 +13,9 @@ Planetary_System::Planetary_System(int sun_radius, int num_planets) {
 		float a, b;
 		random_orbit(a, b);
 		temp->set_orbit(a+(i * 500), b+(i * 500),1);
-
-
 		temp->set_parent_pos(0, 0, 0);
 		// Set orbit to be origin of system
-		Space_Object * temp2 = new Planetary_Body(.3,random_radius()/10);
+		Space_Object * temp2 = new Planetary_Body(.3,random_radius()/6);
 		temp2->set_orbit(temp->planet_radius*3.0, temp->planet_radius*3.0, 1);
 		temp->add_Satelite(temp2);
 		star->add_Satelite(temp);

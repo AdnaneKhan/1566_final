@@ -57,6 +57,7 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius, textureType tType
 	random_rot_axis(this->rotationAxis);
 	this->rotation = 0;
 	random_rot_axis(this->orbit_plane.planeNormal);
+	normalize_vector(this->orbit_plane.planeNormal);
 
 	this->draw_type = STAR;
 	this->planet_tex = &texture_pool[tType];
@@ -79,6 +80,7 @@ Planetary_Body::Planetary_Body(float rotationRate, int radius) {
 
 	random_rot_axis(this->rotationAxis);
 	random_rot_axis(this->orbit_plane.planeNormal);
+	normalize_vector(this->orbit_plane.planeNormal);
 	this->rotation = 0;
 
 	this->draw_type = TEXTURED;
