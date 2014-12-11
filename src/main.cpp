@@ -159,7 +159,6 @@ void my_keyboard(unsigned char key, int x, int y) {
 		break;
 	case 's':
 		ship.update_velocity(-DEFAULT_SPEED_DELTA);
-
 		break; 
 	case 'd':
 		ship.look_right(DEFAULT_LOOK_DELTA);
@@ -175,6 +174,12 @@ void my_keyboard(unsigned char key, int x, int y) {
 		break;
 	case 'P':
 		planetFollowMode = 0;
+		break;
+	case 'g':
+		planetcamera.ChangeToGlobal();
+		break;
+	case 'G':
+		planetcamera.ChangeToLocal();
 		break;
 	case '[':
 		planetcamera.ChangeToPlanet();

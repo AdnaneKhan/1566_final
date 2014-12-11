@@ -19,6 +19,7 @@ public:
 
 	int planet;
 	int planetOrSatellite;
+	int localOrGlobal;
 
 	float camera_pos[3];
 	float up_vec[3];
@@ -42,10 +43,9 @@ public:
 	*/
 	void Planetfollower::SwitchPlanet(int flag);
 
-	/*** ChangeToSatellite ***/
+	/*** ChangeToPlanet ***/
 	/*
-	If Satellite exists, changes to the satellite around the current
-	planet.
+	Switches back to the current planet.
 	*/
 	void Planetfollower::ChangeToPlanet();
 
@@ -56,13 +56,25 @@ public:
 	*/
 	void Planetfollower::ChangeToSatellite();
 
-	/*** InitializeCamera ***/
+	/*** ChangeToGlobal ***/
+	/*
+	Switches to viewing the planet from the middle of the solar system above the sun.
+	*/
+	void Planetfollower::ChangeToGlobal();
+
+	/*** ChangeToLocal ***/
+	/*
+	Switches back to local view of the planet.
+	*/
+	void Planetfollower::ChangeToLocal();
+
+	/*** UpdateCamera ***/
 	/*
 	Initializes camera around planet.
 	*/
 	void Planetfollower::UpdateCamera();
 
-	/*** UpdateCamera ***/
+	/*** RotateCamera ***/
 	/*
 	Updates the the camera using angle provided.
 	*/
