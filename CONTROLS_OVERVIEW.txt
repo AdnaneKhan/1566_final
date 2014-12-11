@@ -1,0 +1,13 @@
+In case I'm not there to brief you on the controls, and while it's pretty obvious what's going on,
+here's a spec just in case.
+
+'p' and 'P' switch between planet viewmode and spaceship respectively
+'[' flips to the planet selected
+']' flips to the little guy floatin around him
+'+' and '-' can be used to move through the deque of planets and view whatever you like
+'g' and 'G' flips between the global viewer (a camera with eye at the sun) and the local viewer (camera with eye in the orbit of the planet)
+'j' and 'k' rotate your camera around the local view orbit along the xy-plane (z-coord is whatever level the planet is at)
+'m' and 'M' will turn off and on the movement of the solar system (just disables and enables root->update() with a flag)
+
+And that's all I got for now, chances are if you're reading this in the first place I'm asleep and wasn't around to explain it to you.
+See you at 2PM.
